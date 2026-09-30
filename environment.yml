@@ -1,0 +1,29 @@
+# Direct dependencies only, hand-trimmed (no transitive dump).
+#
+# NOTE: this file was written by hand, NOT exported from a live env -- the
+# `cdk2` env did not exist on this machine when the project was scaffolded.
+# Versions are therefore unpinned. Pin them from `conda env export` once the
+# env is built and stage 1 runs green; the project is not reproducible until
+# that is done.
+#
+# Order matters: conda-forge packages install before the pip block.
+# Never `pip install vina`.
+name: cdk2
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - rdkit
+  - vina
+  - pdbfixer
+  - numpy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - jupyterlab
+  - pip
+  - pip:
+      - meeko
+      - posebusters
+      - chembl_webresource_client

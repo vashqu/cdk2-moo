@@ -1,0 +1,27 @@
+# Data: directories are tracked via .gitkeep, contents are not.
+data/raw/*
+data/processed/*
+data/structures/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/structures/.gitkeep
+
+# Regenerable outputs.
+figures/*
+results/*
+!figures/.gitkeep
+!results/.gitkeep
+
+# Docking intermediates.
+*.pdbqt
+
+# Python.
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.ipynb_checkpoints/
+
+# OS.
+.DS_Store
