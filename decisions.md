@@ -591,3 +591,803 @@ splits and ten seeds."
 **What would change my mind.** A scrambled-label Spearman clearly above ~0.15,
 or size-only beating the scrambled model by much: either would mean leakage or
 a size artifact to chase before continuing.
+
+---
+
+## D-18: One fixed real surrogate and one fixed scrambled surrogate; matched GA runs
+
+**Date:** 2026-09-30
+**Stage:** 5 (GA) — **[judgment]**
+
+**Decision.** One random forest trained once on all 2,016 curated molecules
+(`random_state = config.SURROGATE_SEED = 42`), and one trained on labels shuffled
+once (`SCRAMBLE_SEED = 20260930`), reused unchanged by every GA seed and arm.
+GA seeds (42–46) control only the search: start molecules, parent choice and
+edits. For each seed, all four arms start from the same 100 training molecules
+(drawn at random from those inside the size window) and use identical operators.
+
+**Why.** Separates GA stochasticity from surrogate stochasticity, and makes arms
+differ in exactly one thing, the fitness function (paired comparison).
+
+**Alternatives considered.** Retrain the forests per seed (what the first, pilot
+run did) — rejected: seed-to-seed variance then mixes search noise with
+instrument noise. A surrogate trained on a scaffold-split training set — kept
+as a later secondary robustness run, one predefined split.
+
+**Cost.** Conclusions rest on one particular scrambled permutation and one
+forest; the scrambled result in particular could differ for another permutation.
+Start molecules are training molecules, so generation 0 has max Tanimoto 1.0 and
+the forest's predictions for them are in-sample (near their measured values).
+Every trajectory therefore begins with an artificial discontinuity at generation 1,
+and "best predicted activity" falls below its generation-0 value in three arms
+(it is not a failure of optimisation: the best start molecules are known actives
+that get displaced).
+
+**How I'd defend it.** "I held the instrument fixed so any difference between
+arms is the objective, not the surrogate's random state. Same seed means same
+start molecules, so comparisons are paired."
+
+**What would change my mind.** Rerunning with a second scrambled permutation
+changing the scrambled-arm conclusion.
+
+---
+
+## D-19: Primary heavy-atom window 20–39; 15–50 kept as a labelled pilot
+
+**Date:** 2026-09-30
+**Stage:** 5 (GA) — **[judgment]**
+
+**Decision.** Generated molecules must have 20–39 heavy atoms, the 5th–95th
+percentile of the training set (full range 5–78). 15–50 is available
+(`--relaxed`) for stress tests only. The first full run, made with 15–50 and
+per-seed retrained forests, is preserved unmodified as
+`results/05_pilot_relaxed_15-50_populations.csv` (+ console log, + figures
+suffixed `_pilot_relaxed`). It is a pilot, not a Stage 5 result.
+
+**Why.** Outside the training size range the surrogate has no examples; any gain
+there is extrapolation by construction. Without a window, `activity_only` grew
+molecules to ~45 heavy atoms (pilot), beyond anything the surrogate was trained on.
+
+**Cost.** The window truncates the very behaviour (size exploitation) that the
+pilot showed. Populations pile up at the bounds: 28% of multi_real and 19% of
+druglike_only final molecules sit at 20 or 39 atoms (almost all at 20), so the
+drug-likeness objectives are partly bounded by the window, not optimised.
+
+**How I'd defend it.** "I matched the allowed chemistry to what the surrogate
+was trained on, so a claim that optimisation left the training distribution
+can't be just a size effect. I kept the wider run, labelled, to show what
+happens without the constraint."
+
+**What would change my mind.** Bound-piling changing conclusions; then the
+window or objectives would need revisiting (e.g. a size-penalty term).
+
+---
+
+## D-20: Four arms, geometric-mean fitness; how Stage 5 is read
+
+**Date:** 2026-09-30
+**Stage:** 5 (GA) — **[judgment]**
+
+**Decision.** Arms: `multi_real` (activity × QED × SA, real surrogate),
+`multi_scrambled` (same, activity from the scrambled surrogate), `activity_only`,
+`druglike_only` (QED × SA, no surrogate). Each term scaled 0–1 (activity linearly
+over pActivity 4–9, fixed globally; SA as (10 − SA)/9), combined by geometric
+mean. GB-GA: population 100, 100 children/generation, 50 generations, elitist
+(keep best 100 of parents + children), crossover + 50% mutation.
+
+**Interpretation rule.** Falling similarity to the training set is **not**
+evidence of surrogate exploitation: it falls from 1.0 to ~0.35 in druglike_only,
+an arm that never sees the surrogate. Evidence is the movement of activity-driven
+arms **relative to druglike_only, same seed** (paired).
+
+**Result (5 seeds, generation 50, median [min, max] over seeds; paired contrast =
+arm minus druglike_only).**
+
+| arm | real pred. change vs start | paired Δ real pred. | paired Δ max Tanimoto | median QED / SA / atoms |
+|---|---|---|---|---|
+| multi_real | +1.21 | +1.85 [+1.47, +1.98] (5/5) | +0.035 [0.00, +0.24] | 0.91 / 2.2 / 21 |
+| multi_scrambled | −0.61 | −0.13 [−0.32, +0.44] (1/5) | −0.008 [−0.01, +0.08] | 0.92 / 2.2 / 23 |
+| activity_only | +1.91 | +2.50 [+2.37, +2.55] (5/5) | **+0.33** [+0.33, +0.38] | 0.31 / 3.2 / 35 |
+| druglike_only | −0.58 | (baseline) | (baseline: 1.0 → 0.355) | 0.94 / 1.7 / 22 |
+
+- Scrambled arm's *own* surrogate rises (+0.5, to ~7.16) while the real surrogate
+  does not improve: the optimiser exploits noise but the gain is not transferred.
+  H4 holds qualitatively; amplitude of the own-surrogate rise is 0.5 vs 1.2–1.9.
+- Activity-driven arms end **closer to** the training set than the baseline, not
+  further (paired Δ Tanimoto ≥ 0). Stage 4 calibration (pooled 3 splits, 10 seeds):
+  RF MAE 0.39 at similarity ≥ 0.8, 0.51 at 0.7–0.8, 0.67 at 0.6–0.7, 0.75 at 0.4–0.6,
+  ~0.9 below 0.4. activity_only molecules mostly sit at 0.6–0.8 (MAE 0.5–0.7),
+  i.e. where the surrogate is reasonably reliable; multi_real has ~42% below 0.4.
+- Diversity collapse: final populations hold 22/100 (multi_real) and 21/100
+  (activity_only) unique scaffolds vs 62–70 for the other arms; activity_only's
+  top molecules resemble dinaciclib (the 4KD1 ligand, a high-pActivity training
+  compound): local exploitation of known actives, not extrapolation.
+
+**Cost / caveats.** Max Tanimoto is size-dependent (Spearman 0.54 with heavy
+atoms, final generation), and activity_only has no molecules at 20–23 atoms, so
+its similarity cannot be size-matched from this run. Size-matched at 20–23 atoms,
+multi_real 0.41 vs druglike 0.35 vs scrambled 0.36, same conclusion. Stage 4
+calibrates on real molecules; GA molecules are naive graph edits, so it may be
+optimistic for them. Only 9 Stage-4 test molecules were both predicted ≥ 8 and below
+0.6 similarity: essentially no validation data where the GA would exploit.
+
+**How I'd defend it.** "Four arms separate the effect of the objective from the
+GA's own drift. The controls behave as designed. The surprise is that activity
+pressure keeps molecules near known actives rather than pushing them out of
+domain, so I report that instead of the hypothesis I expected."
+
+**What would change my mind.** A size-matched or bit-count-normalised similarity
+reversing the activity_only result; or a second scrambled permutation/forest
+seed changing H4.
+
+---
+
+## D-21: Headline statistics describe generated molecules only (birth_generation > 0)
+
+**Date:** 2026-09-30
+**Stage:** 5 — **[judgment]**
+
+**Decision.** Generation 0 (the 100 starting training molecules) stays in the
+trajectory figures as the explicit starting reference. From generation 1 on,
+every statistic is computed over population members with `birth_generation > 0`.
+Final-generation summaries and counts of "unique generated candidates" use the
+same rule. The GA populations and starting molecules are unchanged; the GA was
+not rerun.
+
+**Why.** Starting molecules are training molecules: their similarity is 1.0 by
+construction and the forest's predictions for them are in-sample. Letting them
+into a statistic about generated chemistry mixes the surrogate's memory with its
+generalisation. (It is also why "best predicted activity" used to dip below its
+generation-0 value: the best start molecules are known actives that get displaced.)
+
+**Cost.** Effect on the final generation is small (starting molecules are 0–2%
+of it), but early-generation statistics rest on fewer molecules. Across all
+generations 4.8% of population rows are surviving starting molecules.
+Superseded numbers: D-20's table included them. Corrected generation-50 medians
+(5 seeds): real prediction multi_real 7.75, multi_scrambled 5.91, activity_only
+8.60, druglike_only 6.10; best real prediction 8.28 / 6.97 / 8.67 / 6.81; all
+paired contrasts vs druglike_only unchanged in sign and within rounding.
+
+**How I'd defend it.** "Statistics about what the GA generated shouldn't include
+molecules it was handed."
+
+**What would change my mind.** A need to describe the population as the GA sees
+it (survivors included), which `05_ga_populations.csv` still supports.
+
+---
+
+## D-22: Raw ECFP4 Tanimoto stays primary; add a size-conditioned percentile
+
+**Date:** 2026-09-30
+**Stage:** 5b — **[judgment]**
+
+**Decision.** Primary similarity = highest Tanimoto between a molecule's ECFP4
+fingerprint (Morgan radius 2, 2048 bits, binary, no chirality) and the 2,016
+training fingerprints. Second measure, `size_pctile`: that value as a percentile
+within the leave-one-out nearest-neighbour Tanimoto distribution of training
+molecules whose heavy-atom count is within ±2 of the generated molecule's
+(widening by 1 atom if fewer than 100 reference molecules; the rule never
+triggered in the 20–39 window: ≥153 per stratum). Both are stored in
+`results/05_ga_populations_scored.csv`; the reference is
+`results/05_training_loo_similarity.csv`. No corrected-Tanimoto formula is used.
+
+**Why.** Raw similarity depends on size: the training set's own leave-one-out
+median is 0.73 for 20–24 atoms and 0.83 for 35–39. A 21-atom molecule is a worse
+match than a 35-atom one regardless of novelty. Leave-one-out avoids the trivial
+1.0 of comparing a training molecule with itself. 166 training molecules still
+have an identical fingerprint to another training molecule (stereoisomers,
+possible activity cliffs that ECFP4 cannot distinguish).
+
+**Result (generation 50, generated only, median over seeds).** Size percentile:
+multi_real 7.5, multi_scrambled 4.0, activity_only 11.6, druglike_only 4.6.
+Every arm ends far below a typical training molecule of its size (50th),
+including activity_only, whose raw 0.69 looks close; ordering is unchanged
+(activity-driven arms a little closer than baseline: paired +2.1 and +7.5 points).
+
+**Cost.** The percentile is relative to the training set's own analogue-series
+density, which is high, so it is a demanding bar. The generation-0 percentile
+(~100) is trivial (self-match) and is not a meaningful reference.
+
+**How I'd defend it.** "I kept the plain Tanimoto and added an empirical,
+assumption-free way of asking whether it is high or low for a molecule of that
+size."
+
+**What would change my mind.** Stage 7: if neither measure separates
+well-supported high-prediction candidates from low-similarity candidates with
+larger Stage 4 error, the audit should use a different distance.
+
+---
+
+## D-23: How Stage 5 is stated (descriptive, not hypothesis-preserving)
+
+**Date:** 2026-09-30
+**Stage:** 5 — **[interpretation]**
+
+**Statement.** (i) druglike_only causes substantial chemical drift by itself
+(max Tanimoto 1.0 → 0.36, size percentile ~5). (ii) multi_real raises
+real-surrogate prediction strongly (+1.85 over baseline, 5/5 seeds) with about the
+same or slightly higher raw similarity than druglike_only. (iii) activity_only
+converges on relatively high-similarity potent neighbourhoods while sacrificing
+QED and SA. (iv) multi_scrambled optimises its random surrogate (own prediction
++0.5) without transferring that gain to the real surrogate (1/5 seeds above
+baseline). Activity optimisation here appears to exploit known potent chemical
+neighbourhoods, not to force systematic extrapolation. H2 as worded (similarity
+falls as activity climbs) is **not supported** by this experiment.
+
+**Descriptive support (no rerun; `05d_ga_descriptive_checks.py`).**
+- Diversity collapse: distinct scaffolds per 100 fall to 22 (multi_real) and 21
+  (activity_only) by gen 50, vs 70 and 62. About 48% of activity_only's final
+  molecules share one scaffold, 2-anilino-4-(imidazol-5-yl)pyrimidine (31
+  training molecules, mean pActivity 8.01); multi_real's top scaffold (32%) is
+  the bare imidazolyl-pyrimidine core, which no training molecule has.
+  Nearest training neighbours are top-decile actives for 97% (activity_only) and
+  62% (multi_real) of final molecules, versus 3–5% in the other arms, and
+  activity_only's 492 molecules map to only 14 distinct nearest training molecules.
+- Boundary piling is the window capping a real preference: training-set median
+  QED falls from 0.74 (20 atoms) to 0.38 (36–39) and SA rises 2.5 → 3.3, so the
+  drug-likeness terms push to the lower limit (28% of multi_real final molecules
+  at 20 atoms; 58% at ≤21), while within multi_real size and real prediction
+  correlate +0.39 and size and QED −0.36. activity_only piles at the upper limit (14% at 39).
+
+**How I'd defend it.** "The surrogate's optimiser learned which known series are
+potent and moved toward them, which is what a surrogate trained on those series
+should allow. That is a useful negative result for the extrapolation hypothesis."
+
+**What would change my mind.** A stress run with the relaxed window or a
+second scrambled permutation giving a different picture.
+
+---
+
+## D-24: Pareto analysis design (Stage 6)
+
+**Date:** 2026-09-30
+**Stage:** 6 — **[judgment]**
+
+**Decision.** Objectives: predicted pActivity from the real surrogate (maximise),
+QED (maximise), SA score (minimise). Population: unique SMILES among generated
+molecules (birth_generation > 0), pooled over all generations and five seeds.
+Per-arm fronts, plus one pooled front over all four arms (a molecule found by
+several arms counts once, all arms credited). The four molecules drawn are chosen
+by a rule fixed before looking: the front's highest prediction, highest QED,
+lowest SA, and best GA fitness.
+
+**Why.** The pooled front answers "what trade-offs did the whole search find";
+per-arm fronts show which objective produced which part. Pooling over
+generations (not just the last one) keeps good molecules that later generations replaced.
+
+**Overlays are stand-ins, and labelled as such.** "Known actives" = top decile
+(measured pActivity >= 8.05, 204 molecules) of the TRAINING set: in-sample, not
+the held-out positive control (separate experiment, not built). "Random floor" =
+300 random training molecules, because no random-ChEMBL sample has been
+downloaded; the training set is chemically narrow (kinase-inhibitor-like), so it
+is a biased floor. The reference activity axis is measured, the generated one
+predicted, so dominance comparisons between them are indicative only.
+
+**Result.** 11,931 distinct generated molecules; pooled front 101 (multi_real 65,
+activity_only 23, druglike_only 19, multi_scrambled 5). Front spans predicted
+pActivity 5.84-8.68, QED 0.29-0.95, SA 1.38-3.80, 20-37 heavy atoms. No
+generated molecule is predicted above 8.89 (the forest's ceiling in practice; the
+most potent known actives are measured up to 9.5). 136/204 known actives are
+dominated by a front molecule, almost entirely through QED/SA; 20/101 front
+molecules are dominated by a known active. Against Stage 4's calibration: 44% of the
+front has raw similarity < 0.4 (Stage 4 MAE ~0.91), 26% at 0.4-0.6 (0.75), 21% at
+0.6-0.8 (0.57), 10% >= 0.8 (0.39). 40 front molecules are predicted >= 8; 9 of those
+have raw similarity < 0.6, the region where Stage 4 has almost no validation data.
+
+**What the drawn molecules show.** The top-predicted molecule is the imidazolyl-
+anilinopyrimidine core decorated with a chemically implausible appendage
+(N-CH2-S-N linking an enamine): the surrogate keeps predicting high activity
+for the core and does not penalise nonsense attached to it. The highest-QED
+molecule contains an unusual dihydropyrazine. The best-balanced molecule (20
+atoms, 4-isobutylbiphenyl sulfonamide, predicted 7.81 at size percentile 5) is
+plausible-looking but far from training chemistry.
+
+**Cost.** No structural-alert or stability filter was applied, so some front
+members are not sensible molecules; QED/SA reward resemblance to existing drugs
+(partly circular) and cannot see the failure above.
+
+**How I'd defend it.** "The front shows the trade-off the search actually found.
+The high-activity end is decorated known chemotypes, the drug-like end is small
+generic molecules, and the two ends are separated, which is what you expect if
+activity and drug-likeness pull in opposite directions through molecular size."
+
+**What would change my mind.** A held-out known-active set or an external
+random-ChEMBL sample changing which comparisons look favourable to generated molecules.
+
+---
+
+## D-25: Applicability-domain audit and structural-alert audit (Stage 7)
+
+**Date:** 2026-09-30
+**Stage:** 7 — **[judgment; all thresholds arbitrary and stated]**
+
+**Decision.** Reliability is estimated only from Stage 4's out-of-sample
+predictions (12,090 test predictions; 2,014 distinct molecules) against two
+measures: raw ECFP4 (Morgan r=2, 2048-bit, binary) max-Tanimoto to the training
+set, and the size-conditioned percentile (D-22), whose reference for each Stage 4
+test molecule is its own split's training set, leave-one-out. Regions: raw
+<0.4 / 0.4-0.6 / 0.6-0.8 / >=0.8; percentile <10 / 10-50 / >=50; predicted
+pActivity <6 / 6-7 / 7-8 / >=8. A validation cell is used only if it holds
+>= 30 DISTINCT molecules (rows overstate evidence: a molecule recurs across
+seeds). "Large error" = |error| >= 1.0 log unit (10-fold). Generated molecules
+are classed A (predicted >= 8, raw >= 0.6), B (predicted >= 8, raw < 0.6) or C
+(predicted < 8). Structural alerts (RDKit PAINS and Brenk) are recorded, never
+used to remove molecules, and kept separate from graph validity and domain support.
+
+**Result 1: error rises as similarity falls, on every split, on one curve.**
+Pooled MAE by raw region: <0.4: 0.91; 0.4-0.6: 0.75; 0.6-0.8: 0.57; >=0.8: 0.39
+(RMSE 1.10 / 0.93 / 0.74 / 0.52). Random, scaffold and paper splits fall on
+essentially the same curve: error is a function of similarity, not of how the
+split was made. Spearman(|error|, similarity): raw -0.35, percentile -0.33 pooled;
+AUC for flagging |error| >= 1: raw 0.71, percentile 0.69 (paper split 0.61/0.59: weak).
+The size percentile adds little beyond raw similarity: within a raw region MAE
+barely changes across percentile regions (0.6-0.8: 0.61 / 0.58 / 0.47; 0.4-0.6:
+0.75 / 0.75), and the two measures are strongly collinear in the data (most
+raw<0.4 molecules are also percentile<10), so their separate value cannot be
+tested well here. Raw similarity stays the primary measure.
+
+**Result 2: where Stage 4 can and cannot vouch (distinct validation molecules).**
+Predicted >= 8 is validated only at raw >= 0.6 (n=94 at 0.6-0.8, MAE 0.44;
+n=54 at >=0.8, MAE 0.36). At raw 0.4-0.6 only 7 distinct molecules are predicted
+>= 8 (no estimate) and at raw < 0.4 there are none. At raw < 0.4 and predicted
+7-8 (n=89) the forest OVER-predicts by +0.36 on average (MAE 0.95).
+**No reliability is claimed for any generated molecule with predicted >= 8 and
+raw similarity < 0.6.**
+
+**Result 3: generated molecules on the domain.** Generation-50 share with raw
+similarity < 0.4: druglike_only 77%, multi_scrambled 69%, multi_real 43%,
+activity_only 0%. **Drift alone is not evidence of exploitation:** druglike_only
+never sees the surrogate and drifts furthest. Candidate classes (distinct
+molecules, all generations): activity_only 2,059 A / 455 B; multi_real 117 A /
+164 B; multi_scrambled 2 A / 1 B; druglike_only 7 A / 0 B. Pareto front (101):
+31 A, 9 B, 61 C; 92/101 sit in a cell Stage 4 can estimate. The 9 class B front
+molecules are two families: five truncated imidazolyl-pyrimidine analogues at raw
+0.53-0.58 (size percentile 7-15, just under the 0.6 boundary, so the count
+depends on the threshold) and four diarylalkyl sulfonamides at raw 0.33-0.36
+(percentile 3-7), predicted 8.00-8.01, with no training support.
+
+**Result 4: structural alerts (recorded, not filtered).** Brenk: training set
+30%, known actives 32%, generated overall 27%; activity_only 56%, multi_real 20%,
+druglike_only 12%, multi_scrambled 13%. PAINS 5-11%. High-prediction molecules
+carry Brenk alerts at ~54% in BOTH class A and class B (odds ratio 1.01): no
+enrichment of alerts with weak support. Alerts are driven by oxygen-nitrogen single
+bonds, het-C-het, quaternary N, N-oxide (present in known actives), diketo and thiol.
+The Pareto front is nearly alert-free (7%) because QED already penalises
+alerts and the front is selected on it; the implausible top-prediction front
+molecule is caught by two Brenk alerts (het-C-het_not_in_ring, S-N single bond),
+but the 9 class B front molecules mostly carry none. Validity, alerts and domain
+support are three different properties and none implies another.
+
+**Cost / caveats.** Stage 4 forests were trained on 80% of the data; the GA
+surrogate on 100%, so the calibration is slightly pessimistic for it. Stage 4 tests
+real molecules; GA molecules are naive edits, so the curve may be optimistic
+for them. The one relevant over-prediction signal (+0.36) rests on 89 molecules
+and is pooled across splits. Thresholds (0.6, 8, 30, 1.0) are conventions, not
+findings.
+
+**How I'd defend it.** "I measured how wrong the surrogate is as a function of
+similarity on molecules it had not seen, then placed the generated molecules on that
+curve and refused to make any claim where there was no validation data. Two
+measures of distance gave nearly the same answer, so I kept the simpler."
+
+**What would change my mind.** The held-out-actives positive control showing
+the surrogate recovers potency in weakly supported regions (then B-class
+predictions deserve more trust than Stage 4 suggests), or a different
+distance (e.g. forest tree variance) separating large-error molecules much
+better than similarity.
+
+---
+
+## D-26: Held-out known-actives positive controls (molecule level and scaffold level)
+
+**Date:** 2026-10-02
+**Stage:** 5e-5g — **[judgment; rules fixed before the control GAs were run]**
+
+**Decision.** Two controls, same GA protocol as Stage 5 (4 arms, 5 seeds, 50
+generations, 20-39 heavy atoms, same operators). The surrogate is retrained
+without the held-out molecules; start molecules come from the remainder; held-out
+molecules are used only afterwards, to evaluate.
+- **Molecule level:** hold out the 204 top-decile actives (measured pActivity >=
+  8.05, the 90th percentile; deterministic, no sampling). Siblings and
+  scaffold-mates stay in training. Tests interpolation.
+- **Scaffold level:** hold out every scaffold family with >= 5 top-decile
+  members, ALL members (potent or not): 9 families, 260 molecules (12.9% of
+  the data), 93 of the 204 actives. The other 111 actives stay in training. Tests
+  generalisation to unseen ring systems.
+Threshold 5 was fixed from family sizes alone (top decile = 100 scaffolds, 76
+singletons; thresholds 2-10 all include the two largest families); I had
+already seen the main GA converge on one of these families, so the rule is not
+blind to Stage 5, but the result does not hinge on the threshold.
+
+**Success criteria (never the surrogate's own prediction).** ECFP4 (Morgan r=2,
+2048-bit) Tanimoto to the nearest held-out active, primary threshold 0.6 (0.5-0.8
+reported); exact fingerprint matches; whether a generated molecule's nearest
+neighbour among all 2,016 is a held-out active, against the chance rate; measured
+activity of that neighbour (label transfer, no surrogate); recall of held-out
+actives; diversity. Reference rows: the starting molecules and the remaining
+training molecules (what siblings alone give).
+
+**Surrogate on the held-out actives, before any GA.** Molecule control: trained
+labels reach only 8.05, so predictions cannot exceed it (0% predicted >= 8, median
+7.33 vs measured 8.40, bias -1.26) but it ranks them (AUC 0.80 against
+out-of-fold predictions of the rest). Scaffold control: median predicted 7.52 vs
+8.40, bias -0.94, 11% predicted >= 8, AUC 0.87. Both clearly under-predict the
+actives they never saw.
+
+**Support after the holdout (nearest remaining-training Tanimoto of held-out
+actives).** Molecule: median 0.72, 88% >= 0.6. Scaffold: median 0.67, 76% >= 0.6,
+3% >= 0.8. The scaffold holdout is SOFT: related cores with different scaffold
+strings stay in training (e.g. other anilinopyrimidines), so most held-out actives
+still have a close relative.
+
+**Results (final generation, generated molecules only, 5 seeds pooled).**
+
+| control | arm | median sim to held-out actives | share >= 0.6 | nearest neighbour is a held-out active (chance) | actives hit (any generation) |
+|---|---|---|---|---|---|
+| molecule | activity_only | 0.71 | 83% | 70% (10%) | 112/204 |
+| molecule | multi_real | 0.32 | 1% | 24% | 72/204 |
+| molecule | multi_scrambled / druglike_only | 0.28 / 0.29 | 0% / 0% | 8% / 9% | 30 / 16 |
+| molecule | remaining training (no search) | 0.33 | 26% | 7% | ceiling: 88% have a sibling >= 0.6 |
+| scaffold | activity_only | 0.45 | 22% | 30% (5%) | 56/93 |
+| scaffold | multi_real | 0.30 | 1% | 12% | 30/93 |
+| scaffold | multi_scrambled / druglike_only | 0.17 / 0.22 | 0% / 0% | 1% / 2% | 22 / 15 |
+| scaffold | remaining training (no search) | 0.21 | 6% | 2% | ceiling: 76% |
+
+- Exact rediscovery is rare (<= 0.2% of molecules at identical fingerprint).
+- Activity regime by measured label transfer: among generated molecules with a
+  neighbour >= 0.6, 75% (molecule) and 96% (scaffold) of activity_only's neighbours
+  are themselves top-decile actives.
+- Diversity: activity_only's 408 (molecule) / 110 (scaffold) near-held-out
+  molecules map to only 10 / 3 distinct held-out actives and 33 / 35 scaffolds;
+  top scaffold share 71% / 44%. The same collapse as Stage 5.
+- Scaffold families (9): exact scaffold generated by any arm for 6; but 3 of those are
+  tiny generic scaffolds (13-18 atoms) that every arm including druglike_only
+  produces. Non-generic families found exactly: activity_only 2 (a 20-atom
+  thiazolo-indole imine and a 26-atom benzimidazolyl-pyrimidine), multi_real 1
+  (a 22-atom pyrazolo-triazine); 3 of 9 never. The raw count "5 of 9" overstates.
+
+**Interpretation.** (1) activity_only passes the molecule-level control clearly (83%
+within 0.6, 7x the chance nearest-neighbour rate, far above the no-search baseline
+of 26%), but that is sibling-supported interpolation: 88% of held-out actives had
+a training sibling to begin with, and recall (55%) stays below that ceiling.
+(2) At scaffold level activity_only still finds chemistry near the held-out potent
+families (22% >= 0.6 vs 6% baseline; 6x chance; 60% recall vs 76% ceiling; 2 non-
+generic scaffolds recovered exactly), which is partial support for generalisation, but
+because the holdout is soft it is not evidence of broad generalisation to genuinely
+unseen chemistry. (3) multi_real, the main multi-objective arm, FAILS both
+controls: it is at or below the no-search baseline (1% >= 0.6) because QED and SA
+pull molecules small and drug-like and away from large potent ones. This is
+informative, not a pipeline bug: the Stage 5 "exploits known potent neighbourhoods"
+reading holds for the activity-only objective, not for the composite. (4) The
+negative arms behave as negative controls (0% >= 0.6, well below baseline).
+
+**How I'd defend it.** "I removed known potent molecules, then removed whole potent
+series, retrained, and checked whether the search found chemistry near them,
+judged against measured activity, with no-search and scrambled/drug-likeness
+baselines. The activity-driven search finds them; the composite objective does
+not; and I say the scaffold holdout is soft."
+
+**What would change my mind.** A stricter scaffold holdout (e.g. also removing
+molecules above a similarity threshold to the held-out series) changing the picture;
+or other split seeds / hold-out thresholds giving a different ordering of arms.
+
+---
+
+## D-27: Secondary robustness run: surrogate trained on a scaffold split's training set
+
+**Date:** 2026-10-02
+**Stage:** 5h — **[judgment]**
+
+**Decision.** One predefined run (Stage 3 scaffold split, seed 42; 1,613 training
+molecules, 403 held out), same GA protocol as Stage 5 (4 arms, 5 GA seeds, 50
+generations, 20-39 heavy atoms), with the real and scrambled forests trained on
+those 1,613 molecules only. Similarity is to those 1,613. Compared with the
+primary run on six claims fixed in `05h_scaffold_surrogate_robustness.py`
+before running it. More split seeds only if the picture proved unstable.
+
+**Why.** The primary surrogate saw every molecule, so "training distribution" and
+"all known chemistry" coincide. The scaffold-trained surrogate has a real
+unseen set (accuracy there: R2 0.51, RMSE 0.84, Spearman 0.70), a check that the Stage 5
+picture is not an artifact of training on everything.
+
+**Result (generation 50, generated molecules, median over 5 seeds).** Five of the six
+pre-written claims hold under both surrogates:
+- multi_real raises the real prediction above druglike_only in 5/5 seeds (both).
+- activity_only ends closer to its training set than druglike_only in 5/5 seeds (both;
+  similarity 0.79 vs 0.35 in the secondary run, with QED 0.23 and SA 3.9).
+- multi_scrambled beats druglike_only on the real prediction in 1/5 (primary) and 0/5 seeds.
+- druglike_only drifts as far as anything: 78% of its molecules below raw similarity 0.4,
+  vs 0% for activity_only (both).
+- multi_real and activity_only keep fewer distinct scaffolds than druglike_only
+  (22/21 vs 62 primary; 25/36 vs 40 secondary).
+**One claim fails by the pre-written rule:** "multi_real raw similarity >= druglike_only"
+holds in the primary run (+0.03) and fails in the secondary (-0.01).
+
+**Honest reading.** The failure is by 0.01 on a median of 0.34 vs 0.35 with tight
+ranges, so the robust statement is "multi_real's similarity is about the same as
+druglike_only's", which is how D-23 phrased it; "slightly higher" is not robust. In
+the primary run multi_real's similarity varied a lot between seeds (share below 0.4
+ranged 0% to 88%), in the secondary it was uniformly low (82-91%). Two soft spots:
+the diversity collapse is robust for multi_real but marginal for activity_only in
+the secondary run (36 vs 40 scaffolds per 100, ranges overlapping heavily), and
+druglike_only's own diversity differs between surrogates (62 vs 40). I did not
+change the rule to make the claim pass.
+
+**Cost.** One split seed only; claims about arm differences rest on 5 GA seeds, not on
+independent splits. Absolute similarity and prediction values are not comparable across
+the two experiments (different training sets, different surrogates).
+
+**How I'd defend it.** "The main conclusions (activity pressure raises predicted activity,
+activity-driven search ends close to known chemistry rather than far from it, the scrambled
+surrogate's gain doesn't transfer, drug-likeness alone drifts as far as anything) hold
+when the surrogate has truly unseen test chemistry. One detail, whether multi_real is
+slightly more similar than the baseline, does not, and I state it as 'about the same'."
+
+**What would change my mind.** More split seeds (43, 44, ...) flipping an arm ordering, or
+the multi_real similarity difference growing in either direction.
+
+---
+
+## D-28: Robustness run extended to five scaffold splits (supersedes the single-split reading in D-27)
+
+**Date:** 2026-10-02
+**Stage:** 5h — **[judgment; stability rule fixed before the extra splits were run]**
+
+**Decision.** The scaffold-trained GA was repeated for split seeds 42-46 (the first five
+predetermined split seeds), each with the same 5 GA seeds: 25 (split, GA seed) pairs
+besides the primary run. Rule declared in advance: a claim is STABLE if it holds in the
+primary run and in at least 4 of the 5 splits, otherwise FRAGILE. The six claims are those of D-27.
+
+**Result.**
+| claim | primary | splits holding | verdict |
+|---|---|---|---|
+| multi_real raises the real prediction above druglike_only in every GA seed | holds | 5/5 | STABLE |
+| activity_only ends closer to training than druglike_only in every GA seed | holds | 5/5 | STABLE |
+| druglike_only drifts at least as far as activity_only (share < 0.4: 84% vs 0%) | holds | 5/5 | STABLE |
+| multi_real raw similarity >= druglike_only (median paired difference) | holds | 3/5 | FRAGILE |
+| multi_scrambled beats druglike_only on the real prediction in at most 2 GA seeds | holds | 3/5 | FRAGILE |
+| multi_real and activity_only keep fewer distinct scaffolds than druglike_only | holds | 3/5 | FRAGILE |
+
+**What the fragile claims actually say.**
+- *multi_real vs druglike_only similarity:* per-split paired difference ranges -0.015 to
+  +0.048; pooled over 25 pairs median +0.014, IQR [-0.014, +0.041], positive in 15/25. The
+  robust statement is that multi_real's similarity is **about the same** as the
+  baseline's. "Slightly higher" is not supported.
+- *multi_scrambled on the real prediction:* the rule asked for <= 2 of 5 seeds above
+  the baseline. Under a true null effect about half the seeds would exceed it, so this
+  rule was too strict for a null; the claim as written is fragile (splits 44 and 46 break it,
+  scrambled above baseline in 5/5 and 3/5 seeds). Judged by effect size the picture is
+  clear: pooled median difference **-0.15** (IQR [-0.23, +0.07], above baseline in 10/25),
+  against **+1.55** (minimum +0.86) for multi_real over the same baseline. The scrambled
+  arm sits at the baseline on the real surrogate (one outlier of +1.14 in split 46); it
+  does not transfer a real gain. The declared rule is left as written and the
+  effect-size reading is added beside it, not instead of it.
+- *diversity:* multi_real has fewer scaffolds than druglike_only in all five splits
+  (23-33 vs 34-50 per 100), a robust collapse. activity_only's collapse is fragile
+  (pooled median -11 scaffolds per 100, IQR [-21, +10], fewer in 16/25 pairs; in splits
+  45 and 46 it is as diverse as or more diverse than the baseline). The primary run's
+  "activity_only collapses to 21 scaffolds" does not generalise across splits.
+
+**Cost.** Five splits share overlapping molecules, so they are not independent draws; the
+arm comparisons rest on 5 GA seeds per split. Absolute similarity and prediction values
+are not comparable between the primary and scaffold-trained experiments.
+
+**How I'd defend it.** "I declared the rule in advance and reported it as written: three of
+six claims are stable, three fragile. The headline conclusions are the stable ones; for the
+fragile ones I state the weaker claim the data supports ('about the same', 'no transfer',
+'multi_real collapses, activity_only only sometimes')."
+
+**What would change my mind.** More splits moving the pooled differences clearly away
+from their present near-zero values.
+
+---
+
+## D-29: Docking setup and the redocking control (Stage 8a-8b)
+
+**Date:** 2026-10-02
+**Stage:** 8 (docking; time-boxed, droppable) — **[mixed: standard tooling, judgment on box and protonation]**
+
+**Decision.** Receptor: PDB 4KD1 chain A only. Ligand 1QK, EDO and all waters removed;
+hydrogens added at pH 7.4 with pdbfixer/OpenMM defaults (histidine tautomers left to
+OpenMM's heuristic, no manual flips); converted to PDBQT with Meeko (never ADFR or
+MGLTools). Search box: a 22 A cube centred on the crystal ligand's atoms. Vina 1.2.7,
+exhaustiveness 8 (default), 9 poses. The native ligand is docked as deposited
+(1-hydroxypyridinium cation, N-OH, hydrogens added with generated coordinates).
+Installed `gemmi` (conda-forge), the missing dependency that kept Meeko from importing.
+
+**Why.** 4KD1 is complete (0 missing residues or atoms), monomeric, unmutated (D-08).
+The box is large enough for any ligand we generate (29-heavy-atom crystal ligand spans
+about 9 A) yet small enough that Vina's search stays focused on the ATP site.
+
+**Redocking result (control 7).** Top-ranked pose RMSD to the crystal pose, heavy atoms,
+symmetry-aware: **0.63 / 0.65 / 0.65 A** for Vina seeds 42 / 43 / 44, against the 2.0 A
+limit. Top pose scores -9.48 / -9.44 / -9.48 kcal/mol, essentially identical across seeds
+(engine noise, control 9, is small here). The crystal pose scores -8.46 as deposited and
+-9.45 after local relaxation, i.e. the redocked pose is as good as the relaxed crystal pose,
+so the scoring function does not prefer a wrong pose. About 8 s per docking (8 cores).
+
+**Cost / caveats.** This is the easiest possible test: self-docking into the structure
+crystallised with that very ligand, so the pocket already has the right shape (no induced
+fit to predict). Passing is necessary, not sufficient; it says nothing about how Vina
+treats ligands unlike dinaciclib. Rigid receptor, no crystal waters, no cyclin A (D-02),
+heuristic histidine protonation, no tautomer or protonation enumeration for ligands.
+Vina scores are not binding free energies, and the score correlates with ligand size
+(handled by the planned heavy-atom-count baseline).
+
+**How I'd defend it.** "I first checked that the setup reproduces the crystal binding mode
+within 0.7 A over three random seeds. I know that is the easy case and I say so; the docking
+results are only used as an orthogonal check with size and engine-noise controls."
+
+**What would change my mind.** A cross-docking test (another known CDK2 ligand into 4KD1, or
+dinaciclib into 1KE5) failing badly.
+
+---
+
+## D-30: Docking the molecule sets, and what the Vina scores can and cannot tell us (Stages 8c-8g, 9)
+
+**Date:** 2026-10-02
+**Stage:** 8-9 — **[judgment; set sizes chosen by the author, all selection seeded]**
+
+**Decision.** Dock 788 distinct molecules, one Vina run each (seed 42, exhaustiveness 8):
+100 known actives (random from the top decile, measured pActivity >= 8.05); 100 random
+training molecules; 100 from the final generation of each of the four GA arms; the whole
+pooled Pareto front (101); and 100 property-matched decoys (heavy atoms, MW, cLogP, H-bond
+donors/acceptors, rotatable bonds; candidates from the druglike_only and multi_scrambled
+arms, each dissimilar to every top-decile active at ECFP4 Tanimoto < 0.5). Thirty
+molecules were re-docked with two more Vina seeds. This took ~105 minutes, over the
+project's ~2-hour compute budget (the author chose the "fuller" option knowingly).
+One molecule failed to prepare. Matching quality of decoys: heavy atoms SMD +0.02, but MW
+-0.43 and H-bond donors -0.44 (decoys are a bit lighter and have fewer donors).
+
+**Result 1: Vina does not separate known actives from the references.**
+AUC (actives vs decoys) 0.53, vs random training 0.45; heavy-atom count alone 0.48 and 0.37
+(actives are smaller). Spearman between -Vina and measured pActivity over actives + random
+(n=200): +0.02 (size-adjusted +0.03); +0.14 within the random set alone. The redocking
+control (D-29) passed, so the setup is not broken, but on this chemistry the score carries
+essentially no activity signal. A pose-based feature does a little better: heavy N/O
+within 3.5 A of the hinge backbone (Glu81 O, Leu83 N or O) gives AUC 0.58 (vs decoys) and
+0.62 (vs random), Spearman +0.19 with measured pActivity within the random set.
+
+**Result 2: size.** Over all 788 molecules, Vina improves by 0.06 kcal/mol per heavy atom
+(Spearman -0.49). The size line fitted on the random+decoy sets alone is much shallower
+(-0.017) because those sets span a narrow range, so the stratified comparison (median score
+within 20-24, 25-29, 30-34, 35-39 heavy atoms) is the safer control; both are in 08e.
+
+**Result 3: H3 (do optimized molecules beat known actives on Vina?).** Probability that a
+molecule of the set scores better than a random known active (0.5 = same): activity_only
+**0.73** [0.66, 0.80] (size-adjusted 0.70; within size strata 0.61-0.75), multi_real 0.33,
+multi_scrambled 0.29, druglike_only 0.26, Pareto front 0.45 [0.37, 0.53]. So the
+multi-objective optimized molecules and the front do NOT beat known actives, as H3 says, but
+the activity-only molecules DO, in every size stratum where both exist. Because Vina does not
+rank known actives (Result 1), "scores better" is not evidence of real potency: **H3 is
+inconclusive as an orthogonal test, since the orthogonal signal has no demonstrated
+validity on this chemistry.**
+
+**Result 4: does the surrogate's predicted gain show up in docking?** Spearman(predicted
+pActivity, -Vina) within a set: multi_real -0.23, multi_scrambled +0.09, activity_only +0.28,
+druglike_only +0.03, Pareto front +0.62 (the front spans two ends, drug-like molecules at
+low prediction and activity-driven ones at high prediction, so it mixes two populations
+and is not a within-chemistry correlation).
+
+**Result 5: hinge contacts and poses.** Share of poses with a hinge contact: activity_only 96%,
+known actives 89%, decoys 81%, random training 68%, Pareto front 62%, multi_scrambled 58%,
+multi_real 55%, druglike_only 44% (crystal dinaciclib: 2.65 A). Activity pressure yields
+hinge-binding chemistry, consistent with D-23; the drug-likeness-only arm loses it.
+But 81% of decoys also touch the hinge: decoys are mutated descendants of kinase-inhibitor-like
+molecules, not clean negatives, so the decoy test is pessimistic for any method.
+PoseBusters: 99% of 787 poses pass every check (all sets 100% except activity_only 94%, six poses
+flagged as radicals from hypervalent sulfur in generated molecules, and one decoy). Poses from a
+docking engine are physically sane by construction, so a high pass rate is weak evidence; the
+failures point to odd generated molecules, not bad poses.
+
+**Result 6: engine noise (control 9).** 30 replicate molecules, 3 seeds: median SD 0.01
+kcal/mol, maximum range 1.03; rank agreement between seeds Spearman 0.93 and 0.92.
+
+**Cost / caveats.** Rigid holo receptor, no waters, no cyclin A, heuristic histidine
+protonation, single protonation/tautomer per ligand, unspecified stereocentres set by the
+embedding, Vina is not a binding free energy. The random reference is a stand-in for the
+planned random-ChEMBL sample. One docking per molecule at one seed in the main analysis.
+
+**How I'd defend it.** "I docked known actives and property-matched decoys to ask whether Vina
+is a usable orthogonal check at all. It is not, here: it does not separate them and does not
+track measured activity, with size and engine noise controlled. So I do not use docking
+as evidence for or against the surrogate's gains; what the poses do show is that the
+activity-driven search finds hinge-binding chemistry."
+
+**What would change my mind.** A better docking or rescoring setup (cross-docking several CDK2
+structures, per-series analysis, consensus scoring) that does separate actives from decoys.
+
+---
+
+## D-31: H5 mitigation arm: design fixed before running (Stage 10)
+
+**Date:** 2026-10-02
+**Stage:** 10 — **[judgment; fixed before any constrained run]**
+
+**H5.** Constraining the GA to stay near the training distribution attenuates the activity gain
+(H1) but improves transfer. Measure the exchange rate.
+
+**Decision.**
+- *Constraint:* a hard similarity floor. A generated molecule whose raw ECFP4 (Morgan r=2, 2048-bit)
+  max-Tanimoto to the training set is below tau has fitness 0, so it cannot survive selection.
+  tau in {0.4, 0.5, 0.6, 0.7}; tau = 0.6 is the boundary below which Stage 7 found the surrogate's
+  high predictions unvalidated. Unconstrained = the existing Stage 5 / 5f runs (no new unconstrained runs).
+- *Arms constrained:* multi_real (the composite objective) and activity_only. Everything else is
+  as in Stage 5: same GA, seeds 42-46, 50 generations, 20-39 heavy atoms, same start molecules per
+  seed, so each constrained run is paired with its unconstrained twin.
+- *Where:* (a) the primary surrogate (all 2,016 molecules), to measure attenuation; (b) the molecule-level
+  and (c) the scaffold-level held-out-actives controls (D-26), to measure transfer. Their surrogates
+  are those of D-26; "training set" in the constraint is the control's remaining training molecules.
+- *Cost axis (H1):* median real-surrogate prediction of generated final-generation molecules.
+- *Transfer axis:* measured, not surrogate-based: share of final-generation generated molecules within
+  Tanimoto 0.6 of a held-out active, share whose nearest neighbour among all 2,016 is a held-out active,
+  and recall of held-out actives (any generation, pooled seeds). Docking is NOT used as a transfer
+  measure: D-30 found Vina does not discriminate actives from decoys on this chemistry.
+- *Exchange rate:* for each arm and tau, change in recovery (percentage points of molecules within 0.6
+  of a held-out active) per 1.0 pActivity of predicted activity given up, versus the unconstrained twin.
+
+**Why.** The held-out controls give experimental ground truth for "transfer"; the similarity floor is
+the simplest possible constraint and ties to the reliability analysis of Stage 7.
+
+**What would count as support.** Predicted activity falls as tau rises (attenuation) AND recovery of
+held-out actives rises. Attenuation without a transfer gain, or no attenuation, is a result
+against or beyond H5, and will be reported as such.
+
+**Cost / caveat.** A hard similarity floor to the training set also shrinks the space of novel molecules,
+so any "transfer" gain may simply be the constraint keeping molecules near known actives (in the
+controls, near the siblings of the held-out ones); the scaffold control is the less trivial test.
+
+---
+
+## D-32: H5 result: a similarity floor does not attenuate predicted activity, and does not reliably improve transfer
+
+**Date:** 2026-10-02
+**Stage:** 10 — **[result; design in D-31]**
+
+**Setup as declared.** Hard floor tau in {0.4, 0.5, 0.6, 0.7} on raw ECFP4 max-Tanimoto to the
+training set; arms multi_real and activity_only; 3 experiments x 5 seeds x 4 floors x 2 arms = 120
+runs, each paired by seed with its unconstrained twin; transfer measured on the two held-out-actives
+controls, not by docking (D-30).
+
+**Result A, cost (primary surrogate).** Predicted activity is barely touched. multi_real: 7.75 unconstrained
+vs 7.88 / 8.11 / 7.85 / 8.13 at tau 0.4-0.7 (paired change +0.09, +0.07, 0.00, +0.17, never reliably
+negative); activity_only: 8.60 vs 8.55 / 8.53 / 8.58 / 8.50 (paired change 0.01 to -0.07). The cost of
+the floor appears elsewhere: for multi_real, QED falls from 0.91 to 0.72 at tau 0.7, SA rises from 2.2 to
+2.6-2.8, and molecules grow from 21 to 26 heavy atoms; activity_only is unchanged (QED 0.3, 33-35 atoms).
+The "attenuates H1" half of H5 is **not supported**: high predictions live near the training data.
+
+**Result B, transfer (held-out controls; median over 5 seeds [min, max]).**
+- Molecule level, multi_real: share of generated molecules within 0.6 of a held-out active rises from
+  0% to 19 / 48 / 74 / 77% with the floor (+67 pp at tau 0.6); NN-is-held-out 24% to 30-52%; recall 35% to
+  40-53%. But the floor keeps molecules near the TRAINING set, which contains siblings of the held-out
+  actives (88% have one at >= 0.6), so this gain is largely trivial. activity_only already recovers
+  96% [36, 100] unconstrained and gains nothing (69-98%, noisy).
+- Scaffold level (the less trivial test): multi_real 1% to 3-6% (ranges up to 23%): no meaningful gain;
+  activity_only 28% [0, 52] to 0-10% (it falls, with enormous seed-to-seed spread, 0 to 84%). Recall pooled
+  over all generations does rise (multi_real 32% to 66% at tau 0.7, activity_only 60% to 60-68%), reflecting
+  early-generation molecules kept near the start rather than better final molecules.
+
+**Result C, exchange rate.** Undefined for 13 of 16 conditions: the floor does not lower predicted
+activity (it rises or is flat), so there is nothing "given up". The few defined rates are negative
+(recovery and activity both lower, activity_only). The honest exchange is not against activity but against
+drug-likeness: for multi_real at the molecule level the floor buys about +67 pp recovery for -0.06 QED
+(tau 0.6), at the scaffold level +2 pp for the same -0.06 QED.
+
+**Interpretation.** H5 as worded (floor attenuates the gain, improves transfer) is not supported:
+there is no attenuation, and transfer improves only where it can be explained by proximity to siblings
+(molecule level, composite arm). The surrogate's high predictions are already in well-supported
+chemistry (Stages 5 and 7), so keeping the search there costs little predicted activity but pulls the
+composite objective toward larger, less drug-like molecules.
+
+**Cost / caveats.** Five GA seeds with very wide ranges (activity_only scaffold recovery 0-84%); a hard
+floor on one similarity definition; transfer judged at one threshold (0.6); the controls' training sets
+include siblings of the targets (molecule level) and related cores (scaffold level, 76% of held-out actives
+still have a relative at >= 0.6). Docking was not used as a transfer measure because it carries no signal.
+
+**How I'd defend it.** "I declared the constraint and the metrics before running, and measured transfer
+against held-out measured actives, not the surrogate. The floor was nearly free in predicted activity, which
+tells me the surrogate was already being used where it is supported; where it improved recovery it did so
+by staying near siblings of the targets."
+
+**What would change my mind.** A soft penalty (rather than a hard floor), a different similarity measure,
+or more seeds narrowing the activity_only scaffold-level range and showing a gain.

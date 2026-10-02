@@ -102,3 +102,71 @@ SPLIT_SEEDS = list(range(42, 52))
 # default recommendation for regression forests.
 RF_N_TREES = 300
 RF_MAX_FEATURES = 0.33
+
+# --- Genetic algorithm (decisions.md D-18 .. D-20) ------------------------
+GA_SEEDS = [42, 43, 44, 45, 46]   # 5 runs per arm; fixed in advance
+GA_POP_SIZE = 100                 # molecules kept each generation
+GA_N_CHILDREN = 100               # new molecules proposed each generation
+GA_N_GENERATIONS = 50
+GA_MUTATION_PROB = 0.5            # chance a child is mutated after crossover
+
+# PRIMARY size window for generated molecules: the training set's observed
+# support (5th-95th percentile of heavy-atom count = 20-39; decisions.md D-19).
+# Outside it the surrogate has no training examples of that size, so any
+# "improvement" there would be extrapolation by construction.
+GA_MIN_HEAVY_ATOMS = 20
+GA_MAX_HEAVY_ATOMS = 39
+# RELAXED window, used only for the pilot / stress run (--relaxed). Training
+# molecules span 5-78 heavy atoms. Never used for primary Stage 5 conclusions.
+GA_RELAXED_MIN_HEAVY_ATOMS = 15
+GA_RELAXED_MAX_HEAVY_ATOMS = 50
+GA_ALLOWED_ELEMENTS = ["C", "N", "O", "F", "S", "Cl", "Br"]  # that mutation may add
+
+# ONE real surrogate and ONE scrambled surrogate, trained once on all 2,016
+# molecules and reused by every GA seed and arm (decisions.md D-18). GA seeds
+# then vary only the search, never the instrument.
+SURROGATE_SEED = RANDOM_SEED      # random_state of the real forest
+SCRAMBLE_SEED = 20260930          # seed of the one-off label shuffle AND of its forest
+
+# Fixed linear rescaling of predicted pActivity to a 0-1 fitness term. The same
+# for every arm, so arms differ only in which surrogate they follow.
+ACTIVITY_LOW = 4.0
+ACTIVITY_HIGH = 9.0
+
+# --- Size-conditioned similarity (decisions.md D-22) ----------------------
+# Reference stratum for a generated molecule of h heavy atoms: training
+# molecules with h +/- SIZE_STRATUM_HALFWIDTH heavy atoms. If that holds fewer
+# than SIZE_STRATUM_MIN_N molecules, the half-width grows by 1 until it does.
+SIZE_STRATUM_HALFWIDTH = 2
+SIZE_STRATUM_MIN_N = 100
+
+# --- Applicability-domain audit (decisions.md D-25) -----------------------
+# Regions are defined on the raw ECFP4 (Morgan radius 2, 2048-bit, binary)
+# max-Tanimoto to the training set, using the same edges as the Stage 6 table.
+AD_RAW_EDGES = [0.0, 0.4, 0.6, 0.8, 1.01]
+AD_RAW_NAMES = ["<0.4", "0.4-0.6", "0.6-0.8", ">=0.8"]
+# Regions of the size-conditioned percentile (see similarity.py).
+AD_PCT_EDGES = [0.0, 10.0, 50.0, 100.01]
+AD_PCT_NAMES = ["<10 (novel for size)", "10-50", ">=50 (typical or better)"]
+# A cell of the validation data is only used to estimate error if it holds at
+# least this many DISTINCT molecules. Arbitrary, the usual rule of thumb.
+AD_MIN_UNIQUE = 30
+# "Large error" for the detection test: 1 log unit = a 10-fold misprediction,
+# twice the ~0.5 literature inter-lab noise (external figure, not measured here).
+AD_LARGE_ERROR = 1.0
+
+# --- Held-out positive controls (decisions.md D-26) -----------------------
+# Fixed from the dataset's structure, before any control GA was run.
+HOLDOUT_QUANTILE = 0.9           # top decile of measured pActivity (>= 8.05 here)
+HOLDOUT_MIN_TOP_PER_FAMILY = 5   # scaffold level: a "potent series" has >= 5 top-decile members
+# Generated molecule "approaches" a held-out active at this ECFP4 Tanimoto
+# (same boundary as the applicability-domain region A/B split; stage 7).
+REDISCOVERY_SIM = 0.6
+REDISCOVERY_SIMS = [0.5, 0.6, 0.7, 0.8]   # reported as a sensitivity check
+
+# --- Docking (decisions.md D-29) ---------------------------------------------
+DOCK_PH = 7.4                 # protonation of the protein, via OpenMM/pdbfixer defaults
+DOCK_BOX_SIZE = 22.0          # Angstrom cube centred on the crystal ligand
+DOCK_EXHAUSTIVENESS = 8       # Vina search effort (default); higher = slower, slightly more reproducible
+DOCK_N_POSES = 9
+REDOCK_MAX_RMSD = 2.0         # Angstrom; above this nothing downstream is trustworthy

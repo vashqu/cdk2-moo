@@ -203,13 +203,13 @@ decisions.md     the judgment-call log
 | 2 | Curation: filter, standardize, aggregate | **done** — 2,016 molecules + 602 Ki/Kd external (mutant filter and assay-type rules applied). |
 | 3 | Featurization (ECFP4) + random, scaffold and paper splits, 10 predetermined seeds | **done** (D-13..D-16) |
 | 4 | Surrogate: RandomForest; three splits × 10 seeds; scrambled-label, mean and size-only controls | **done** (D-17); median/IQR reported |
-| 5 | GB-GA optimization, 4 arms × 5 seeds | not started |
-| 6 | Pareto analysis over (pActivity, QED, SA) | not started |
-| 7 | Applicability-domain audit | not started |
-| 8 | Docking (Vina) — **timeboxed, droppable** | not started |
-| 9 | Pose/score audit (PoseBusters, size confound, decoy ROC) | not started |
-| 10 | Mitigation arm (H5) | not started |
-| 11 | Figures, README, slide deck | not started |
+| 5 | GB-GA optimization, 4 arms × 5 seeds | **done** (D-18..D-23): primary window 20–39, pilot 15–50 kept; H2 not supported, see D-23; held-out positive controls (D-26) and scaffold-trained robustness across 5 splits (D-27, D-28): 3 of 6 claims stable, 3 fragile |
+| 6 | Pareto analysis over (pActivity, QED, SA) | **done** (D-24); overlays are stand-ins, see D-24 |
+| 7 | Applicability-domain audit + structural-alert audit | **done** (D-25) |
+| 8 | Docking (Vina) — **timeboxed, droppable** | **done** (D-29, D-30): redocking 0.65 A; Vina does not discriminate actives from decoys, H3 inconclusive |
+| 9 | Pose/score audit (PoseBusters, size confound, decoy ROC) | **done** (D-30): PoseBusters 99% pass, size confound quantified, decoy AUC 0.53 |
+| 10 | Mitigation arm (H5) | **done** (D-31, D-32): floor is nearly free in predicted activity; H5 not supported as worded |
+| 11 | Figures, README, slide deck | figures 1-5 and Table 1 **done** (`figures/final/`); README current; slide deck left to the author |
 
 Stages 1–7 + 10 are a complete, presentable project on their own. Stages 8–9
 are upside. **If docking is not working by the Day 3 midpoint, drop it and say
