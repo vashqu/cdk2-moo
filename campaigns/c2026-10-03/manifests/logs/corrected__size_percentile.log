@@ -1,0 +1,19 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05b_size_conditioned_similarity.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=corrected
+[campaign c2026-10-03 | scope corrected] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results
+Training set, leave-one-out nearest-neighbour ECFP4 Tanimoto (2048-bit, radius 2)
+  all molecules: median 0.79, 10th/90th percentile 0.58/0.98
+  identical fingerprint to another training molecule: 166
+  by size (this is the size dependence the percentile removes):
+     5-19 heavy atoms  n=  86  median LOO similarity 0.65
+    20-24 heavy atoms  n= 295  median LOO similarity 0.73
+    25-29 heavy atoms  n= 629  median LOO similarity 0.78
+    30-34 heavy atoms  n= 574  median LOO similarity 0.81
+    35-39 heavy atoms  n= 335  median LOO similarity 0.83
+    40-80 heavy atoms  n=  97  median LOO similarity 0.83
+
+Strata: half-width used 2 unless fewer than 100 reference molecules
+  half-width actually used (rows): {2: 102000}
+  reference molecules per stratum: min 153, median 361, max 639
+
+Wrote results/05_ga_populations_scored.csv (102000 rows)

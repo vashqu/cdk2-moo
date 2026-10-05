@@ -1,0 +1,1 @@
+{"job_id": "d7ac242188ffe33c", "smiles": "COc1cc(C2=C(c3cn(CNC[C@H](C)N)c4ccccc34)CNC2=O)cc(OC)c1OC", "vina_seed": 42, "prep_seed": 42, "status": "ok", "vina_score": -5.321, "n_heavy_atoms": 33, "n_rotatable": 10, "seconds": 18.510330200195312, "error": "", "pose_sha256": "2450a5cec8ef8a90bfb0a2be17ed536617df35d92c20388186a400e27639fa70"}

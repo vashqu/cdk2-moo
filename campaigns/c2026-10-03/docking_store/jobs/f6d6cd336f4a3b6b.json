@@ -1,0 +1,1 @@
+{"job_id": "f6d6cd336f4a3b6b", "smiles": "CNC(=O)c1ccc(Nc2ccc(C(=O)N(C)C)cc2)cc1", "vina_seed": 42, "prep_seed": 42, "status": "ok", "vina_score": -7.844, "n_heavy_atoms": 22, "n_rotatable": 4, "seconds": 2.691951036453247, "error": "", "pose_sha256": "8136237afbbba0e796b00ecd8ecfedc2f31577ad47950064418ea4cbd7e5fa2e"}

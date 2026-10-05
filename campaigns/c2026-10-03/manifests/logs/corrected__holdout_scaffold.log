@@ -1,0 +1,27 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05f_positive_control_ga.py --controls scaffold
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=corrected
+[campaign c2026-10-03 | scope corrected] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results
+output: /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results/05f_scaffold_populations.csv
+
+scaffold control: surrogate trained on 1756 molecules (seeds 42 and 20260930), size window (20, 39)
+  seed 42  multi_real       pred_real -> 7.47, similarity to remaining training -> 0.49
+  seed 42  multi_scrambled  pred_real -> 5.93, similarity to remaining training -> 0.35
+  seed 42  activity_only    pred_real -> 8.41, similarity to remaining training -> 0.69
+  seed 42  druglike_only    pred_real -> 6.40, similarity to remaining training -> 0.37
+  seed 43  multi_real       pred_real -> 7.37, similarity to remaining training -> 0.40
+  seed 43  multi_scrambled  pred_real -> 6.10, similarity to remaining training -> 0.32
+  seed 43  activity_only    pred_real -> 8.42, similarity to remaining training -> 0.78
+  seed 43  druglike_only    pred_real -> 6.33, similarity to remaining training -> 0.38
+  seed 44  multi_real       pred_real -> 7.52, similarity to remaining training -> 0.50
+  seed 44  multi_scrambled  pred_real -> 5.87, similarity to remaining training -> 0.31
+  seed 44  activity_only    pred_real -> 8.36, similarity to remaining training -> 0.58
+  seed 44  druglike_only    pred_real -> 6.03, similarity to remaining training -> 0.32
+  seed 45  multi_real       pred_real -> 7.30, similarity to remaining training -> 0.36
+  seed 45  multi_scrambled  pred_real -> 5.70, similarity to remaining training -> 0.37
+  seed 45  activity_only    pred_real -> 8.28, similarity to remaining training -> 0.49
+  seed 45  druglike_only    pred_real -> 5.96, similarity to remaining training -> 0.35
+  seed 46  multi_real       pred_real -> 7.61, similarity to remaining training -> 0.51
+  seed 46  multi_scrambled  pred_real -> 5.92, similarity to remaining training -> 0.35
+  seed 46  activity_only    pred_real -> 8.50, similarity to remaining training -> 0.71
+  seed 46  druglike_only    pred_real -> 6.10, similarity to remaining training -> 0.36
+Wrote /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results/05f_scaffold_populations.csv (102000 rows) and its manifest

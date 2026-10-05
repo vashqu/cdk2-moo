@@ -1,0 +1,25 @@
+{
+  "box_center": [
+    55.56,
+    79.857,
+    28.02
+  ],
+  "box_size": [
+    22.0,
+    22.0,
+    22.0
+  ],
+  "exhaustiveness": 8,
+  "force_even_voxels": true,
+  "ligand_prep": "AddHs + ETKDGv3 + MMFF(500) + Meeko",
+  "ligand_prep_seed": 42,
+  "meeko_version": "0.8.0",
+  "n_poses": 9,
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.11.16",
+  "rdkit_version": "2026.03.1",
+  "receptor_sha256": "fde7f70acec038884a533e4d96cdf7399e044452cc5203fee04d3c6cb2949751",
+  "scoring_function": "vina",
+  "vina_cpu": 0,
+  "vina_version": "1.2.7"
+}

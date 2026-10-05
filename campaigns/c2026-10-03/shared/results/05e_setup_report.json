@@ -1,0 +1,46 @@
+{
+  "top_decile_cutoff": 8.050609993355087,
+  "n_top_decile": 204,
+  "molecule": {
+    "n_train": 1812,
+    "n_held": 204,
+    "n_held_actives": 204,
+    "n_held_scaffolds": 100,
+    "n_families": null,
+    "held_pactivity_quartiles": [
+      8.050609993355087,
+      8.221848749616356,
+      8.397940008672037,
+      8.67778070526608,
+      9.522878745280336
+    ],
+    "train_label_max": 8.045878161439553,
+    "nn_train_similarity_median": 0.7246376872062683,
+    "frac_nn_ge_0.6": 0.8823529411764706,
+    "frac_nn_ge_0.8": 0.22549019607843138,
+    "surrogate_mae": 1.2642514311645672,
+    "surrogate_bias": -1.2642514311645672,
+    "surrogate_auc_vs_remainder": 0.7964712375016232
+  },
+  "scaffold": {
+    "n_train": 1756,
+    "n_held": 260,
+    "n_held_actives": 93,
+    "n_held_scaffolds": 9,
+    "n_families": 9,
+    "held_pactivity_quartiles": [
+      8.074172425375258,
+      8.221848749616356,
+      8.397940008672037,
+      8.522878745280337,
+      9.522878745280336
+    ],
+    "train_label_max": 9.481486060122112,
+    "nn_train_similarity_median": 0.6716417670249939,
+    "frac_nn_ge_0.6": 0.7634408602150538,
+    "frac_nn_ge_0.8": 0.03225806451612903,
+    "surrogate_mae": 0.9434839271813863,
+    "surrogate_bias": -0.9420124922131716,
+    "surrogate_auc_vs_remainder": 0.867244715506895
+  }
+}

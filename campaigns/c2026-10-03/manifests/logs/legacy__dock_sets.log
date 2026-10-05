@@ -1,0 +1,34 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/08c_select_docking_sets.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=legacy
+[campaign c2026-10-03 | scope legacy] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results
+policy scope: legacy; groups P (all-data surrogate), M (molecule-level holdout), S (scaffold-level holdout)
+group  set                    role                
+M      M:activity_only        generated               100
+       M:decoys               decoy                   100
+       M:druglike_only        generated               100
+       M:heldout_actives      heldout_active          100
+       M:multi_real           generated               100
+       M:multi_scrambled      generated               100
+       M:random_remaining     random_reference        100
+P      P:activity_only        generated               100
+       P:decoys               decoy                   100
+       P:druglike_only        generated               100
+       P:multi_real           generated               100
+       P:multi_scrambled      generated               100
+       P:pareto_front         generated               124
+       P:random_training      random_reference        100
+       P:training_top_decile  in_sample_top_decile    100
+S      S:activity_only        generated               100
+       S:decoys               decoy                    93
+       S:druglike_only        generated               100
+       S:heldout_actives      heldout_active           93
+       S:multi_real           generated               100
+       S:multi_scrambled      generated               100
+       S:random_remaining     random_reference        100
+
+2210 rows, 2033 distinct molecules; 89 replicate molecules
+decoy matching (standardized mean differences, decoys minus actives):
+  P: heavy atoms -0.01, MW -0.32, cLogP -0.11, HBD -0.31, HBA -0.10, rotatable bonds -0.17
+  M: heavy atoms -0.08, MW -0.44, cLogP -0.13, HBD -0.40, HBA -0.33, rotatable bonds -0.08
+  S: heavy atoms +0.19, MW -0.42, cLogP -0.17, HBD -0.53, HBA -0.25, rotatable bonds -0.33
+Wrote /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results/08c_docking_sets.csv

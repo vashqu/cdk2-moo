@@ -1,0 +1,177 @@
+{
+  "args": [],
+  "campaign": "c2026-10-03",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/ad_reliability": {
+      "campaigns/c2026-10-03/corrected/results/07_reliability_bins.csv": {
+        "bytes": 2329,
+        "sha256": "f1c7b061e2dea001635279c250e3d3b29ac4be2a3b540e9605c818955eea79d8"
+      },
+      "campaigns/c2026-10-03/corrected/results/07_stage4_ad.csv": {
+        "bytes": 1359827,
+        "sha256": "121e067414c17415b78202948c6bc1bc17d084cd0499a55327e89ab47b40a3c4"
+      }
+    },
+    "corrected/dock_analysis": {
+      "campaigns/c2026-10-03/corrected/results/08e_docking_by_molecule.csv": {
+        "bytes": 547779,
+        "sha256": "3687d424827799cdaaac81488ab3686bfa54e99bd16733a7b7e58fc32122eeb4"
+      }
+    },
+    "corrected/hinge": {
+      "campaigns/c2026-10-03/corrected/results/08g_hinge_by_set.csv": {
+        "bytes": 1380,
+        "sha256": "0587b6d7f5818948455209d5ff7e730bd3c8e040d2d95180c9c528f4fa8f57ad"
+      },
+      "campaigns/c2026-10-03/corrected/results/08g_hinge_contacts.csv": {
+        "bytes": 143184,
+        "sha256": "512966fa0e2084a1e46c8813b9766945b3e15f5d3f52d1bd0010d1aa714e1fd5"
+      }
+    },
+    "corrected/pareto": {
+      "campaigns/c2026-10-03/corrected/results/06_pareto_front.csv": {
+        "bytes": 8213,
+        "sha256": "8301594c6868f8b6963de913044d30e6052bb9719b682e1a87361d27d4d354bc"
+      }
+    },
+    "corrected/posebusters": {
+      "campaigns/c2026-10-03/corrected/results/posebusters_audit/posebusters_checks.csv": {
+        "bytes": 389425,
+        "sha256": "51b140b2c2e849c8ce2e4fce8c7c0e4666329150c70b028e80afab040efec42b"
+      }
+    },
+    "corrected/summarize_ga": {
+      "campaigns/c2026-10-03/corrected/results/05_ga_final_summary.csv": {
+        "bytes": 2483,
+        "sha256": "10b4e5188d549d764c3ef293c46c82bdf0bcfc47e74d72265640157258de1c51"
+      },
+      "campaigns/c2026-10-03/corrected/results/05_ga_per_run.csv": {
+        "bytes": 114763,
+        "sha256": "6f94abb7ea211d409110b083f4e043ea0982d99a43b0f9f2c0ed7057a651cbe2"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-10-05T07:44:08+00:00",
+  "log": "campaigns/c2026-10-03/manifests/logs/corrected__figures.log",
+  "log_sha256": "7900dc2bb724ba83839a2a88a453303c8672403a6d34d2c9460783dae6546b83",
+  "outputs": {
+    "campaigns/c2026-10-03/corrected/figures/final/fig1_surrogate.png": {
+      "bytes": 290760,
+      "sha256": "4439091579d38ca079f6c5a6572e621343422a74b8ac8aa3959fcd79ef68ef0f"
+    },
+    "campaigns/c2026-10-03/corrected/figures/final/fig2_trajectories.png": {
+      "bytes": 328691,
+      "sha256": "ee7319dcc27b06ceec81196b2ea1de46cf9f821089095abcbbb0fcaab6f72764"
+    },
+    "campaigns/c2026-10-03/corrected/figures/final/fig3_pareto_fronts.png": {
+      "bytes": 937676,
+      "sha256": "650f447d7bc1d1461e6f44f180da403182ed7953313f5b67ed69798497026629"
+    },
+    "campaigns/c2026-10-03/corrected/figures/final/fig3b_pareto_structures.png": {
+      "bytes": 88510,
+      "sha256": "be47ba2684627c3b94b28d1960a43fb47984767da0ac84c1753e4bee4579c799"
+    },
+    "campaigns/c2026-10-03/corrected/figures/final/fig4_similarity_vs_prediction.png": {
+      "bytes": 475883,
+      "sha256": "5260f64e6b2104b288d3a63594c178a8ac44b557b3d413f9c1ef53fc2ec14f7c"
+    },
+    "campaigns/c2026-10-03/corrected/figures/final/fig5_docking_M.png": {
+      "bytes": 199088,
+      "sha256": "44109e044677a6c6562842ee958ff77deb06fab48fe996c876fb6bac5366fcde"
+    },
+    "campaigns/c2026-10-03/corrected/figures/final/fig5_docking_P.png": {
+      "bytes": 217555,
+      "sha256": "d2ccb842e5a9f395926f9bf64e8bf69791376dc227794d4e9c7d59bef7b8d3b2"
+    },
+    "campaigns/c2026-10-03/corrected/figures/final/fig5_docking_S.png": {
+      "bytes": 203708,
+      "sha256": "80ed2697abd169aa42eabd860b0dc86557606563cfa59eb10517550f3bffd829"
+    },
+    "campaigns/c2026-10-03/corrected/figures/final/fig6_pose_checks.png": {
+      "bytes": 158705,
+      "sha256": "1ed3ef73cdc537a7e8ea32d3a91b41aa75fc7ab99dcfdda4a8b7ebe3d42f141e"
+    }
+  },
+  "scope": "corrected",
+  "script": "11_make_figures.py",
+  "seconds": 1.7,
+  "source": {
+    "git_head": "2d71827cfcbdea22168a43ac02196ab8325f9d5d",
+    "git_status_lines": [
+      "M CLAUDE.md",
+      " M README.md",
+      " M decisions.md",
+      " M environment.yml",
+      " M scripts/01_fetch_chembl.py",
+      " M scripts/02_curate.py",
+      " M scripts/03_features_and_splits.py",
+      " M scripts/04_train_surrogate.py",
+      " M src/cdk2moo/audit.py",
+      " M src/cdk2moo/config.py",
+      " M src/cdk2moo/docking.py",
+      " M src/cdk2moo/ga.py",
+      " M src/cdk2moo/splits.py",
+      " M src/cdk2moo/standardize.py",
+      "?? campaigns/",
+      "?? historical_record/",
+      "?? reproducibility/",
+      "?? scripts/03b_eligible_starts.py",
+      "?? scripts/05_run_ga.py",
+      "?? scripts/05b_size_conditioned_similarity.py",
+      "?? scripts/05c_summarize_ga.py",
+      "?? scripts/05d_ga_descriptive_checks.py",
+      "?? scripts/05e_positive_control_setup.py",
+      "?? scripts/05f_positive_control_ga.py",
+      "?? scripts/05g_positive_control_eval.py",
+      "?? scripts/05h_scaffold_surrogate_robustness.py",
+      "?? scripts/06_pareto.py",
+      "?? scripts/07_ad_reliability.py",
+      "?? scripts/07b_ad_generated_overlay.py",
+      "?? scripts/07c_structural_alerts.py",
+      "?? scripts/08_prepare_receptor.py",
+      "?? scripts/08b_redock_native_ligand.py",
+      "?? scripts/08c_select_docking_sets.py",
+      "?? scripts/08d_dock_sets.py",
+      "?? scripts/08e_docking_analysis.py",
+      "?? scripts/08f_posebusters.py",
+      "?? scripts/08g_hinge_contacts.py",
+      "?? scripts/10_run_constrained_ga.py",
+      "?? scripts/10b_analyze_tradeoff.py",
+      "?? scripts/11_make_figures.py",
+      "?? scripts/11b_table1.py",
+      "?? scripts/12_audit_leakage_and_artifacts.py",
+      "?? scripts/13_hypothesis_endpoints.py",
+      "?? scripts/campaign_inventory.py",
+      "?? scripts/campaign_run.py",
+      "?? src/cdk2moo/ad_plots.py",
+      "?? src/cdk2moo/alerts.py",
+      "?? src/cdk2moo/applicability.py",
+      "?? src/cdk2moo/campaign.py",
+      "?? src/cdk2moo/campaign_driver.py",
+      "?? src/cdk2moo/candidates.py",
+      "?? src/cdk2moo/dock_jobs.py",
+      "?? src/cdk2moo/dock_validate.py",
+      "?? src/cdk2moo/docking_stats.py",
+      "?? src/cdk2moo/docksets.py",
+      "?? src/cdk2moo/endpoints.py",
+      "?? src/cdk2moo/figures_model.py",
+      "?? src/cdk2moo/figures_validation.py",
+      "?? src/cdk2moo/ga_plots.py",
+      "?? src/cdk2moo/hinge.py",
+      "?? src/cdk2moo/holdout.py",
+      "?? src/cdk2moo/mutations.py",
+      "?? src/cdk2moo/pareto_plots.py",
+      "?? src/cdk2moo/posebusters_audit.py",
+      "?? src/cdk2moo/recovery.py",
+      "?? src/cdk2moo/run_outputs.py",
+      "?? src/cdk2moo/similarity.py",
+      "?? src/cdk2moo/starts.py",
+      "?? tests/"
+    ],
+    "source_tree_sha256": "9d161d7baada1f5907383d8a54b30b09ff3e8dc0e57beb2f032a2165743efd08",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/figures"
+}

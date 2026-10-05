@@ -1,0 +1,133 @@
+{
+  "args": [],
+  "campaign": "c2026-10-03",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "legacy/ga_primary": {
+      "campaigns/c2026-10-03/legacy/results/05_ga_populations.csv": {
+        "bytes": 28752569,
+        "sha256": "5645b297c9537bfd3646b7e21f98a2264d09452b3d2410c64a70d6ff5a7a5aa1"
+      }
+    },
+    "legacy/robust_scaffold_split": {
+      "campaigns/c2026-10-03/legacy/results/05f_scaffold_split_populations.csv": {
+        "bytes": 29460081,
+        "sha256": "b40b5dbd0eac405c01de868d90b4cc89c08d90f8cca7e86527aac02d62c1b140"
+      }
+    },
+    "legacy/robust_scaffold_split_s43": {
+      "campaigns/c2026-10-03/legacy/results/05f_scaffold_split_s43_populations.csv": {
+        "bytes": 28905240,
+        "sha256": "6115e4a6c7b1eaad0129457214920837c601fd72d99ec177cdd4279390adf443"
+      }
+    },
+    "legacy/robust_scaffold_split_s44": {
+      "campaigns/c2026-10-03/legacy/results/05f_scaffold_split_s44_populations.csv": {
+        "bytes": 28815424,
+        "sha256": "61ad7ec80f8f9e894d8f8e09bf7041ead591ce3a5f80b0f14fcc926fdb8c402f"
+      }
+    },
+    "legacy/robust_scaffold_split_s45": {
+      "campaigns/c2026-10-03/legacy/results/05f_scaffold_split_s45_populations.csv": {
+        "bytes": 29226396,
+        "sha256": "d9fdfcbd3aeca121240ab1e4fe75a4141961dac97605fb916b9b63c1a1e3b35e"
+      }
+    },
+    "legacy/robust_scaffold_split_s46": {
+      "campaigns/c2026-10-03/legacy/results/05f_scaffold_split_s46_populations.csv": {
+        "bytes": 29055261,
+        "sha256": "7264668b854b4afd379ba1c9811fb0504302f1c746260b6f5ac7fecb12c86a17"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-10-04T10:30:10+00:00",
+  "log": "campaigns/c2026-10-03/manifests/logs/legacy__robustness_eval.log",
+  "log_sha256": "9b77b90efd272c860278dbe36bfdb79383d34b9442751c17bf4b8f5bc2fe2b91",
+  "outputs": {
+    "campaigns/c2026-10-03/legacy/results/05h_robustness_summary.csv": {
+      "bytes": 9551,
+      "sha256": "205303934bfc0d61137c6658a290a2c1bc63808501f58d599d80b331ed1fc3aa"
+    }
+  },
+  "scope": "legacy",
+  "script": "05h_scaffold_surrogate_robustness.py",
+  "seconds": 6.7,
+  "source": {
+    "git_head": "2d71827cfcbdea22168a43ac02196ab8325f9d5d",
+    "git_status_lines": [
+      "M CLAUDE.md",
+      " M README.md",
+      " M decisions.md",
+      " M environment.yml",
+      " M scripts/01_fetch_chembl.py",
+      " M scripts/02_curate.py",
+      " M scripts/03_features_and_splits.py",
+      " M scripts/04_train_surrogate.py",
+      " M src/cdk2moo/audit.py",
+      " M src/cdk2moo/config.py",
+      " M src/cdk2moo/docking.py",
+      " M src/cdk2moo/ga.py",
+      " M src/cdk2moo/splits.py",
+      " M src/cdk2moo/standardize.py",
+      "?? campaigns/",
+      "?? historical_record/",
+      "?? reproducibility/",
+      "?? scripts/03b_eligible_starts.py",
+      "?? scripts/05_run_ga.py",
+      "?? scripts/05b_size_conditioned_similarity.py",
+      "?? scripts/05c_summarize_ga.py",
+      "?? scripts/05d_ga_descriptive_checks.py",
+      "?? scripts/05e_positive_control_setup.py",
+      "?? scripts/05f_positive_control_ga.py",
+      "?? scripts/05g_positive_control_eval.py",
+      "?? scripts/05h_scaffold_surrogate_robustness.py",
+      "?? scripts/06_pareto.py",
+      "?? scripts/07_ad_reliability.py",
+      "?? scripts/07b_ad_generated_overlay.py",
+      "?? scripts/07c_structural_alerts.py",
+      "?? scripts/08_prepare_receptor.py",
+      "?? scripts/08b_redock_native_ligand.py",
+      "?? scripts/08c_select_docking_sets.py",
+      "?? scripts/08d_dock_sets.py",
+      "?? scripts/08e_docking_analysis.py",
+      "?? scripts/08f_posebusters.py",
+      "?? scripts/08g_hinge_contacts.py",
+      "?? scripts/10_run_constrained_ga.py",
+      "?? scripts/10b_analyze_tradeoff.py",
+      "?? scripts/11_make_figures.py",
+      "?? scripts/11b_table1.py",
+      "?? scripts/12_audit_leakage_and_artifacts.py",
+      "?? scripts/13_hypothesis_endpoints.py",
+      "?? scripts/campaign_inventory.py",
+      "?? scripts/campaign_run.py",
+      "?? src/cdk2moo/ad_plots.py",
+      "?? src/cdk2moo/alerts.py",
+      "?? src/cdk2moo/applicability.py",
+      "?? src/cdk2moo/campaign.py",
+      "?? src/cdk2moo/campaign_driver.py",
+      "?? src/cdk2moo/candidates.py",
+      "?? src/cdk2moo/dock_jobs.py",
+      "?? src/cdk2moo/dock_validate.py",
+      "?? src/cdk2moo/docking_stats.py",
+      "?? src/cdk2moo/docksets.py",
+      "?? src/cdk2moo/endpoints.py",
+      "?? src/cdk2moo/figures_model.py",
+      "?? src/cdk2moo/figures_validation.py",
+      "?? src/cdk2moo/ga_plots.py",
+      "?? src/cdk2moo/hinge.py",
+      "?? src/cdk2moo/holdout.py",
+      "?? src/cdk2moo/mutations.py",
+      "?? src/cdk2moo/pareto_plots.py",
+      "?? src/cdk2moo/posebusters_audit.py",
+      "?? src/cdk2moo/recovery.py",
+      "?? src/cdk2moo/run_outputs.py",
+      "?? src/cdk2moo/similarity.py",
+      "?? src/cdk2moo/starts.py",
+      "?? tests/"
+    ],
+    "source_tree_sha256": "6fb8378c22b7f82dc01119f459f07dc81d3166b4908d7cc15b5f362d81f866d4",
+    "working_tree_clean": false
+  },
+  "stage": "legacy/robustness_eval"
+}

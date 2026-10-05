@@ -1,0 +1,29 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05_run_ga.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=legacy
+[campaign c2026-10-03 | scope legacy] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results
+seeds = [42, 43, 44, 45, 46], generations = 50, size window = (20, 39), policy = legacy, arms = ['multi_real', 'multi_scrambled', 'activity_only', 'druglike_only']
+output: /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results/05_ga_populations.csv
+Training ONE real and ONE scrambled surrogate on all 2016 molecules (seeds 42 and 20260930)
+1833 of 2016 training molecules are eligible as starting molecules (size window, unchanged by standardization, closed-shell, unique; the same list for both preparation policies)
+  seed 42  multi_real       pred_real 6.60 -> 7.76   max Tanimoto 1.00 -> 0.41
+  seed 42  multi_scrambled  pred_real 6.60 -> 6.70   max Tanimoto 1.00 -> 0.39
+  seed 42  activity_only    pred_real 6.60 -> 8.60   max Tanimoto 1.00 -> 0.69
+  seed 42  druglike_only    pred_real 6.60 -> 6.22   max Tanimoto 1.00 -> 0.35
+  seed 43  multi_real       pred_real 6.46 -> 7.71   max Tanimoto 1.00 -> 0.42
+  seed 43  multi_scrambled  pred_real 6.46 -> 5.94   max Tanimoto 1.00 -> 0.41
+  seed 43  activity_only    pred_real 6.46 -> 8.34   max Tanimoto 1.00 -> 0.75
+  seed 43  druglike_only    pred_real 6.46 -> 6.19   max Tanimoto 1.00 -> 0.40
+  seed 44  multi_real       pred_real 6.60 -> 7.69   max Tanimoto 1.00 -> 0.41
+  seed 44  multi_scrambled  pred_real 6.60 -> 6.62   max Tanimoto 1.00 -> 0.39
+  seed 44  activity_only    pred_real 6.60 -> 8.52   max Tanimoto 1.00 -> 0.72
+  seed 44  druglike_only    pred_real 6.60 -> 6.02   max Tanimoto 1.00 -> 0.35
+  seed 45  multi_real       pred_real 6.72 -> 7.84   max Tanimoto 1.00 -> 0.51
+  seed 45  multi_scrambled  pred_real 6.72 -> 6.24   max Tanimoto 1.00 -> 0.33
+  seed 45  activity_only    pred_real 6.72 -> 8.61   max Tanimoto 1.00 -> 0.71
+  seed 45  druglike_only    pred_real 6.72 -> 6.25   max Tanimoto 1.00 -> 0.38
+  seed 46  multi_real       pred_real 6.56 -> 7.73   max Tanimoto 1.00 -> 0.40
+  seed 46  multi_scrambled  pred_real 6.56 -> 6.02   max Tanimoto 1.00 -> 0.39
+  seed 46  activity_only    pred_real 6.56 -> 8.59   max Tanimoto 1.00 -> 0.71
+  seed 46  druglike_only    pred_real 6.56 -> 6.11   max Tanimoto 1.00 -> 0.36
+
+Wrote /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results/05_ga_populations.csv (102000 rows) and 05_ga_populations.csv.manifest.json

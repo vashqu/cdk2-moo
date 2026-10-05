@@ -1,0 +1,53 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/07c_structural_alerts.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=legacy
+[campaign c2026-10-03 | scope legacy] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results
+Graph validity: 100% of generated molecules sanitize (required to be generated at all).
+That says nothing about whether they are sensible; see the alerts and the examples below.
+
+  set                                                 n     PAINS     Brenk    either Brenk/mol
+  training set (2,016)                                         7%       30%       33%
+  known actives, top decile                                   11%       32%       35%
+  generated, multi_real (distinct)                 2604        4%       16%       19%      0.18
+  generated, multi_scrambled (distinct)            3039        5%       11%       14%      0.12
+  generated, activity_only (distinct)              3399       11%       59%       60%      1.01
+  generated, druglike_only (distinct)              3053        8%       11%       18%      0.12
+  generated, all distinct                         11959        7%       26%       29%      0.39
+
+Alert rate by applicability-domain class (all distinct generated molecules):
+  A: high prediction, supported (raw >= 0.6)       2055        8%       56%       57%      0.94
+  B: high prediction, weak support (raw < 0.6)      518        5%       64%       64%      1.15
+  C: prediction < 8                                9386        7%       17%       21%      0.22
+  B (weak support) vs A (supported), any alert: odds ratio 1.31, Fisher p = 0.0081 (the same molecule recurs in related forms, so p is optimistic)
+
+Alert rate by raw-similarity region, generated molecules predicted >= 8 only:
+  raw similarity <0.4                                 6       17%      100%      100%      2.50
+  raw similarity 0.4-0.6                            512        5%       63%       63%      1.13
+  raw similarity 0.6-0.8                           1871        8%       58%       59%      0.96
+  raw similarity >=0.8                              184        8%       42%       45%      0.71
+
+Pareto front (124 molecules):
+  group                                               n     PAINS     Brenk    either Brenk/mol
+  front, all                                        124        6%        2%        9%      0.02
+  front, A: high prediction, supported (raw >= 0.6)     34        0%        6%        6%      0.06
+  front, B: high prediction, weak support (raw < 0.6)      4        0%        0%        0%      0.00
+  front, C: prediction < 8                           86        9%        1%       10%      0.01
+  most frequent alerts on the front:
+      6  anil_di_alk_A(478)
+      1  anil_di_alk_C(246)
+      1  anil_di_alk_E(186)
+      1  Michael_acceptor_1
+      1  isolated_alkene
+      1  alkyl_halide
+
+Class B front molecules (high prediction, weak support): alerts found
+  pred 8.18 raw 0.49  alerts: none
+  pred 8.15 raw 0.58  alerts: none
+  pred 8.13 raw 0.58  alerts: none
+  pred 8.04 raw 0.56  alerts: none
+
+Do the alerts catch the implausible molecule drawn in Stage 6?
+  highest-predicted front molecule: CN1CCN(c2cccc(-c3cccc(Nc4ncc5c(n4)-c4c(c(C(N)=O)nn4C)CC5)c3)c2)CC1
+    PAINS: none
+    Brenk: none
+
+Wrote results/07_generated_alerts.csv, results/07_front_alerts.csv, figures/07_generated_on_domain.png

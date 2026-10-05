@@ -1,0 +1,12 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/11_make_figures.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=legacy
+[campaign c2026-10-03 | scope legacy] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results
+  legacy/figures/final/fig1_surrogate.png
+  legacy/figures/final/fig2_trajectories.png
+  legacy/figures/final/fig3_pareto_fronts.png
+  legacy/figures/final/fig3b_pareto_structures.png
+  legacy/figures/final/fig4_similarity_vs_prediction.png
+  legacy/figures/final/fig5_docking_M.png
+  legacy/figures/final/fig5_docking_P.png
+  legacy/figures/final/fig5_docking_S.png
+  legacy/figures/final/fig6_pose_checks.png

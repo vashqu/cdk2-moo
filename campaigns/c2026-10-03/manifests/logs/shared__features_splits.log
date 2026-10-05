@@ -1,0 +1,28 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/03_features_and_splits.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=shared
+[campaign c2026-10-03 | scope shared] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/results
+seeds = [42, 43, 44, 45, 46, 47, 48, 49, 50, 51]
+Loaded 2016 molecules
+ECFP4: (2016, 2048), on-bits per molecule: median 55, min 12, max 89
+
+Scaffolds: 889 unique for 2016 molecules
+  singletons (scaffold used by one molecule): 635
+  acyclic molecules (empty scaffold, lumped into one group): 0
+  largest scaffold groups:
+      74  c1cc(-c2ccc3nc[nH]c3c2)nc(Nc2ccc3c(n2)CCNC3)n1
+      67  c1ccc(Nc2ncccn2)cc1
+      33  c1ccc(NCCc2c[nH]c3ccccc23)cc1
+      31  c1ccc(Nc2nccc(-c3cnc[nH]3)n2)cc1
+      30  c1ccc(N=Nc2c[nH]c3ccccc23)cc1
+
+Test set vs train set, median [min, max] over seeds:
+                                                              random              scaffold                 paper
+  n_test                                              403 [403, 403]        403 [403, 403]        403 [403, 403]
+  test molecules with scaffold in train               266 [249, 281]              0 [0, 0]        84.5 [44, 148]
+  test molecules with ANY paper in train              388 [384, 389]        380 [340, 389]         113 [52, 178]
+  median max Tanimoto to train                  0.781 [0.771, 0.787]  0.659 [0.627, 0.724]  0.412 [0.365, 0.462]
+  frac test with max Tanimoto > 0.7             0.733 [0.707, 0.762]  0.406 [0.335, 0.571]  0.103 [0.062, 0.169]
+  pActivity shift (test mean - train mean)    0.0701 [-0.109, 0.229]-0.0824 [-0.408, 0.296]-0.0625 [-0.427, 0.388]
+
+Wrote cdk2_splits.csv, ecfp4.npy, results/03_splits.json
+Next: stage 4, surrogate.

@@ -1,0 +1,46 @@
+
+molecule control: surrogate trained on 1812 molecules (seeds 42 and 20260930), size window (20, 39)
+  seed 42  multi_real       pred_real -> 7.25, similarity to remaining training -> 0.37
+  seed 42  multi_scrambled  pred_real -> 5.95, similarity to remaining training -> 0.34
+  seed 42  activity_only    pred_real -> 7.91, similarity to remaining training -> 0.73
+  seed 42  druglike_only    pred_real -> 6.27, similarity to remaining training -> 0.37
+  seed 43  multi_real       pred_real -> 7.23, similarity to remaining training -> 0.35
+  seed 43  multi_scrambled  pred_real -> 6.05, similarity to remaining training -> 0.39
+  seed 43  activity_only    pred_real -> 7.86, similarity to remaining training -> 0.72
+  seed 43  druglike_only    pred_real -> 6.09, similarity to remaining training -> 0.40
+  seed 44  multi_real       pred_real -> 7.21, similarity to remaining training -> 0.37
+  seed 44  multi_scrambled  pred_real -> 5.82, similarity to remaining training -> 0.36
+  seed 44  activity_only    pred_real -> 7.89, similarity to remaining training -> 0.74
+  seed 44  druglike_only    pred_real -> 6.10, similarity to remaining training -> 0.33
+  seed 45  multi_real       pred_real -> 7.25, similarity to remaining training -> 0.35
+  seed 45  multi_scrambled  pred_real -> 5.97, similarity to remaining training -> 0.37
+  seed 45  activity_only    pred_real -> 7.93, similarity to remaining training -> 0.75
+  seed 45  druglike_only    pred_real -> 6.03, similarity to remaining training -> 0.36
+  seed 46  multi_real       pred_real -> 7.27, similarity to remaining training -> 0.43
+  seed 46  multi_scrambled  pred_real -> 6.15, similarity to remaining training -> 0.38
+  seed 46  activity_only    pred_real -> 7.83, similarity to remaining training -> 0.63
+  seed 46  druglike_only    pred_real -> 6.46, similarity to remaining training -> 0.35
+Wrote results/05f_molecule_populations.csv (102000 rows)
+
+scaffold control: surrogate trained on 1756 molecules (seeds 42 and 20260930), size window (20, 39)
+  seed 42  multi_real       pred_real -> 7.37, similarity to remaining training -> 0.42
+  seed 42  multi_scrambled  pred_real -> 6.07, similarity to remaining training -> 0.36
+  seed 42  activity_only    pred_real -> 8.40, similarity to remaining training -> 0.68
+  seed 42  druglike_only    pred_real -> 6.28, similarity to remaining training -> 0.38
+  seed 43  multi_real       pred_real -> 7.56, similarity to remaining training -> 0.49
+  seed 43  multi_scrambled  pred_real -> 5.97, similarity to remaining training -> 0.33
+  seed 43  activity_only    pred_real -> 8.41, similarity to remaining training -> 0.78
+  seed 43  druglike_only    pred_real -> 6.21, similarity to remaining training -> 0.38
+  seed 44  multi_real       pred_real -> 7.36, similarity to remaining training -> 0.43
+  seed 44  multi_scrambled  pred_real -> 6.02, similarity to remaining training -> 0.40
+  seed 44  activity_only    pred_real -> 8.36, similarity to remaining training -> 0.67
+  seed 44  druglike_only    pred_real -> 6.11, similarity to remaining training -> 0.34
+  seed 45  multi_real       pred_real -> 7.32, similarity to remaining training -> 0.43
+  seed 45  multi_scrambled  pred_real -> 5.86, similarity to remaining training -> 0.33
+  seed 45  activity_only    pred_real -> 8.27, similarity to remaining training -> 0.51
+  seed 45  druglike_only    pred_real -> 6.32, similarity to remaining training -> 0.37
+  seed 46  multi_real       pred_real -> 7.38, similarity to remaining training -> 0.40
+  seed 46  multi_scrambled  pred_real -> 5.99, similarity to remaining training -> 0.35
+  seed 46  activity_only    pred_real -> 8.43, similarity to remaining training -> 0.68
+  seed 46  druglike_only    pred_real -> 6.13, similarity to remaining training -> 0.39
+Wrote results/05f_scaffold_populations.csv (102000 rows)

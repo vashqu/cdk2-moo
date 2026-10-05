@@ -1,0 +1,38 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05e_positive_control_setup.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=shared
+[campaign c2026-10-03 | scope shared] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/results
+seed = 42 (surrogate and cross-validation folds)
+2016 molecules; top decile = measured pActivity >= 8.051 (204 molecules, 100 scaffolds)
+
+===== MOLECULE-LEVEL CONTROL =====
+  training 1812; held out 204 molecules, of which 204 are top-decile actives
+  held-out actives: 100 distinct scaffolds
+  held-out actives' measured pActivity: min 8.05, quartiles 8.22/8.40/8.68, max 9.52
+  remaining training labels: max 8.05, 90th percentile 7.70, top-decile actives still in training: 0
+  nearest-training ECFP4 Tanimoto of held-out actives: median 0.72, quartiles 0.66/0.79; 88% >= 0.6, 23% >= 0.8; median size percentile 34
+  control surrogate on held-out actives (out-of-sample): MAE 1.26, RMSE 1.41, bias -1.26 (negative = under-predicts), Spearman within the narrow held-out range -0.11
+    predicted pActivity of held-out actives: median 7.33 (measured median 8.40); 0% predicted >= 8, 69% >= 7
+    discrimination: AUC 0.80 for ranking held-out actives above 5-fold out-of-fold predictions of the remaining molecules; 68% of held-out actives exceed the remainder's 75th percentile
+
+===== SCAFFOLD-LEVEL CONTROL =====
+  training 1756; held out 260 molecules, of which 93 are top-decile actives
+  held-out actives: 9 distinct scaffolds
+  held-out scaffold FAMILIES (>= 5 top-decile members each): 9; 167 held-out members are not top decile
+     30 actives /  67 members  c1ccc(Nc2ncccn2)cc1
+     18 actives /  31 members  c1ccc(Nc2nccc(-c3cnc[nH]3)n2)cc1
+     10 actives /  14 members  C(=Nc1ccccc1)c1c[nH]c2ccc3ncsc3c12
+      8 actives /  30 members  c1ccc(N=Nc2c[nH]c3ccccc23)cc1
+      6 actives /  74 members  c1cc(-c2ccc3nc[nH]c3c2)nc(Nc2ccc3c(n2)CCNC3)n1
+      6 actives /  17 members  c1ccc(Nc2cc(NC3CCCCC3)nc3ccnn23)cc1
+      5 actives /   5 members  O=C(c1ccc(Nc2nccc(-c3cnc[nH]3)n2)cc1)N1CCCC1
+      5 actives /  12 members  c1ccc(Nc2nccc(-c3cnc4ccccn34)n2)cc1
+      5 actives /  10 members  c1ccc(Nc2nccc(-c3cnn4ncccc34)n2)cc1
+  held-out actives' measured pActivity: min 8.07, quartiles 8.22/8.40/8.52, max 9.52
+  remaining training labels: max 9.48, 90th percentile 7.89, top-decile actives still in training: 111
+  nearest-training ECFP4 Tanimoto of held-out actives: median 0.67, quartiles 0.60/0.72; 76% >= 0.6, 3% >= 0.8; median size percentile 20
+  control surrogate on held-out actives (out-of-sample): MAE 0.94, RMSE 1.08, bias -0.94 (negative = under-predicts), Spearman within the narrow held-out range 0.19
+    predicted pActivity of held-out actives: median 7.52 (measured median 8.40); 11% predicted >= 8, 85% >= 7
+    discrimination: AUC 0.87 for ranking held-out actives above 5-fold out-of-fold predictions of the remaining molecules; 85% of held-out actives exceed the remainder's 75th percentile
+
+Wrote results/05e_holdout_sets.csv, 05e_heldout_predictions.csv, 05e_setup_report.json
+Next: scripts/05f_positive_control_ga.py

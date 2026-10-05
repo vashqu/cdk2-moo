@@ -1,0 +1,68 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/08e_docking_analysis.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=corrected
+[campaign c2026-10-03 | scope corrected] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results
+Denominators (rows in set; completed jobs; failures by kind; jobs missing):
+                  set  rows  completed  prep_failed  dock_failed  pose_export_failed  no_job
+      M:activity_only   100        100            0            0                   0       0
+             M:decoys   100         99            1            0                   0       0
+      M:druglike_only   100        100            0            0                   0       0
+    M:heldout_actives   100        100            0            0                   0       0
+         M:multi_real   100        100            0            0                   0       0
+    M:multi_scrambled   100        100            0            0                   0       0
+   M:random_remaining   100        100            0            0                   0       0
+      P:activity_only   100        100            0            0                   0       0
+             P:decoys   100        100            0            0                   0       0
+      P:druglike_only   100        100            0            0                   0       0
+         P:multi_real   100        100            0            0                   0       0
+    P:multi_scrambled   100        100            0            0                   0       0
+       P:pareto_front    87         87            0            0                   0       0
+    P:random_training   100        100            0            0                   0       0
+P:training_top_decile   100        100            0            0                   0       0
+      S:activity_only   100        100            0            0                   0       0
+             S:decoys    93         91            2            0                   0       0
+      S:druglike_only   100        100            0            0                   0       0
+    S:heldout_actives    93         93            0            0                   0       0
+         S:multi_real   100        100            0            0                   0       0
+    S:multi_scrambled   100        100            0            0                   0       0
+   S:random_remaining   100        100            0            0                   0       0
+
+===== GROUP P: in-sample comparator (the surrogate saw these actives); 100 comparator actives, 100 decoys, 100 random molecules completed =====
+  size dependence over all 787 docked molecules of the group: -0.048 kcal/mol per heavy atom, Spearman -0.39
+  gate: AUC actives vs decoys 0.60 [0.49, 0.70], stratified 0.62 [0.51, 0.73] -> FAILED
+        AUC actives vs random 0.53 [0.42, 0.65]; Spearman(-Vina, measured pActivity) +0.10 [-0.07, +0.27] (n=200)
+  P_sup of each sample over the comparator actives (0.5 = same; 95% cluster-bootstrap interval; stratified = within heavy-atom strata):
+    multi_real             n=100  0.36 [0.23, 0.51]   stratified 0.50 [0.24, 0.78] (pairs 1274/10000)   -> in-sample comparison (not H3)
+    multi_scrambled        n=100  0.22 [0.14, 0.31]   stratified 0.26 [0.13, 0.41] (pairs 1963/10000)   -> in-sample comparison (not H3)
+    activity_only          n=100  0.61 [0.46, 0.77]   stratified 0.56 [0.39, 0.72] (pairs 1306/10000)   -> in-sample comparison (not H3)
+    druglike_only          n=100  0.26 [0.16, 0.37]   stratified 0.39 [0.18, 0.61] (pairs 1495/10000)   -> in-sample comparison (not H3)
+    pareto_front           n= 87  0.40 [0.30, 0.52]   stratified 0.59 [0.41, 0.78] (pairs 1534/8700)   -> in-sample comparison (not H3)
+    decoys                 n=100  0.40 [0.29, 0.50]   stratified 0.38 [0.27, 0.49] (pairs 3874/10000)   -> in-sample comparison (not H3)
+    random_training        n=100  0.47 [0.35, 0.58]   stratified 0.49 [0.35, 0.62] (pairs 2548/10000)   -> in-sample comparison (not H3)
+
+===== GROUP M: held-out comparator (molecule-level holdout); 100 comparator actives, 99 decoys, 100 random molecules completed =====
+  size dependence over all 699 docked molecules of the group: -0.036 kcal/mol per heavy atom, Spearman -0.33
+  gate: AUC actives vs decoys 0.55 [0.43, 0.69], stratified 0.57 [0.46, 0.72] -> FAILED
+        AUC actives vs random 0.49 [0.38, 0.62]; Spearman(-Vina, measured pActivity) +0.05 [-0.12, +0.23] (n=200)
+  P_sup of each sample over the comparator actives (0.5 = same; 95% cluster-bootstrap interval; stratified = within heavy-atom strata):
+    multi_real             n=100  0.36 [0.22, 0.49]   stratified 0.42 [0.19, 0.60] (pairs 1552/10000)   -> not assessable (validity gate failed or undefined)
+    multi_scrambled        n=100  0.42 [0.27, 0.56]   stratified 0.49 [0.27, 0.66] (pairs 2178/10000)   -> not assessable (validity gate failed or undefined)
+    activity_only          n=100  0.54 [0.34, 0.70]   stratified 0.49 [0.30, 0.65] (pairs 1944/10000)   -> not assessable (validity gate failed or undefined)
+    druglike_only          n=100  0.33 [0.19, 0.47]   stratified 0.39 [0.15, 0.58] (pairs 1536/10000)   -> not assessable (validity gate failed or undefined)
+    decoys                 n= 99  0.45 [0.31, 0.57]   stratified 0.43 [0.28, 0.54] (pairs 3483/9900)   -> not assessable (validity gate failed or undefined)
+    random_remaining       n=100  0.51 [0.39, 0.62]   stratified 0.52 [0.38, 0.64] (pairs 2560/10000)   -> not assessable (validity gate failed or undefined)
+
+===== GROUP S: held-out comparator (scaffold-level holdout); 93 comparator actives, 91 decoys, 100 random molecules completed =====
+  size dependence over all 684 docked molecules of the group: -0.062 kcal/mol per heavy atom, Spearman -0.39
+  gate: AUC actives vs decoys 0.54 [0.39, 0.77], stratified 0.53 [0.36, 0.78] -> FAILED
+        AUC actives vs random 0.43 [0.28, 0.68]; Spearman(-Vina, measured pActivity) +0.01 [-0.26, +0.36] (n=193)
+  P_sup of each sample over the comparator actives (0.5 = same; 95% cluster-bootstrap interval; stratified = within heavy-atom strata):
+    multi_real             n=100  0.34 [0.10, 0.53]   stratified 0.37 [0.04, 0.62] (pairs 1804/9300)   -> not assessable (validity gate failed or undefined)
+    multi_scrambled        n=100  0.18 [0.03, 0.38]   stratified 0.21 [0.02, 0.41] (pairs 1930/9300)   -> not assessable (validity gate failed or undefined)
+    activity_only          n=100  0.52 [0.24, 0.71]   stratified 0.48 [0.20, 0.72] (pairs 1565/9300)   -> not assessable (validity gate failed or undefined)
+    druglike_only          n=100  0.24 [0.04, 0.40]   stratified 0.29 [0.00, 0.54] (pairs 1594/9300)   -> not assessable (validity gate failed or undefined)
+    decoys                 n= 91  0.46 [0.22, 0.62]   stratified 0.47 [0.20, 0.64] (pairs 3347/8463)   -> not assessable (validity gate failed or undefined)
+    random_remaining       n=100  0.57 [0.34, 0.72]   stratified 0.58 [0.34, 0.78] (pairs 2185/9300)   -> not assessable (validity gate failed or undefined)
+
+Engine noise: 94 molecules docked with 3 seeds: median SD 0.011 kcal/mol, max range 2.63
+
+Wrote results/08e_* and figures/08_docking_<group>.png

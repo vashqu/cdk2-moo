@@ -1,0 +1,2 @@
+stage status counts: {'completed': 55, 'failed': 1, 'planned': 13, 'plan_frozen': 1}
+FAILED stages: ['legacy/dock']; see campaigns/c2026-10-03/manifests/logs/

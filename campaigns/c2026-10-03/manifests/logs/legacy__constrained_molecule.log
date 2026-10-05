@@ -1,0 +1,46 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/10_run_constrained_ga.py --experiments molecule
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=legacy
+[campaign c2026-10-03 | scope legacy] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results
+
+molecule: surrogate trained on 1812 molecules; floors [0.4, 0.5, 0.6, 0.7]
+  seed 42 multi_real     tau 0.4: 100 generated; pred_real 7.28, similarity 0.48
+  seed 42 multi_real     tau 0.5:  98 generated; pred_real 7.33, similarity 0.58
+  seed 42 multi_real     tau 0.6:  97 generated; pred_real 7.35, similarity 0.68
+  seed 42 multi_real     tau 0.7:  87 generated; pred_real 7.37, similarity 0.74
+  seed 42 activity_only  tau 0.4:  96 generated; pred_real 7.77, similarity 0.71
+  seed 42 activity_only  tau 0.5:  97 generated; pred_real 7.86, similarity 0.73
+  seed 42 activity_only  tau 0.6:  97 generated; pred_real 7.83, similarity 0.75
+  seed 42 activity_only  tau 0.7:  90 generated; pred_real 7.65, similarity 0.76
+  seed 43 multi_real     tau 0.4: 100 generated; pred_real 7.25, similarity 0.48
+  seed 43 multi_real     tau 0.5:  98 generated; pred_real 7.34, similarity 0.67
+  seed 43 multi_real     tau 0.6:  98 generated; pred_real 7.34, similarity 0.67
+  seed 43 multi_real     tau 0.7:  95 generated; pred_real 7.44, similarity 0.76
+  seed 43 activity_only  tau 0.4:  97 generated; pred_real 7.79, similarity 0.60
+  seed 43 activity_only  tau 0.5:  98 generated; pred_real 7.83, similarity 0.69
+  seed 43 activity_only  tau 0.6:  92 generated; pred_real 7.70, similarity 0.68
+  seed 43 activity_only  tau 0.7:  92 generated; pred_real 7.68, similarity 0.79
+  seed 44 multi_real     tau 0.4: 100 generated; pred_real 7.27, similarity 0.47
+  seed 44 multi_real     tau 0.5:  99 generated; pred_real 7.29, similarity 0.58
+  seed 44 multi_real     tau 0.6:  97 generated; pred_real 7.33, similarity 0.67
+  seed 44 multi_real     tau 0.7:  92 generated; pred_real 7.39, similarity 0.75
+  seed 44 activity_only  tau 0.4:  99 generated; pred_real 7.84, similarity 0.74
+  seed 44 activity_only  tau 0.5:  98 generated; pred_real 7.81, similarity 0.67
+  seed 44 activity_only  tau 0.6:  98 generated; pred_real 7.81, similarity 0.74
+  seed 44 activity_only  tau 0.7:  95 generated; pred_real 7.77, similarity 0.77
+  seed 45 multi_real     tau 0.4: 100 generated; pred_real 7.24, similarity 0.45
+  seed 45 multi_real     tau 0.5: 100 generated; pred_real 7.26, similarity 0.56
+  seed 45 multi_real     tau 0.6: 100 generated; pred_real 7.25, similarity 0.67
+  seed 45 multi_real     tau 0.7:  96 generated; pred_real 7.39, similarity 0.75
+  seed 45 activity_only  tau 0.4:  98 generated; pred_real 7.93, similarity 0.74
+  seed 45 activity_only  tau 0.5:  98 generated; pred_real 7.93, similarity 0.75
+  seed 45 activity_only  tau 0.6:  98 generated; pred_real 7.88, similarity 0.76
+  seed 45 activity_only  tau 0.7:  97 generated; pred_real 7.84, similarity 0.76
+  seed 46 multi_real     tau 0.4:  98 generated; pred_real 7.26, similarity 0.57
+  seed 46 multi_real     tau 0.5:  97 generated; pred_real 7.24, similarity 0.62
+  seed 46 multi_real     tau 0.6:  97 generated; pred_real 7.32, similarity 0.69
+  seed 46 multi_real     tau 0.7:  93 generated; pred_real 7.37, similarity 0.75
+  seed 46 activity_only  tau 0.4:  96 generated; pred_real 7.76, similarity 0.70
+  seed 46 activity_only  tau 0.5:  94 generated; pred_real 7.75, similarity 0.69
+  seed 46 activity_only  tau 0.6:  96 generated; pred_real 7.78, similarity 0.72
+  seed 46 activity_only  tau 0.7:  92 generated; pred_real 7.73, similarity 0.75
+Wrote /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results/10_constrained_molecule_populations.csv (204000 rows) and its manifest

@@ -1,0 +1,5 @@
+arm,runs_negative_literal,spearman_median,delta_similarity_median,delta_similarity_min,delta_similarity_max,runs_farther_than_baseline,delta_size_percentile_median,delta_heavy_atoms_median,literal_by_plan,attributable_by_plan
+multi_real,4,-0.9470790199865489,0.024144999999999972,-0.005825000000000025,0.10509499999999994,1,1.265019999999999,0.0,True,False
+multi_scrambled,2,0.7537903457889844,0.012470000000000037,-0.06415500000000002,0.046254999999999935,2,-0.715955000000001,2.0,False,False
+activity_only,0,0.7268360933963568,0.34715499999999994,0.3208749999999999,0.35153,0,9.00938,13.0,False,False
+druglike_only,1,0.24234407472933983,0.0,0.0,0.0,0,0.0,0.0,False,False

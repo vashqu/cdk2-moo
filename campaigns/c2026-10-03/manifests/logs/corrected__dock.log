@@ -1,0 +1,98 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/08d_dock_sets.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=corrected
+[campaign c2026-10-03 | scope corrected] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results
+store /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/docking_store: manifest matches; grid maps validated; 2177 dockings requested by this scope (exhaustiveness 8, box 22.0 A)
+[RDKit] WARNING:[22:20:26] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[22:20:29] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[22:20:31] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[22:20:34] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+  25/1449 jobs done
+[RDKit] ERROR:[22:24:36] UFFTYPER: Unrecognized charge state for atom: 1
+  50/1449 jobs done
+[RDKit] ERROR:[22:27:51] UFFTYPER: Unrecognized charge state for atom: 1
+[RDKit] ERROR:[22:29:55] UFFTYPER: Unrecognized atom type: S_5+6 (14)
+  75/1449 jobs done
+  100/1449 jobs done
+  125/1449 jobs done
+  150/1449 jobs done
+  175/1449 jobs done
+  200/1449 jobs done
+[RDKit] ERROR:[22:47:51] UFFTYPER: Unrecognized atom type: S_5+6 (27)
+  225/1449 jobs done
+[RDKit] ERROR:[22:50:45] UFFTYPER: Unrecognized charge state for atom: 25
+  250/1449 jobs done
+[RDKit] ERROR:[22:55:40] UFFTYPER: Unrecognized atom type: S_5+4 (23)
+  275/1449 jobs done
+[RDKit] ERROR:[22:57:34] UFFTYPER: Unrecognized atom type: S_5+6 (24)
+  300/1449 jobs done
+  325/1449 jobs done
+  350/1449 jobs done
+  375/1449 jobs done
+  400/1449 jobs done
+[RDKit] ERROR:[23:15:08] UFFTYPER: Unrecognized atom type: S_5+6 (14)
+  425/1449 jobs done
+  450/1449 jobs done
+  475/1449 jobs done
+  500/1449 jobs done
+  525/1449 jobs done
+[RDKit] ERROR:[23:30:11] UFFTYPER: Unrecognized charge state for atom: 19
+  550/1449 jobs done
+  575/1449 jobs done
+  600/1449 jobs done
+[RDKit] ERROR:[23:39:08] UFFTYPER: Unrecognized atom type: S_5+6 (18)
+[RDKit] ERROR:[23:42:14] UFFTYPER: Unrecognized charge state for atom: 1
+  625/1449 jobs done
+  650/1449 jobs done
+  675/1449 jobs done
+  700/1449 jobs done
+  725/1449 jobs done
+  750/1449 jobs done
+  775/1449 jobs done
+[RDKit] ERROR:[00:04:22] UFFTYPER: Unrecognized atom type: S_5+4 (6)
+  800/1449 jobs done
+  825/1449 jobs done
+[RDKit] ERROR:[00:10:17] UFFTYPER: Unrecognized charge state for atom: 14
+  850/1449 jobs done
+  875/1449 jobs done
+[RDKit] ERROR:[00:18:03] UFFTYPER: Unrecognized atom type: S_5+6 (3)
+  900/1449 jobs done
+[RDKit] ERROR:[00:23:37] UFFTYPER: Unrecognized atom type: S_5+4 (6)
+  925/1449 jobs done
+  950/1449 jobs done
+  975/1449 jobs done
+  1000/1449 jobs done
+  1025/1449 jobs done
+  1050/1449 jobs done
+  1075/1449 jobs done
+  1100/1449 jobs done
+  1125/1449 jobs done
+  1150/1449 jobs done
+  1175/1449 jobs done
+  1200/1449 jobs done
+  1225/1449 jobs done
+  1250/1449 jobs done
+  1275/1449 jobs done
+  1300/1449 jobs done
+[RDKit] ERROR:[01:16:43] UFFTYPER: Unrecognized atom type: S_5+4 (8)
+  1325/1449 jobs done
+  1350/1449 jobs done
+  1375/1449 jobs done
+  1400/1449 jobs done
+  1425/1449 jobs done
+  1449/1449 jobs done
+[RDKit] WARNING:[01:36:02] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[01:36:03] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[01:36:06] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[01:36:08] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[01:36:10] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[01:36:11] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[01:36:14] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[01:36:16] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+
+11753 s this session. This scope's job records by status: {'ok': 2184, 'prep_failed': 5}
+store: complete 3654, recorded failures 6, unresolved inconsistencies: none
+[RDKit] WARNING:[01:36:18] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[01:36:19] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[01:36:22] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[01:36:24] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+exported 2189 job rows for this scope to /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results/08d_export

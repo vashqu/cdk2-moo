@@ -1,0 +1,5 @@
+arm,runs,net_rise_median,net_rise_min,net_rise_max,runs_with_rise,runs_spearman_ge_0.9,runs_literally_monotone,fraction_nondecreasing_median,rises_by_plan,monotone_by_plan
+multi_real,5,1.1320100000000002,1.0260150000000001,1.3995499999999996,5,5,0,0.86,True,False
+multi_scrambled,5,-0.6488149999999999,-0.7962049999999996,0.5105050000000002,1,1,0,0.52,False,False
+activity_only,5,1.9283299999999999,1.8508799999999992,2.1041849999999993,5,5,5,1.0,True,True
+druglike_only,5,-0.5242849999999999,-0.7668400000000002,-0.28377500000000033,0,0,0,0.44,False,False

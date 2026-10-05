@@ -1,0 +1,1 @@
+{"job_id": "fada40351bcbf601", "smiles": "CC(C)(C)c1nc(Nc2ccc(NCN3CCSCC3)cc2)ncc1F", "vina_seed": 42, "prep_seed": 42, "status": "ok", "vina_score": -8.06, "n_heavy_atoms": 26, "n_rotatable": 5, "seconds": 5.581599950790405, "error": "", "pose_sha256": "bd098ccc4eae01e21314e4d589e64b9e32c77754d6f6610dcf4559d401ff38b5"}

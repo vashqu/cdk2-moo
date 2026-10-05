@@ -1,0 +1,9 @@
+set,n,pass,fail,unevaluable,no_audit_result,pass_rate
+known_actives,100,100,0,0,0,1.0
+random_training,100,100,0,0,0,1.0
+decoys,100,98,1,0,1,0.98
+multi_real,100,98,2,0,0,0.98
+multi_scrambled,100,100,0,0,0,1.0
+activity_only,100,92,8,0,0,0.92
+druglike_only,100,100,0,0,0,1.0
+pareto_front,101,99,2,0,0,0.9801980198019802

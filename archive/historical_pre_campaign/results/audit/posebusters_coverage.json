@@ -1,0 +1,24 @@
+{
+  "required_checks": 22,
+  "historical_report_checks": 21,
+  "required_but_absent_from_historical_report": [
+    "internal_energy"
+  ],
+  "historical_poses": 787,
+  "historical_pass": 780,
+  "corrected_audit_poses": 787,
+  "corrected_status_counts": {
+    "pass": 774,
+    "fail": 13
+  },
+  "corrected_checks_present": 22,
+  "corrected_missing_by_check": {
+    "internal_energy": 5
+  },
+  "corrected_failed_by_check": {
+    "no_radicals": 6,
+    "bond_angles": 1,
+    "aromatic_ring_flatness": 1,
+    "internal_energy": 6
+  }
+}

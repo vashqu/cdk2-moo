@@ -1,0 +1,57 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/07b_ad_generated_overlay.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=corrected
+[campaign c2026-10-03 | scope corrected] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results
+Stage 4 validation coverage: distinct test molecules (MAE, bias) by similarity region x prediction band
+'n/a' = fewer than 30 distinct molecules: error cannot be estimated there
+  similarity                       <6                     6-7                     7-8                     >=8
+  <0.4             0.80 +0.02 (n=335)      0.95 -0.06 (n=769)       0.95 +0.36 (n=89)                    none
+  0.4-0.6          0.68 +0.16 (n=288)      0.79 -0.07 (n=596)      0.74 -0.07 (n=227)              n/a  (n=7)
+  0.6-0.8          0.52 +0.09 (n=404)      0.63 -0.06 (n=654)      0.56 -0.17 (n=550)       0.44 +0.02 (n=94)
+  >=0.8            0.42 -0.03 (n=209)      0.40 -0.00 (n=352)      0.36 -0.07 (n=343)       0.36 +0.01 (n=54)
+  (cell entries: MAE, bias = prediction minus measured)
+
+Generation 50, generated molecules, 5 seeds pooled: share in each raw-similarity region
+  arm                   <0.4   0.4-0.6   0.6-0.8     >=0.8     n
+  multi_real             58%       33%        9%        0%   499
+  multi_scrambled        70%       29%        1%        0%   499
+  activity_only           0%        4%       75%       22%   494
+  druglike_only          80%       19%        0%        0%   500
+  ...and in each size-percentile region
+  arm               <10 (novel for s             10-50  >=50 (typical or
+  multi_real                     72%               27%                0%
+  multi_scrambled                91%                9%                0%
+  activity_only                  28%               55%               17%
+  druglike_only                  96%                4%                0%
+
+  DRIFT IS NOT EXPLOITATION: share with raw similarity < 0.4: multi_real 58%, multi_scrambled 70%, activity_only 0%, druglike_only 80%
+  druglike_only never sees the surrogate yet drifts as far; low similarity alone proves nothing about exploitation.
+
+Candidate classes among distinct generated molecules (all generations, 5 seeds pooled):
+  arm              distinct  A supported  B weak support  C pred<8
+  multi_real           2709           93             124      2492
+  multi_scrambled      2923            4               0      2919
+  activity_only        3420         1963             469       988
+  druglike_only        2978            5               3      2970
+  Pareto front           87           26               6        55
+
+Pareto-front molecules by Stage 4 support:
+  front molecules in a (similarity x prediction) cell where Stage 4 can estimate error: 81/87
+  of the 32 front molecules predicted >= 8: 26 sit in a supported cell, 6 do not
+  class B = high prediction and weak support (no error claim possible):
+     pred   QED    SA  rawsim  pctile  atoms  arms / SMILES
+     8.36  0.62  2.03    0.58    11.1     24  activity_only  Nc1ccc(Nc2nccc(-c3ccc(S(N)(=O)=O)cc3)n2)cc1
+     8.20  0.89  2.68    0.56    12.3     23  multi_real  CCCNC(=O)Nc1ncc(F)c(-c2cnc(C)n2C(C)C)n1
+     8.18  0.88  2.64    0.56    12.3     23  druglike_only|multi_real  CCCCC(=O)Nc1ncc(F)c(-c2cnc(C)n2C(C)C)n1
+     8.15  0.92  2.67    0.58    14.9     22  multi_real  CCCC(=O)Nc1ncc(F)c(-c2cnc(C)n2C(C)C)n1
+     8.13  0.94  2.66    0.58    14.9     22  multi_real  Cc1ncc(-c2nc(NC(=O)C3CC3)ncc2F)n1C(C)C
+     8.01  0.91  2.41    0.36     7.2     20  multi_real  CNc1ccc(C(C)c2ccc(S(N)(=O)=O)cc2)cc1
+
+Agreement of the two measures for generated molecules (distinct, pooled): rows = raw region, cols = percentile region
+pct_region  <10 (novel for size)  10-50  >=50 (typical or better)
+raw_region                                                       
+<0.4                        5275      0                         0
+0.4-0.6                     2816    861                         0
+0.6-0.8                      542   1998                        76
+>=0.8                          0     60                       282
+
+Wrote results/07_generated_regions.csv

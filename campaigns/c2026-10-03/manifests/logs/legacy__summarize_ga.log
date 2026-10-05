@@ -1,0 +1,34 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05c_summarize_ga.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=legacy
+[campaign c2026-10-03 | scope legacy] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results
+05_ga_populations_scored.csv: 4 arms, 5 seeds, 50 generations, 102000 rows
+population members that are still starting molecules after generation 0: 4822 of 100000 rows (excluded from every statistic below)
+
+Generation 50: generated molecules (birth_generation > 0) per run, of 100
+  multi_real       per run min 99, median 100; unique SMILES across 5 runs 413 of 499
+  multi_scrambled  per run min 99, median 100; unique SMILES across 5 runs 499 of 499
+  activity_only    per run min 95, median 99; unique SMILES across 5 runs 476 of 492
+  druglike_only    per run min 100, median 100; unique SMILES across 5 runs 487 of 500
+
+Generation 50: per-seed population statistic, median [min, max] over seeds
+                             med pred_real          best pred_real      med pred_scrambled        med max_tanimoto         med size_pctile                 med qed                  med sa         med heavy_atoms
+  multi_real             7.699 [7.62,7.74]       8.419 [8.21,8.50]       6.503 [6.43,6.57]       0.378 [0.36,0.49]      6.494 [5.88,10.91]       0.908 [0.90,0.92]       2.088 [1.99,2.53]    21.000 [21.00,22.00]
+  multi_scrambled        6.183 [5.91,6.75]       7.485 [6.72,7.70]       7.296 [7.16,7.33]       0.373 [0.32,0.39]       4.670 [2.71,5.15]       0.915 [0.90,0.92]       2.266 [1.77,2.58]    23.000 [22.00,24.00]
+  activity_only          8.589 [8.31,8.60]       8.656 [8.56,8.71]       6.490 [6.47,6.91]       0.701 [0.69,0.74]    14.127 [13.60,21.02]       0.300 [0.27,0.34]       3.094 [2.81,3.20]    35.000 [34.00,36.00]
+  druglike_only          6.134 [5.91,6.21]       7.421 [6.57,7.57]       6.641 [6.58,6.66]       0.361 [0.34,0.39]       4.938 [4.77,5.86]       0.933 [0.93,0.94]       1.706 [1.66,1.79]    21.000 [21.00,22.00]
+
+Change from generation 0 to 50, median [min, max] over seeds
+                             med pred_real          best pred_real      med pred_scrambled        med max_tanimoto         med size_pctile                 med qed                  med sa         med heavy_atoms
+  multi_real          +1.068 [+1.02,+1.21]    -0.259 [-0.43,-0.06]    -0.198 [-0.33,-0.04]    -0.622 [-0.64,-0.51] -93.506 [-94.12,-89.09]    +0.390 [+0.37,+0.41]    -0.837 [-0.87,-0.38]    -8.000 [-9.00,-7.00]
+  multi_scrambled     -0.528 [-0.60,+0.16]    -1.349 [-1.99,-0.77]    +0.562 [+0.40,+0.74]    -0.627 [-0.68,-0.61] -95.330 [-97.29,-94.85]    +0.400 [+0.37,+0.43]    -0.699 [-1.09,-0.17]    -7.000 [-7.00,-5.00]
+  activity_only       +1.908 [+1.80,+2.10]    -0.000 [-0.18,+0.19]    -0.118 [-0.31,+0.21]    -0.299 [-0.31,-0.26] -85.873 [-86.40,-78.98]    -0.200 [-0.25,-0.17]    +0.231 [+0.01,+0.37]    +5.000 [+5.00,+8.00]
+  druglike_only       -0.512 [-0.68,-0.32]    -1.321 [-2.15,-0.90]    -0.044 [-0.18,+0.03]    -0.639 [-0.66,-0.61] -95.062 [-95.23,-94.14]    +0.417 [+0.39,+0.43]    -1.125 [-1.26,-1.08]    -8.000 [-9.00,-7.00]
+
+Paired contrast at generation 50: arm minus druglike_only, same seed
+  (how much of the movement is attributable to the activity objective)
+                             med pred_real        med max_tanimoto         med size_pctile                 med qed                  med sa         med heavy_atoms   seeds arm>base on pred_real
+  multi_real          +1.564 [+1.50,+1.71]    +0.024 [-0.01,+0.11]    +1.265 [+1.05,+5.97]    -0.027 [-0.04,-0.01]    +0.385 [+0.25,+0.74]    +0.000 [-1.00,+0.00]                          5/5
+  multi_scrambled     -0.024 [-0.28,+0.84]    +0.012 [-0.06,+0.05]    -0.716 [-2.23,+0.13]    -0.017 [-0.04,-0.00]    +0.560 [+0.09,+0.92]    +2.000 [+0.00,+3.00]                          2/5
+  activity_only       +2.455 [+2.12,+2.59]    +0.347 [+0.32,+0.35]   +9.009 [+8.82,+15.16]    -0.627 [-0.67,-0.59]    +1.372 [+1.15,+1.45] +13.000 [+12.00,+15.00]                          5/5
+
+Wrote figures/05_ga_trajectories.png and figures/05_ga_final_generation.png

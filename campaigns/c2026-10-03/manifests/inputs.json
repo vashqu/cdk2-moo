@@ -1,0 +1,23 @@
+{
+  "inputs": {
+    "inputs/raw/chembl_CHEMBL301_activities.csv": {
+      "bytes": 2139293,
+      "copied_from": "data/raw/chembl_CHEMBL301_activities.csv",
+      "matches_historical_record": true,
+      "sha256": "e42b76cf2427ffa7731dd459b66818d38f8767c591b24280bd21eeb2f18a8011"
+    },
+    "inputs/structures/4KD1.pdb": {
+      "bytes": 245997,
+      "copied_from": "data/structures/4KD1.pdb",
+      "matches_historical_record": true,
+      "sha256": "f902a65172345488551d1eb14659d2e24094aa82b5b882d88ddecccdf0811f5c"
+    },
+    "inputs/structures/4kd1_1QK_crystal.sdf": {
+      "bytes": 3452,
+      "copied_from": "data/structures/4kd1_1QK_crystal.sdf",
+      "matches_historical_record": true,
+      "sha256": "154ef0db46fed220680b8e0943dc270d8416353af89adc3754e0f4373a2e8c08"
+    }
+  },
+  "provenance": "The ChEMBL activity table is the CACHED download made in the historical run (5,367 records for CHEMBL301); no newer ChEMBL release was downloaded. 4KD1.pdb and the crystal ligand SDF were downloaded from RCSB in the historical run and are the structural inputs; the campaign never downloads in their place."
+}

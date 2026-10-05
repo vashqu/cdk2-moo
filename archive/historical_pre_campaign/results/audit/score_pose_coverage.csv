@@ -1,0 +1,4 @@
+vina_seed,score_rows,ok_scores,pose_records,records_without_identity,distinct_pose_identities,duplicate_pose_identities,duplicate_score_rows,ok_scores_without_pose,poses_without_ok_score,non_ok_status_counts
+42,788,787,787,0,787,0,0,0,0,"{""prep_failed"": 1}"
+43,30,30,30,0,30,0,0,0,0,{}
+44,30,30,30,0,30,0,0,0,0,{}

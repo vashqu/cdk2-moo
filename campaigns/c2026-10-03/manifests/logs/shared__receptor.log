@@ -1,0 +1,20 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/08_prepare_receptor.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=shared
+[campaign c2026-10-03 | scope shared] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/results
+Structure 4KD1.pdb, crystal ligand 4kd1_1QK_crystal.sdf
+  missing residues: 0, missing atoms: 0, non-standard residues: 0
+  protein with hydrogens: 4848 atoms
+[20:28:26] Warning: molecule is tagged as 2D, but at least one Z coordinate is not zero. Marking the mol as 3D.
+  crystal ligand: 29 heavy atoms, centre (55.6, 79.9, 28.0), extent 7.0 x 8.6 x 8.0 A; box 22.0 A cube
+Template padding will be used.
+[32m gasteiger charges will be read from template file 
+ [0m
+
+Files written:
+  /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/structures/receptor.pdbqt <-- static (i.e., rigid) receptor input file
+/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/structures/receptor.box.txt <-- Vina-style box dimension file
+/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/structures/receptor.box.pdb <-- PDB file to visualize the grid box
+ 
+
+Wrote receptor_H.pdb, receptor.pdbqt, receptor_box.txt in data/structures/
+Next: scripts/08b_redock_native_ligand.py

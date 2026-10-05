@@ -1,0 +1,18 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/08d_dock_sets.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=legacy
+[campaign c2026-10-03 | scope legacy] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results
+store /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/docking_store: manifest matches; grid maps validated; 2211 dockings requested by this scope (exhaustiveness 8, box 22.0 A)
+[RDKit] WARNING:[21:45:58] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[21:46:01] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[21:46:03] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[21:46:06] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[21:46:08] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[21:46:11] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[21:46:13] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[21:46:16] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+
+19 s this session. This scope's job records by status: {'ok': 2210, 'prep_failed': 1}
+store: complete 2210, recorded failures 1, unresolved inconsistencies: none
+[RDKit] WARNING:[21:46:17] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+[RDKit] WARNING:[21:46:20] WARNING: not removing hydrogen atom with neighbor that has non-tetrahedral stereochemistry
+exported 2211 job rows for this scope to /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results/08d_export

@@ -1,0 +1,45 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/06_pareto.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=corrected
+[campaign c2026-10-03 | scope corrected] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results
+seed = 42 (random reference sample only)
+Generated molecules (birth_generation > 0), unique per arm, pooled over seeds and generations
+  multi_real         2709 molecules, own Pareto front   60
+  multi_scrambled    2923 molecules, own Pareto front   48
+  activity_only      3420 molecules, own Pareto front   26
+  druglike_only      2978 molecules, own Pareto front   42
+
+Pooled: 11910 distinct generated molecules; Pareto front has 87
+  which arm(s) produced the front molecules:
+    multi_real         50 of 87
+    multi_scrambled     5 of 87
+    activity_only      23 of 87
+    druglike_only      18 of 87
+  front ranges: predicted pActivity 5.87-8.89, QED 0.22-0.95, SA 1.39-3.51, heavy atoms 20-38
+
+Known actives: 204 training molecules with measured pActivity >= 8.05 (in-sample); random reference: 300 training molecules
+  Trade-off comparison (generated = PREDICTED activity, reference = MEASURED; indicative only):
+    known actives dominated by at least one front molecule: 136/204
+    random training molecules dominated by a front molecule: 294/300
+    front molecules dominated by a known active: 16/87
+    known actives: median QED 0.53, median SA 2.89; front: median QED 0.91, median SA 2.15
+
+Front molecules against Stage 4's error-vs-similarity curve (ECFP4 Tanimoto, 2048-bit):
+  raw max Tanimoto bin   Stage 4 MAE  share of front
+  <0.4                          0.91             49%
+  0.4-0.6                       0.75             20%
+  0.6-0.8                       0.57             17%
+  >=0.8                         0.39             14%
+  front median raw max Tanimoto 0.40, median size percentile 9.2
+  front molecules predicted >= 8 : 32; of those with raw similarity < 0.6: 6
+
+Front molecules drawn:
+  highest predicted pActivity: pred 8.89, QED 0.47, SA 3.51, sim 1.00 (pctile 100), activity_only
+    CCc1cnn2c(NCc3ccc[n+]([O-])c3)cc(N3CCCCC3CCO)nc12
+  highest QED: pred 6.21, QED 0.95, SA 2.55, sim 0.38 (pctile 6), multi_real
+    Cc1nc2c(F)cc(N3CCC(O)CC3)cc2n1CC1CC1
+  lowest SA score: pred 6.00, QED 0.88, SA 1.39, sim 0.38 (pctile 9), druglike_only
+    COC(=O)c1ccc(C(=O)Nc2ccc(Cl)cc2)cc1
+  best balanced (GA fitness): pred 7.89, QED 0.95, SA 1.80, sim 0.31 (pctile 4), multi_real
+    CC(C)(C)Oc1ccc(-c2ccc(S(N)(=O)=O)cc2)cc1
+
+Wrote results/06_pareto_front.csv, figures/06_pareto_fronts.png, figures/06_pareto_structures.png

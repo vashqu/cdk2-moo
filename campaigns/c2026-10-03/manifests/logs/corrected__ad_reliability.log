@@ -1,0 +1,35 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/07_ad_reliability.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=corrected
+[campaign c2026-10-03 | scope corrected] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results
+12090 Stage 4 test predictions, 2014 distinct molecules; stratum widened beyond +/-2 for 729 rows
+
+Rank correlation of |error| with similarity (negative = error rises as similarity falls),
+and AUC for flagging |error| >= 1.0 (0.5 = useless, 1.0 = perfect):
+               rho raw  rho pctile   AUC raw  AUC pctile   large-error share
+  random         -0.33       -0.29     0.737       0.723                 13%
+  scaffold       -0.30       -0.26     0.691       0.670                 21%
+  paper          -0.20       -0.16     0.610       0.588                 30%
+  pooled         -0.35       -0.33     0.706       0.694                 21%
+
+Stage 4 error by raw similarity region (pooled over splits and seeds):
+  region                      rows  distinct mols    MAE   RMSE   bias  supported
+  <0.4                        2604            987   0.91   1.10  -0.01  yes
+  0.4-0.6                     2526            915   0.75   0.93  -0.01  yes
+  0.6-0.8                     4492           1377   0.57   0.74  -0.05  yes
+  >=0.8                       2468            857   0.39   0.52  -0.03  yes
+
+Stage 4 error by size-percentile region (pooled over splits and seeds):
+  region                      rows  distinct mols    MAE   RMSE   bias  supported
+  <10 (novel for size)        4636           1551   0.83   1.02  -0.03  yes
+  10-50                       4682           1462   0.60   0.78  -0.03  yes
+  >=50 (typical or better)    2772           1002   0.41   0.54  -0.04  yes
+
+Inside each raw region: MAE by size-percentile region (distinct molecules in brackets).
+If the percentile carried extra information, MAE would change across a row.
+  raw region        <10 (novel for size)                     10-50    >=50 (typical or bette
+  <0.4                        0.90 (982)                  n/a (13)                         -
+  0.4-0.6                     0.75 (760)                0.75 (249)                         -
+  0.6-0.8                      0.61 (57)               0.58 (1254)                0.47 (272)
+  >=0.8                                -                0.38 (143)                0.39 (792)
+
+Wrote results/07_stage4_ad.csv, results/07_reliability_bins.csv, figures/07_reliability_curves.png

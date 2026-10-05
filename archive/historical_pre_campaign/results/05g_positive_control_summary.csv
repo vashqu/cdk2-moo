@@ -1,0 +1,21 @@
+control,group,n,median_sim_to_held_actives,frac_ge_0.5,frac_ge_0.6,frac_ge_0.7,frac_ge_0.8,frac_exact,frac_nn_is_held_active,base_rate,frac_nn_label_potent,actives_hit,n_actives,scaffolds_exact,scaffolds_near
+molecule,multi_real,500,0.3214,0.0680,0.0140,0.0040,0.0020,0.0000,0.2360,0.1012,0.7778,,,,
+molecule,multi_scrambled,500,0.2774,0.0000,0.0000,0.0000,0.0000,0.0000,0.0840,0.1012,0.0000,,,,
+molecule,activity_only,490,0.7097,0.9755,0.8327,0.5347,0.1327,0.0020,0.7000,0.1012,0.7483,,,,
+molecule,druglike_only,500,0.2879,0.0000,0.0000,0.0000,0.0000,0.0000,0.0920,0.1012,0.0000,,,,
+molecule,start molecules,500,0.3288,0.3340,0.2800,0.1680,0.0680,0.0040,0.0040,0.1012,0.0040,,,,
+molecule,remaining training,1631,0.3294,0.3397,0.2624,0.1447,0.0460,0.0031,0.0668,0.1012,0.0657,,,,
+molecule,multi_real (recall),2618,,,,,,,,,,72.0000,204.0000,15.0000,31.0000
+molecule,multi_scrambled (recall),3013,,,,,,,,,,30.0000,204.0000,13.0000,14.0000
+molecule,activity_only (recall),3485,,,,,,,,,,112.0000,204.0000,21.0000,38.0000
+molecule,druglike_only (recall),2965,,,,,,,,,,16.0000,204.0000,9.0000,14.0000
+scaffold,multi_real,500,0.3000,0.0540,0.0100,0.0000,0.0000,0.0000,0.1200,0.0461,0.8070,,,,
+scaffold,multi_scrambled,499,0.1711,0.0000,0.0000,0.0000,0.0000,0.0000,0.0060,0.0461,,,,,
+scaffold,activity_only,493,0.4459,0.4422,0.2231,0.0304,0.0000,0.0000,0.3022,0.0461,0.9578,,,,
+scaffold,druglike_only,500,0.2238,0.0000,0.0000,0.0000,0.0000,0.0000,0.0180,0.0461,0.0000,,,,
+scaffold,start molecules,500,0.2179,0.1060,0.0820,0.0260,0.0020,0.0000,0.0000,0.0461,0.0580,,,,
+scaffold,remaining training,1591,0.2150,0.0867,0.0635,0.0207,0.0019,0.0000,0.0151,0.0461,0.0766,,,,
+scaffold,multi_real (recall),2681,,,,,,,,,,30.0000,93.0000,4.0000,6.0000
+scaffold,multi_scrambled (recall),2971,,,,,,,,,,22.0000,93.0000,3.0000,5.0000
+scaffold,activity_only (recall),4005,,,,,,,,,,56.0000,93.0000,5.0000,7.0000
+scaffold,druglike_only (recall),2907,,,,,,,,,,15.0000,93.0000,2.0000,3.0000

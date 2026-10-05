@@ -1,0 +1,71 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/02_curate.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=shared
+[campaign c2026-10-03 | scope shared] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/results
+Loaded 5367 raw records from chembl_CHEMBL301_activities.csv
+
+--- IC50 (modelling set) ---
+    5367  raw records
+    3692  type in ['IC50']   (-1675)
+    2826  relation == '='   (-866)
+    2798  units == 'nM'   (-28)
+    2725  no curator flag   (-73)
+    2715  not a mutant-CDK2 assay   (-10)
+    2680  assay_type in ['B']   (-35)
+    2680  positive value present   (-0)
+    2676  SMILES present   (-4)
+
+  pActivity vs ChEMBL's pchembl_value: 2676 comparable, 0 disagree by >0.01 (max diff 0.0055)
+  standardizing 2035 unique input SMILES (tautomer canonicalization: True) ...
+    500/2035
+    1000/2035
+    1500/2035
+    2000/2035
+
+  2676 records survived standardization (-0)
+
+  2035 unique ChEMBL IDs -> 2016 unique structures
+  19 ID(s) collapsed into another structure (salts, tautomers, charge states). These would have leaked across a train/test split if we had deduplicated by ID.
+
+  Disagreement between repeated records (diagnostic only):
+    n_replicated: 439
+    frac_replicated: 0.218
+    median_within_compound_sd: 0.000
+    mean_within_compound_sd: 0.174
+    median_range: 0.000
+    max_range: 3.448
+
+  This is NOT a noise floor: most replicates are the same measurement curated twice. Cite the literature figure (~0.5 log units) as external. See decisions.md D-09.
+
+  pActivity distribution:
+count    2016.000000
+mean        6.581470
+std         1.156457
+min         3.455932
+25%         5.721698
+50%         6.602060
+75%         7.468521
+max         9.522879
+
+Wrote /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/processed/cdk2_ic50_curated.csv  (2016 molecules)
+
+--- Ki/Kd (external check) ---
+    5367  raw records
+    1675  type in ['Ki', 'Kd']   (-3692)
+     730  relation == '='   (-945)
+     730  units == 'nM'   (-0)
+     718  no curator flag   (-12)
+     718  not a mutant-CDK2 assay   (-0)
+     718  positive value present   (-0)
+     718  SMILES present   (-0)
+
+  pActivity vs ChEMBL's pchembl_value: 718 comparable, 0 disagree by >0.01 (max diff 0.0055)
+  standardizing 644 unique input SMILES (tautomer canonicalization: True) ...
+    500/644
+
+  718 records survived standardization (-0)
+
+  644 unique ChEMBL IDs -> 644 unique structures
+
+Wrote /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/processed/cdk2_kikd_external.csv  (602 molecules with no IC50)
+
+Next: stage 3, featurization and splits.

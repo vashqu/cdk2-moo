@@ -1,0 +1,58 @@
+{
+  "policy": "legacy",
+  "seed": 42,
+  "top_decile_cutoff": 8.050609993355087,
+  "P_decoy_standardized_mean_differences": {
+    "heavy atoms": -0.00786886921565956,
+    "MW": -0.3244313638816915,
+    "cLogP": -0.10652544941411511,
+    "HBD": -0.3105018123890448,
+    "HBA": -0.09643269302342564,
+    "rotatable bonds": -0.1749994725146011
+  },
+  "P_decoy_pool_after_exclusions": 5839,
+  "M_decoy_standardized_mean_differences": {
+    "heavy atoms": -0.07896779090833414,
+    "MW": -0.44257273693768995,
+    "cLogP": -0.12554250458380822,
+    "HBD": -0.4016081092670317,
+    "HBA": -0.3323910550217407,
+    "rotatable bonds": -0.08218502943686123
+  },
+  "M_decoy_pool_after_exclusions": 5713,
+  "S_decoy_standardized_mean_differences": {
+    "heavy atoms": 0.19323457437389735,
+    "MW": -0.4241007727896538,
+    "cLogP": -0.16767071482677912,
+    "HBD": -0.5335781744694328,
+    "HBA": -0.2534897047253545,
+    "rotatable bonds": -0.3345005151394562
+  },
+  "S_decoy_pool_after_exclusions": 5848,
+  "set_sizes": {
+    "M:activity_only": 100,
+    "M:decoys": 100,
+    "M:druglike_only": 100,
+    "M:heldout_actives": 100,
+    "M:multi_real": 100,
+    "M:multi_scrambled": 100,
+    "M:random_remaining": 100,
+    "P:activity_only": 100,
+    "P:decoys": 100,
+    "P:druglike_only": 100,
+    "P:multi_real": 100,
+    "P:multi_scrambled": 100,
+    "P:pareto_front": 124,
+    "P:random_training": 100,
+    "P:training_top_decile": 100,
+    "S:activity_only": 100,
+    "S:decoys": 93,
+    "S:druglike_only": 100,
+    "S:heldout_actives": 93,
+    "S:multi_real": 100,
+    "S:multi_scrambled": 100,
+    "S:random_remaining": 100
+  },
+  "distinct_molecules": 2033,
+  "replicate_molecules": 89
+}

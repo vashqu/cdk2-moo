@@ -1,0 +1,123 @@
+{
+  "args": [],
+  "campaign": "c2026-10-03",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/dock_analysis": {
+      "campaigns/c2026-10-03/corrected/results/08e_docking_by_molecule.csv": {
+        "bytes": 547779,
+        "sha256": "3687d424827799cdaaac81488ab3686bfa54e99bd16733a7b7e58fc32122eeb4"
+      }
+    },
+    "corrected/hinge": {
+      "campaigns/c2026-10-03/corrected/results/08g_hinge_by_set.csv": {
+        "bytes": 1380,
+        "sha256": "0587b6d7f5818948455209d5ff7e730bd3c8e040d2d95180c9c528f4fa8f57ad"
+      },
+      "campaigns/c2026-10-03/corrected/results/08g_hinge_contacts.csv": {
+        "bytes": 143184,
+        "sha256": "512966fa0e2084a1e46c8813b9766945b3e15f5d3f52d1bd0010d1aa714e1fd5"
+      }
+    },
+    "corrected/posebusters": {
+      "campaigns/c2026-10-03/corrected/results/posebusters_audit/posebusters_checks.csv": {
+        "bytes": 389425,
+        "sha256": "51b140b2c2e849c8ce2e4fce8c7c0e4666329150c70b028e80afab040efec42b"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-10-05T07:42:58+00:00",
+  "log": "campaigns/c2026-10-03/manifests/logs/corrected__table1.log",
+  "log_sha256": "82a1cadf8d93ae6845fa12db129f5a0d968732e630905f33604b2c1e7050a528",
+  "outputs": {
+    "campaigns/c2026-10-03/corrected/figures/final/table1.md": {
+      "bytes": 3383,
+      "sha256": "8f8adff44f186d544a0953f588201662cc33d83dde86a31e24d1036a9edb44c7"
+    },
+    "campaigns/c2026-10-03/corrected/results/table1.csv": {
+      "bytes": 2245,
+      "sha256": "06b0befd1997f267cbb5b476a490c67fa4cad63446e3cb7c344e678ae2b8a0f5"
+    }
+  },
+  "scope": "corrected",
+  "script": "11b_table1.py",
+  "seconds": 14.6,
+  "source": {
+    "git_head": "2d71827cfcbdea22168a43ac02196ab8325f9d5d",
+    "git_status_lines": [
+      "M CLAUDE.md",
+      " M README.md",
+      " M decisions.md",
+      " M environment.yml",
+      " M scripts/01_fetch_chembl.py",
+      " M scripts/02_curate.py",
+      " M scripts/03_features_and_splits.py",
+      " M scripts/04_train_surrogate.py",
+      " M src/cdk2moo/audit.py",
+      " M src/cdk2moo/config.py",
+      " M src/cdk2moo/docking.py",
+      " M src/cdk2moo/ga.py",
+      " M src/cdk2moo/splits.py",
+      " M src/cdk2moo/standardize.py",
+      "?? campaigns/",
+      "?? historical_record/",
+      "?? reproducibility/",
+      "?? scripts/03b_eligible_starts.py",
+      "?? scripts/05_run_ga.py",
+      "?? scripts/05b_size_conditioned_similarity.py",
+      "?? scripts/05c_summarize_ga.py",
+      "?? scripts/05d_ga_descriptive_checks.py",
+      "?? scripts/05e_positive_control_setup.py",
+      "?? scripts/05f_positive_control_ga.py",
+      "?? scripts/05g_positive_control_eval.py",
+      "?? scripts/05h_scaffold_surrogate_robustness.py",
+      "?? scripts/06_pareto.py",
+      "?? scripts/07_ad_reliability.py",
+      "?? scripts/07b_ad_generated_overlay.py",
+      "?? scripts/07c_structural_alerts.py",
+      "?? scripts/08_prepare_receptor.py",
+      "?? scripts/08b_redock_native_ligand.py",
+      "?? scripts/08c_select_docking_sets.py",
+      "?? scripts/08d_dock_sets.py",
+      "?? scripts/08e_docking_analysis.py",
+      "?? scripts/08f_posebusters.py",
+      "?? scripts/08g_hinge_contacts.py",
+      "?? scripts/10_run_constrained_ga.py",
+      "?? scripts/10b_analyze_tradeoff.py",
+      "?? scripts/11_make_figures.py",
+      "?? scripts/11b_table1.py",
+      "?? scripts/12_audit_leakage_and_artifacts.py",
+      "?? scripts/13_hypothesis_endpoints.py",
+      "?? scripts/campaign_inventory.py",
+      "?? scripts/campaign_run.py",
+      "?? src/cdk2moo/ad_plots.py",
+      "?? src/cdk2moo/alerts.py",
+      "?? src/cdk2moo/applicability.py",
+      "?? src/cdk2moo/campaign.py",
+      "?? src/cdk2moo/campaign_driver.py",
+      "?? src/cdk2moo/candidates.py",
+      "?? src/cdk2moo/dock_jobs.py",
+      "?? src/cdk2moo/dock_validate.py",
+      "?? src/cdk2moo/docking_stats.py",
+      "?? src/cdk2moo/docksets.py",
+      "?? src/cdk2moo/endpoints.py",
+      "?? src/cdk2moo/figures_model.py",
+      "?? src/cdk2moo/figures_validation.py",
+      "?? src/cdk2moo/ga_plots.py",
+      "?? src/cdk2moo/hinge.py",
+      "?? src/cdk2moo/holdout.py",
+      "?? src/cdk2moo/mutations.py",
+      "?? src/cdk2moo/pareto_plots.py",
+      "?? src/cdk2moo/posebusters_audit.py",
+      "?? src/cdk2moo/recovery.py",
+      "?? src/cdk2moo/run_outputs.py",
+      "?? src/cdk2moo/similarity.py",
+      "?? src/cdk2moo/starts.py",
+      "?? tests/"
+    ],
+    "source_tree_sha256": "54c5a23b138fc5ec572a3171fb3ff20b55c835e0d71f252c26d4985ded2328f3",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/table1"
+}

@@ -1,0 +1,14 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/08b_redock_native_ligand.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=shared
+[campaign c2026-10-03 | scope shared] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/results
+Vina seeds = [42, 43, 44], exhaustiveness 8, box 22.0 A
+[RDKit] WARNING:[20:28:31] Warning: molecule is tagged as 2D, but at least one Z coordinate is not zero. Marking the mol as 3D.
+Ligand: 29 heavy atoms, 18 rigid groups
+Vina score of the crystal pose: -8.46 kcal/mol as deposited, -9.45 after local relaxation
+  seed 42: 8 s; top pose -9.48 kcal/mol, RMSD 0.63 A; best RMSD among 2 poses 0.63 A (pose 1, score -9.48)
+  seed 43: 7 s; top pose -9.44 kcal/mol, RMSD 0.65 A; best RMSD among 3 poses 0.65 A (pose 1, score -9.44)
+  seed 44: 9 s; top pose -9.48 kcal/mol, RMSD 0.65 A; best RMSD among 5 poses 0.65 A (pose 1, score -9.48)
+
+Top-ranked pose RMSD to the crystal pose: median 0.65 A over 3 seeds (range 0.63-0.65)
+  <= 2.0 A: the setup reproduces the crystal binding mode.
+Wrote results/08b_redocking.json

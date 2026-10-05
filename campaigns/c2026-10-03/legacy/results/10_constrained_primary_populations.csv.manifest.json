@@ -1,0 +1,612 @@
+{
+  "campaign": "c2026-10-03",
+  "complete": true,
+  "created_utc": "2026-10-03T18:13:41+00:00",
+  "inputs": {
+    "curated": {
+      "bytes": 361575,
+      "path": "/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/processed/cdk2_ic50_curated.csv",
+      "sha256": "634c8603cbaba2424b99b9d2ddcb0f7f3ed0452c5c92ed6f6377961d922aa6b2"
+    },
+    "eligible_starts": {
+      "bytes": 109426,
+      "path": "/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/processed/eligible_starts.csv",
+      "sha256": "2bff7da9700fc77071b70ffc0de33d296a13260b95c4253e80e280159d88ac92"
+    },
+    "fingerprints": {
+      "bytes": 4128896,
+      "path": "/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/processed/ecfp4.npy",
+      "sha256": "9918f0f49e95c4699ddac5ca130403e95db76d58034eac4c04d9edebccbb4246"
+    },
+    "holdout_assignments": {
+      "bytes": 275849,
+      "path": "/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results/05e_holdout_sets.csv",
+      "sha256": "ab1181502a9ee0e6de4a92f686c0f0ab16d16d24e50f0d9474844a9e3426a5f2"
+    }
+  },
+  "output": "10_constrained_primary_populations.csv",
+  "outputs": {
+    "10_constrained_primary_populations.csv": {
+      "bytes": 25266764,
+      "sha256": "987c075afb9e1db4c8950132e8ec4eedf048be53d545e5894426d1d138420500"
+    }
+  },
+  "parameters": {
+    "ACTIVITY_HIGH": 9.0,
+    "ACTIVITY_LOW": 4.0,
+    "AD_LARGE_ERROR": 1.0,
+    "AD_MIN_UNIQUE": 30,
+    "AD_PCT_EDGES": [
+      0.0,
+      10.0,
+      50.0,
+      100.01
+    ],
+    "AD_RAW_EDGES": [
+      0.0,
+      0.4,
+      0.6,
+      0.8,
+      1.01
+    ],
+    "DOCK_BOX_SIZE": 22.0,
+    "DOCK_EXHAUSTIVENESS": 8,
+    "DOCK_N_POSES": 9,
+    "DOCK_PH": 7.4,
+    "DROP_CURATOR_FLAGGED": true,
+    "FP_BITS": 2048,
+    "FP_RADIUS": 2,
+    "GA_ALLOWED_ELEMENTS": [
+      "C",
+      "N",
+      "O",
+      "F",
+      "S",
+      "Cl",
+      "Br"
+    ],
+    "GA_MAX_HEAVY_ATOMS": 39,
+    "GA_MIN_HEAVY_ATOMS": 20,
+    "GA_MUTATION_PROB": 0.5,
+    "GA_N_CHILDREN": 100,
+    "GA_N_GENERATIONS": 50,
+    "GA_POP_SIZE": 100,
+    "GA_RELAXED_MAX_HEAVY_ATOMS": 50,
+    "GA_RELAXED_MIN_HEAVY_ATOMS": 15,
+    "GA_SEEDS": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "HOLDOUT_MIN_TOP_PER_FAMILY": 5,
+    "HOLDOUT_QUANTILE": 0.9,
+    "KEEP_ASSAY_TYPES": [
+      "B"
+    ],
+    "KEEP_RELATION": "=",
+    "KEEP_TYPES": [
+      "IC50"
+    ],
+    "KEEP_UNITS": "nM",
+    "MUTANT_REGEX": "\\bmutant\\b|\\bCDK2\\s+[A-Z]\\d{1,3}[A-Z]\\b",
+    "PDB_ID": "4KD1",
+    "RANDOM_SEED": 42,
+    "REDISCOVERY_SIM": 0.6,
+    "REDISCOVERY_SIMS": [
+      0.5,
+      0.6,
+      0.7,
+      0.8
+    ],
+    "REDOCK_MAX_RMSD": 2.0,
+    "RF_MAX_FEATURES": 0.33,
+    "RF_N_TREES": 300,
+    "SCRAMBLE_SEED": 20260930,
+    "SIZE_STRATUM_HALFWIDTH": 2,
+    "SIZE_STRATUM_MIN_N": 100,
+    "SPLIT_SEEDS": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "SURROGATE_SEED": 42,
+    "TARGET_CHEMBL_ID": "CHEMBL301",
+    "TEST_FRAC": 0.2,
+    "activity_scaling": "linear over pActivity [ACTIVITY_LOW, ACTIVITY_HIGH], clipped to 0-1, same for every arm",
+    "campaign": "c2026-10-03",
+    "fingerprint": "ECFP4: Morgan radius 2, 2048 bits, binary, chirality NOT included",
+    "scope": "legacy",
+    "standardization": "cleanup, largest fragment, neutralise, canonical tautomer (RDKit TautomerEnumerator defaults: 1000 transforms), organic-element check"
+  },
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.11.16",
+  "scope": "legacy",
+  "settings": {
+    "arms": [
+      "multi_real",
+      "activity_only"
+    ],
+    "experiment": "primary",
+    "floors": [
+      0.4,
+      0.5,
+      0.6,
+      0.7
+    ],
+    "generations": 50,
+    "n_training_molecules": 2016,
+    "policy": "legacy",
+    "rejection_counts": {
+      "activity_only/tau0.4/seed42": {
+        "duplicate": 440,
+        "edit_not_applicable": 642,
+        "infeasible_similarity": 1433,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5440,
+        "sanitize": 1502,
+        "size": 5658
+      },
+      "activity_only/tau0.4/seed43": {
+        "duplicate": 348,
+        "edit_not_applicable": 632,
+        "infeasible_similarity": 1190,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5348,
+        "sanitize": 1605,
+        "size": 5452
+      },
+      "activity_only/tau0.4/seed44": {
+        "duplicate": 244,
+        "edit_not_applicable": 561,
+        "infeasible_similarity": 1637,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5244,
+        "sanitize": 1450,
+        "size": 5395
+      },
+      "activity_only/tau0.4/seed45": {
+        "duplicate": 341,
+        "edit_not_applicable": 700,
+        "infeasible_similarity": 1292,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5341,
+        "sanitize": 1635,
+        "size": 5695
+      },
+      "activity_only/tau0.4/seed46": {
+        "duplicate": 279,
+        "edit_not_applicable": 635,
+        "infeasible_similarity": 1523,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5279,
+        "sanitize": 1541,
+        "size": 4814
+      },
+      "activity_only/tau0.5/seed42": {
+        "duplicate": 500,
+        "edit_not_applicable": 682,
+        "infeasible_similarity": 2423,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5500,
+        "sanitize": 1633,
+        "size": 5781
+      },
+      "activity_only/tau0.5/seed43": {
+        "duplicate": 299,
+        "edit_not_applicable": 405,
+        "infeasible_similarity": 2292,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5299,
+        "sanitize": 1541,
+        "size": 5226
+      },
+      "activity_only/tau0.5/seed44": {
+        "duplicate": 253,
+        "edit_not_applicable": 380,
+        "infeasible_similarity": 2525,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5253,
+        "sanitize": 1386,
+        "size": 5381
+      },
+      "activity_only/tau0.5/seed45": {
+        "duplicate": 438,
+        "edit_not_applicable": 707,
+        "infeasible_similarity": 2447,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5438,
+        "sanitize": 1546,
+        "size": 5606
+      },
+      "activity_only/tau0.5/seed46": {
+        "duplicate": 343,
+        "edit_not_applicable": 681,
+        "infeasible_similarity": 2560,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5343,
+        "sanitize": 1691,
+        "size": 4995
+      },
+      "activity_only/tau0.6/seed42": {
+        "duplicate": 394,
+        "edit_not_applicable": 535,
+        "infeasible_similarity": 3404,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5394,
+        "sanitize": 1587,
+        "size": 5644
+      },
+      "activity_only/tau0.6/seed43": {
+        "duplicate": 253,
+        "edit_not_applicable": 620,
+        "infeasible_similarity": 3518,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5253,
+        "sanitize": 1511,
+        "size": 4681
+      },
+      "activity_only/tau0.6/seed44": {
+        "duplicate": 258,
+        "edit_not_applicable": 333,
+        "infeasible_similarity": 3546,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5258,
+        "sanitize": 1392,
+        "size": 5433
+      },
+      "activity_only/tau0.6/seed45": {
+        "duplicate": 308,
+        "edit_not_applicable": 674,
+        "infeasible_similarity": 3418,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5308,
+        "sanitize": 1641,
+        "size": 5348
+      },
+      "activity_only/tau0.6/seed46": {
+        "duplicate": 351,
+        "edit_not_applicable": 612,
+        "infeasible_similarity": 3531,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5351,
+        "sanitize": 1627,
+        "size": 4715
+      },
+      "activity_only/tau0.7/seed42": {
+        "duplicate": 211,
+        "edit_not_applicable": 565,
+        "infeasible_similarity": 4388,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5211,
+        "sanitize": 1626,
+        "size": 4414
+      },
+      "activity_only/tau0.7/seed43": {
+        "duplicate": 276,
+        "edit_not_applicable": 466,
+        "infeasible_similarity": 4295,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5276,
+        "sanitize": 1448,
+        "size": 4426
+      },
+      "activity_only/tau0.7/seed44": {
+        "duplicate": 414,
+        "edit_not_applicable": 184,
+        "infeasible_similarity": 4225,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5414,
+        "sanitize": 1252,
+        "size": 5898
+      },
+      "activity_only/tau0.7/seed45": {
+        "duplicate": 363,
+        "edit_not_applicable": 531,
+        "infeasible_similarity": 4137,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5363,
+        "sanitize": 1628,
+        "size": 5198
+      },
+      "activity_only/tau0.7/seed46": {
+        "duplicate": 430,
+        "edit_not_applicable": 638,
+        "infeasible_similarity": 4221,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5430,
+        "sanitize": 1628,
+        "size": 4014
+      },
+      "multi_real/tau0.4/seed42": {
+        "duplicate": 226,
+        "edit_not_applicable": 457,
+        "infeasible_similarity": 1983,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5226,
+        "sanitize": 1506,
+        "size": 3376
+      },
+      "multi_real/tau0.4/seed43": {
+        "duplicate": 252,
+        "edit_not_applicable": 481,
+        "infeasible_similarity": 1504,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5252,
+        "sanitize": 1489,
+        "size": 3678
+      },
+      "multi_real/tau0.4/seed44": {
+        "duplicate": 434,
+        "edit_not_applicable": 353,
+        "infeasible_similarity": 1674,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5434,
+        "sanitize": 1508,
+        "size": 3348
+      },
+      "multi_real/tau0.4/seed45": {
+        "duplicate": 307,
+        "edit_not_applicable": 299,
+        "infeasible_similarity": 1504,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5307,
+        "sanitize": 1537,
+        "size": 3623
+      },
+      "multi_real/tau0.4/seed46": {
+        "duplicate": 312,
+        "edit_not_applicable": 497,
+        "infeasible_similarity": 1929,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5312,
+        "sanitize": 1466,
+        "size": 3517
+      },
+      "multi_real/tau0.5/seed42": {
+        "duplicate": 354,
+        "edit_not_applicable": 398,
+        "infeasible_similarity": 2851,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5354,
+        "sanitize": 1538,
+        "size": 3410
+      },
+      "multi_real/tau0.5/seed43": {
+        "duplicate": 264,
+        "edit_not_applicable": 370,
+        "infeasible_similarity": 2662,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5264,
+        "sanitize": 1549,
+        "size": 3554
+      },
+      "multi_real/tau0.5/seed44": {
+        "duplicate": 221,
+        "edit_not_applicable": 309,
+        "infeasible_similarity": 2963,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5221,
+        "sanitize": 1486,
+        "size": 3353
+      },
+      "multi_real/tau0.5/seed45": {
+        "duplicate": 395,
+        "edit_not_applicable": 471,
+        "infeasible_similarity": 2484,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5395,
+        "sanitize": 1668,
+        "size": 3615
+      },
+      "multi_real/tau0.5/seed46": {
+        "duplicate": 354,
+        "edit_not_applicable": 528,
+        "infeasible_similarity": 2954,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5354,
+        "sanitize": 1622,
+        "size": 3344
+      },
+      "multi_real/tau0.6/seed42": {
+        "duplicate": 296,
+        "edit_not_applicable": 379,
+        "infeasible_similarity": 3816,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5296,
+        "sanitize": 1551,
+        "size": 3660
+      },
+      "multi_real/tau0.6/seed43": {
+        "duplicate": 274,
+        "edit_not_applicable": 197,
+        "infeasible_similarity": 3707,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5274,
+        "sanitize": 1414,
+        "size": 3564
+      },
+      "multi_real/tau0.6/seed44": {
+        "duplicate": 236,
+        "edit_not_applicable": 269,
+        "infeasible_similarity": 3920,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5236,
+        "sanitize": 1478,
+        "size": 3380
+      },
+      "multi_real/tau0.6/seed45": {
+        "duplicate": 363,
+        "edit_not_applicable": 344,
+        "infeasible_similarity": 3654,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5363,
+        "sanitize": 1580,
+        "size": 3636
+      },
+      "multi_real/tau0.6/seed46": {
+        "duplicate": 213,
+        "edit_not_applicable": 272,
+        "infeasible_similarity": 3944,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5213,
+        "sanitize": 1399,
+        "size": 3172
+      },
+      "multi_real/tau0.7/seed42": {
+        "duplicate": 221,
+        "edit_not_applicable": 289,
+        "infeasible_similarity": 4408,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5221,
+        "sanitize": 1397,
+        "size": 3774
+      },
+      "multi_real/tau0.7/seed43": {
+        "duplicate": 145,
+        "edit_not_applicable": 322,
+        "infeasible_similarity": 4484,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5145,
+        "sanitize": 1383,
+        "size": 3784
+      },
+      "multi_real/tau0.7/seed44": {
+        "duplicate": 65,
+        "edit_not_applicable": 240,
+        "infeasible_similarity": 4621,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5065,
+        "sanitize": 1377,
+        "size": 3212
+      },
+      "multi_real/tau0.7/seed45": {
+        "duplicate": 271,
+        "edit_not_applicable": 527,
+        "infeasible_similarity": 4316,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5271,
+        "sanitize": 1599,
+        "size": 3792
+      },
+      "multi_real/tau0.7/seed46": {
+        "duplicate": 120,
+        "edit_not_applicable": 419,
+        "infeasible_similarity": 4519,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5120,
+        "sanitize": 1568,
+        "size": 3361
+      }
+    },
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "size_window": [
+      20,
+      39
+    ],
+    "training_subset": "all curated molecules"
+  },
+  "source": {
+    "git_head": "2d71827cfcbdea22168a43ac02196ab8325f9d5d",
+    "git_status_lines": [
+      "M CLAUDE.md",
+      " M README.md",
+      " M decisions.md",
+      " M environment.yml",
+      " M scripts/01_fetch_chembl.py",
+      " M scripts/02_curate.py",
+      " M scripts/03_features_and_splits.py",
+      " M scripts/04_train_surrogate.py",
+      " M src/cdk2moo/audit.py",
+      " M src/cdk2moo/config.py",
+      " M src/cdk2moo/docking.py",
+      " M src/cdk2moo/ga.py",
+      " M src/cdk2moo/splits.py",
+      " M src/cdk2moo/standardize.py",
+      "?? campaigns/",
+      "?? historical_record/",
+      "?? reproducibility/",
+      "?? scripts/03b_eligible_starts.py",
+      "?? scripts/05_run_ga.py",
+      "?? scripts/05b_size_conditioned_similarity.py",
+      "?? scripts/05c_summarize_ga.py",
+      "?? scripts/05d_ga_descriptive_checks.py",
+      "?? scripts/05e_positive_control_setup.py",
+      "?? scripts/05f_positive_control_ga.py",
+      "?? scripts/05g_positive_control_eval.py",
+      "?? scripts/05h_scaffold_surrogate_robustness.py",
+      "?? scripts/06_pareto.py",
+      "?? scripts/07_ad_reliability.py",
+      "?? scripts/07b_ad_generated_overlay.py",
+      "?? scripts/07c_structural_alerts.py",
+      "?? scripts/08_prepare_receptor.py",
+      "?? scripts/08b_redock_native_ligand.py",
+      "?? scripts/08c_select_docking_sets.py",
+      "?? scripts/08d_dock_sets.py",
+      "?? scripts/08e_docking_analysis.py",
+      "?? scripts/08f_posebusters.py",
+      "?? scripts/08g_hinge_contacts.py",
+      "?? scripts/10_run_constrained_ga.py",
+      "?? scripts/10b_analyze_tradeoff.py",
+      "?? scripts/11_make_figures.py",
+      "?? scripts/11b_table1.py",
+      "?? scripts/12_audit_leakage_and_artifacts.py",
+      "?? scripts/13_hypothesis_endpoints.py",
+      "?? scripts/campaign_inventory.py",
+      "?? scripts/campaign_run.py",
+      "?? src/cdk2moo/ad_plots.py",
+      "?? src/cdk2moo/alerts.py",
+      "?? src/cdk2moo/applicability.py",
+      "?? src/cdk2moo/campaign.py",
+      "?? src/cdk2moo/campaign_driver.py",
+      "?? src/cdk2moo/candidates.py",
+      "?? src/cdk2moo/dock_jobs.py",
+      "?? src/cdk2moo/dock_validate.py",
+      "?? src/cdk2moo/docking_stats.py",
+      "?? src/cdk2moo/docksets.py",
+      "?? src/cdk2moo/endpoints.py",
+      "?? src/cdk2moo/figures_model.py",
+      "?? src/cdk2moo/figures_validation.py",
+      "?? src/cdk2moo/ga_plots.py",
+      "?? src/cdk2moo/hinge.py",
+      "?? src/cdk2moo/holdout.py",
+      "?? src/cdk2moo/mutations.py",
+      "?? src/cdk2moo/pareto_plots.py",
+      "?? src/cdk2moo/posebusters_audit.py",
+      "?? src/cdk2moo/recovery.py",
+      "?? src/cdk2moo/run_outputs.py",
+      "?? src/cdk2moo/similarity.py",
+      "?? src/cdk2moo/starts.py",
+      "?? tests/"
+    ],
+    "n_source_files": 85,
+    "source_tree_sha256": "6fb8378c22b7f82dc01119f459f07dc81d3166b4908d7cc15b5f362d81f866d4",
+    "working_tree_clean": false
+  },
+  "versions": {
+    "gemmi": "0.7.5",
+    "matplotlib": "3.11.2",
+    "meeko": "0.8.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "posebusters": "0.6.5",
+    "rdkit": "2026.3.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.17.1",
+    "vina": "1.2.7"
+  }
+}

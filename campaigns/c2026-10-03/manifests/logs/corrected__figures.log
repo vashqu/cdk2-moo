@@ -1,0 +1,12 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/11_make_figures.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=corrected
+[campaign c2026-10-03 | scope corrected] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results
+  corrected/figures/final/fig1_surrogate.png
+  corrected/figures/final/fig2_trajectories.png
+  corrected/figures/final/fig3_pareto_fronts.png
+  corrected/figures/final/fig3b_pareto_structures.png
+  corrected/figures/final/fig4_similarity_vs_prediction.png
+  corrected/figures/final/fig5_docking_M.png
+  corrected/figures/final/fig5_docking_P.png
+  corrected/figures/final/fig5_docking_S.png
+  corrected/figures/final/fig6_pose_checks.png

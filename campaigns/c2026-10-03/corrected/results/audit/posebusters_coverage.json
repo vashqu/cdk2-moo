@@ -1,0 +1,21 @@
+{
+  "required_checks": 22,
+  "audit_poses": 1996,
+  "required_checks_present_as_columns": 22,
+  "status_counts": {
+    "pass": 1967,
+    "fail": 23,
+    "unevaluable": 6
+  },
+  "missing_by_check": {
+    "internal_energy": 7
+  },
+  "failed_by_check": {
+    "bond_lengths": 4,
+    "bond_angles": 5,
+    "internal_steric_clash": 5,
+    "double_bond_flatness": 3,
+    "internal_energy": 15,
+    "minimum_distance_to_protein": 3
+  }
+}

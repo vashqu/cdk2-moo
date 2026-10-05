@@ -1,0 +1,5 @@
+control,group,n,identity_full_overlap_with_remaining_training,identity_connectivity_overlap_with_remaining_training,fingerprint_overlap_with_remaining_training,scaffold_overlap_with_remaining_training,any_document_overlap
+molecule,held-out actives,204,0,4,4,149,204
+molecule,all held-out molecules,204,0,4,4,149,204
+scaffold,held-out actives,93,0,0,0,0,93
+scaffold,all held-out molecules,260,0,0,0,0,260

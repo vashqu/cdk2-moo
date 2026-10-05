@@ -1,0 +1,2 @@
+stage status counts: {'completed': 51, 'failed': 2, 'planned': 16, 'plan_frozen': 1}
+FAILED stages: ['legacy/holdout_eval', 'corrected/holdout_eval']; see campaigns/c2026-10-03/manifests/logs/

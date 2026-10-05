@@ -1,0 +1,1 @@
+{"job_id": "8f6e364a85ecba10", "smiles": "C[C@@H](Oc1nc(Nc2ccc(S(=O)(=O)S(N)(=O)=O)cc2)ncc1C(F)(F)F)OC(F)(F)[C@H](C)[C@@H](C)O", "vina_seed": 42, "prep_seed": 42, "status": "ok", "vina_score": -8.687, "n_heavy_atoms": 36, "n_rotatable": 12, "seconds": 19.442693948745728, "error": "", "pose_sha256": "9ead96795d9de0e2d931793913fe34f9edb251052d39343738c849aaed864991"}

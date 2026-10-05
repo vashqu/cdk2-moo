@@ -1,0 +1,116 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/08f_posebusters.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=legacy
+[campaign c2026-10-03 | scope legacy] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results
+2032 SDF records read (2032 parsed), 2032 poses expected from the scores file
+[21:46:31] UFFTYPER: Unrecognized charge state for atom: 21
+Energy ratio module failed because Pre-condition Violation
+	bad params pointer
+	Violation occurred on line 79 in file Code/ForceField/UFF/AngleBend.cpp
+	Failed Expression: at2Params
+	RDKIT: 2026.03.1
+	BOOST: 
+
+[21:48:41] UFFTYPER: Unrecognized atom type: S_5+6 (30)
+Energy ratio module failed because Pre-condition Violation
+	bad params pointer
+	Violation occurred on line 79 in file Code/ForceField/UFF/AngleBend.cpp
+	Failed Expression: at2Params
+	RDKIT: 2026.03.1
+	BOOST: 
+
+[21:49:15] UFFTYPER: Unrecognized atom type: S_5+6 (19)
+Energy ratio module failed because Pre-condition Violation
+	bad params pointer
+	Violation occurred on line 79 in file Code/ForceField/UFF/AngleBend.cpp
+	Failed Expression: at2Params
+	RDKIT: 2026.03.1
+	BOOST: 
+
+[21:50:07] UFFTYPER: Unrecognized charge state for atom: 3
+[21:50:07] UFFTYPER: Unrecognized atom type: S_5+4 (3)
+Energy ratio module failed because UFF parameters missing for molecule.
+Energy ratio module failed to calculate ensemble conformation energy for InChI=1S/C24H22N8O4S2/c25-37(34,32-24-14-22(29-31-24)16-2-1-3-18(33)12-16)19-10-6-17(7-11-19)27-23-13-21(28-30-23)15-4-8-20(9-5-15)38(26,35)36/h1-14,33H,(H2,26,35,36)(H2,27,28,30)(H3,25,29,31,32,34)/t37-/m0/s1: Failed to generate conformations.
+[22:01:47] UFFTYPER: Unrecognized atom type: S_5+4 (1)
+[22:01:48] UFFTYPER: Unrecognized atom type: S_5+4 (1)
+Energy ratio module failed because UFF parameters missing for molecule.
+[22:02:01] UFFTYPER: Unrecognized atom type: S_5+6 (2)
+Energy ratio module failed because Pre-condition Violation
+	bad params pointer
+	Violation occurred on line 79 in file Code/ForceField/UFF/AngleBend.cpp
+	Failed Expression: at2Params
+	RDKIT: 2026.03.1
+	BOOST: 
+
+[22:03:22] UFFTYPER: Unrecognized atom type: S_5+6 (24)
+Energy ratio module failed because Pre-condition Violation
+	bad params pointer
+	Violation occurred on line 79 in file Code/ForceField/UFF/AngleBend.cpp
+	Failed Expression: at2Params
+	RDKIT: 2026.03.1
+	BOOST: 
+
+[22:10:13] UFFTYPER: Unrecognized charge state for atom: 18
+Energy ratio module failed because Pre-condition Violation
+	bad params pointer
+	Violation occurred on line 79 in file Code/ForceField/UFF/AngleBend.cpp
+	Failed Expression: at2Params
+	RDKIT: 2026.03.1
+	BOOST: 
+
+[22:11:25] UFFTYPER: Unrecognized atom type: S_5+6 (23)
+Energy ratio module failed because Pre-condition Violation
+	bad params pointer
+	Violation occurred on line 79 in file Code/ForceField/UFF/AngleBend.cpp
+	Failed Expression: at2Params
+	RDKIT: 2026.03.1
+	BOOST: 
+
+[22:11:28] UFFTYPER: Unrecognized charge state for atom: 20
+Energy ratio module failed because Pre-condition Violation
+	bad params pointer
+	Violation occurred on line 79 in file Code/ForceField/UFF/AngleBend.cpp
+	Failed Expression: at2Params
+	RDKIT: 2026.03.1
+	BOOST: 
+
+
+Summary (denominator for every rate below = records audited):
+  expected_poses        2032
+  records_read          2032
+  parsed                2032
+  audited               2032
+  passed                1991
+  failed                34
+  unevaluable           7
+  denominator_for_rates 2032
+
+  set                  n  pass  fail  unevaluable  no audit  pass rate   (rate = pass / n in set)
+  P:training_top_decile  100    99     1            0         0        99%
+  M:heldout_actives  100    99     1            0         0        99%
+  S:heldout_actives   93    93     0            0         0       100%
+  P:random_training  100    99     1            0         0        99%
+  M:random_remaining  100    96     4            0         0        96%
+  S:random_remaining  100    99     1            0         0        99%
+  P:multi_real       100    99     1            0         0        99%
+  P:multi_scrambled  100    99     1            0         0        99%
+  P:activity_only    100    97     3            0         0        97%
+  P:druglike_only    100    99     1            0         0        99%
+  P:pareto_front     124   123     1            0         0        99%
+  P:decoys           100    94     5            0         1        94%
+  M:multi_real       100    97     2            1         0        97%
+  M:multi_scrambled  100    99     1            0         0        99%
+  M:activity_only    100    89     5            6         0        89%
+  M:druglike_only    100   100     0            0         0       100%
+  M:decoys           100   100     0            0         0       100%
+  S:multi_real       100    99     1            0         0        99%
+  S:multi_scrambled  100    99     1            0         0        99%
+  S:activity_only    100    98     2            0         0        98%
+  S:druglike_only    100    99     1            0         0        99%
+  S:decoys            93    91     2            0         0        98%
+
+Checks that failed (poses): {'internal_energy': 17, 'no_radicals': 8, 'internal_steric_clash': 7, 'bond_lengths': 4, 'bond_angles': 4, 'double_bond_flatness': 3, 'minimum_distance_to_protein': 2, 'aromatic_ring_flatness': 1}
+Checks that were missing (poses): {'internal_energy': 11}
+
+Median Vina score by status (kcal/mol): {'fail': -8.14, 'pass': -7.98, 'unevaluable': -7.7}
+
+Wrote /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results/posebusters_audit/posebusters_checks.csv, posebusters_summary.json, posebusters_by_set.csv, posebusters_audit.png

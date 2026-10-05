@@ -1,0 +1,51 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/13_hypothesis_endpoints.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=legacy
+[campaign c2026-10-03 | scope legacy] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results
+policy scope: legacy; campaign c2026-10-03
+
+H1  predicted pActivity (real surrogate) of generated molecules over generations; 5 runs per arm
+  multi_real       net rise median +1.07 [+1.02, +1.21]; rises in 5/5 runs, Spearman >= 0.9 in 5, literally monotone in 0  -> rises: True, monotone: False
+  multi_scrambled  net rise median -0.53 [-0.60, +0.16]; rises in 2/5 runs, Spearman >= 0.9 in 0, literally monotone in 0  -> rises: False, monotone: False
+  activity_only    net rise median +1.91 [+1.80, +2.10]; rises in 5/5 runs, Spearman >= 0.9 in 5, literally monotone in 5  -> rises: True, monotone: True
+  druglike_only    net rise median -0.51 [-0.68, -0.32]; rises in 0/5 runs, Spearman >= 0.9 in 0, literally monotone in 0  -> rises: False, monotone: False
+
+H2  (literal) Spearman between predicted activity and similarity across generations 1-50; (attributable) final similarity minus the druglike_only baseline of the same seed
+  multi_real       Spearman median -0.95, negative in 4/5 -> literal: True;  delta similarity median +0.024 [-0.006, +0.105], farther in 1/5 -> attributable: False  (delta heavy atoms +0.0)
+  multi_scrambled  Spearman median +0.75, negative in 2/5 -> literal: False;  delta similarity median +0.012 [-0.064, +0.046], farther in 2/5 -> attributable: False  (delta heavy atoms +2.0)
+  activity_only    Spearman median +0.73, negative in 0/5 -> literal: False;  delta similarity median +0.347 [+0.321, +0.352], farther in 0/5 -> attributable: False  (delta heavy atoms +13.0)
+  druglike_only    Spearman median +0.24, negative in 1/5 -> literal: False;  delta similarity median +0.000 [+0.000, +0.000], farther in 0/5 -> attributable: False  (delta heavy atoms +0.0)
+
+H4  followed-prediction curves (surrogate SD over its own training molecules: real 1.010, scrambled 0.748)
+  multi_real       follows pred_real          net rise +1.07 (standardized +1.06), Spearman >= 0.9 in 5/5; real prediction minus druglike_only: +1.56 [+1.50, +1.71], above in 5/5
+  multi_scrambled  follows pred_scrambled     net rise +0.56 (standardized +0.75), Spearman >= 0.9 in 5/5; real prediction minus druglike_only: -0.02 [-0.28, +0.84], above in 2/5
+  activity_only    follows pred_real          net rise +1.91 (standardized +1.89), Spearman >= 0.9 in 5/5; real prediction minus druglike_only: +2.45 [+2.12, +2.59], above in 5/5
+  druglike_only    follows none (real shown)  net rise -0.51 (standardized -0.51), Spearman >= 0.9 in 0/5; real prediction minus druglike_only: +0.00 [+0.00, +0.00], above in 0/5
+  similar-looking curve by the plan's shape criterion (Spearman >= 0.9 in >= 4/5 runs for both arms): True; standardized-rise ratio scrambled / real = 0.71 (no threshold)
+
+H5  constrained minus unconstrained twin (paired by seed); attenuation = predicted activity lower in >= 4/5 seeds
+  molecule  activity_only  floor 0.4: delta predicted -0.02 [-0.05, +0.04], attenuated in 4/5; delta QED +0.00, atoms +0; proximity +4.0 pp [-34.0, +17.7], exchange -181.9 pp per pActivity
+  molecule  activity_only  floor 0.5: delta predicted -0.02 [-0.07, +0.07], attenuated in 3/5; delta QED +0.07, atoms +0; proximity +5.0 pp [-6.8, +11.2], exchange +1238.4 pp per pActivity
+  molecule  activity_only  floor 0.6: delta predicted -0.06 [-0.07, +0.02], attenuated in 4/5; delta QED +0.05, atoms +0; proximity +3.0 pp [-27.7, +16.7], exchange -36.5 pp per pActivity
+  molecule  activity_only  floor 0.7: delta predicted -0.10 [-0.16, -0.05], attenuated in 5/5; delta QED +0.09, atoms +0; proximity -0.2 pp [-36.3, +20.8], exchange -29.0 pp per pActivity
+  molecule  multi_real     floor 0.4: delta predicted +0.04 [+0.02, +0.06], attenuated in 0/5; delta QED -0.01, atoms +1; proximity +15.0 pp [+7.0, +45.9], exchange undefined
+  molecule  multi_real     floor 0.5: delta predicted +0.07 [+0.00, +0.13], attenuated in 0/5; delta QED -0.03, atoms +1; proximity +45.9 pp [+33.0, +69.4], exchange undefined
+  molecule  multi_real     floor 0.6: delta predicted +0.11 [+0.03, +0.13], attenuated in 0/5; delta QED -0.06, atoms +2; proximity +58.8 pp [+39.0, +74.2], exchange undefined
+  molecule  multi_real     floor 0.7: delta predicted +0.17 [+0.14, +0.23], attenuated in 0/5; delta QED -0.18, atoms +4; proximity +80.6 pp [+49.4, +91.6], exchange undefined
+  primary   activity_only  floor 0.4: delta predicted -0.01 [-0.07, +0.11], attenuated in 3/5; delta QED -0.02, atoms +0
+  primary   activity_only  floor 0.5: delta predicted -0.01 [-0.04, +0.08], attenuated in 3/5; delta QED -0.03, atoms +0
+  primary   activity_only  floor 0.6: delta predicted -0.00 [-0.05, +0.05], attenuated in 4/5; delta QED -0.01, atoms +0
+  primary   activity_only  floor 0.7: delta predicted -0.04 [-0.18, +0.11], attenuated in 3/5; delta QED -0.01, atoms +0
+  primary   multi_real     floor 0.4: delta predicted +0.09 [-0.01, +0.47], attenuated in 1/5; delta QED -0.01, atoms +1
+  primary   multi_real     floor 0.5: delta predicted +0.39 [+0.37, +0.43], attenuated in 0/5; delta QED -0.02, atoms +1
+  primary   multi_real     floor 0.6: delta predicted +0.11 [-0.22, +0.45], attenuated in 1/5; delta QED -0.06, atoms +2
+  primary   multi_real     floor 0.7: delta predicted +0.46 [+0.05, +0.55], attenuated in 0/5; delta QED -0.21, atoms +5
+  scaffold  activity_only  floor 0.4: delta predicted +0.02 [-0.02, +0.04], attenuated in 2/5; delta QED -0.04, atoms +0; proximity -1.0 pp [-8.8, +2.0], exchange undefined
+  scaffold  activity_only  floor 0.5: delta predicted -0.03 [-0.21, +0.02], attenuated in 4/5; delta QED +0.00, atoms -1; proximity +0.0 pp [-34.0, +42.9], exchange +79.5 pp per pActivity
+  scaffold  activity_only  floor 0.6: delta predicted -0.06 [-0.32, +0.01], attenuated in 4/5; delta QED +0.01, atoms -0; proximity +0.0 pp [-29.9, +13.4], exchange -40.5 pp per pActivity
+  scaffold  activity_only  floor 0.7: delta predicted -0.37 [-0.55, -0.08], attenuated in 5/5; delta QED +0.13, atoms -2; proximity +3.3 pp [+0.0, +46.4], exchange +39.9 pp per pActivity
+  scaffold  multi_real     floor 0.4: delta predicted +0.07 [+0.01, +0.31], attenuated in 0/5; delta QED +0.00, atoms +1; proximity +8.0 pp [+0.0, +18.0], exchange undefined
+  scaffold  multi_real     floor 0.5: delta predicted +0.15 [+0.07, +0.66], attenuated in 0/5; delta QED -0.02, atoms +2; proximity +3.0 pp [+0.0, +10.0], exchange undefined
+  scaffold  multi_real     floor 0.6: delta predicted +0.22 [-0.01, +0.76], attenuated in 1/5; delta QED -0.08, atoms +2; proximity +7.3 pp [+0.0, +15.4], exchange undefined
+  scaffold  multi_real     floor 0.7: delta predicted +0.13 [-0.02, +0.45], attenuated in 2/5; delta QED -0.18, atoms +4; proximity +7.8 pp [+3.7, +16.6], exchange undefined
+
+Wrote results/13_*.csv

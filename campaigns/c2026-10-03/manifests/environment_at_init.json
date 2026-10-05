@@ -1,0 +1,21 @@
+{
+  "captured_utc": "2026-10-03T17:27:00+00:00",
+  "cpu_count": 8,
+  "machine": "arm64",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.11.16",
+  "versions": {
+    "gemmi": "0.7.5",
+    "matplotlib": "3.11.2",
+    "meeko": "0.8.0",
+    "numpy": "2.4.6",
+    "openmm": "8.6.1",
+    "pandas": "3.0.6",
+    "pdbfixer": "1.12.0",
+    "posebusters": "0.6.5",
+    "rdkit": "2026.3.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.17.1",
+    "vina": "1.2.7"
+  }
+}

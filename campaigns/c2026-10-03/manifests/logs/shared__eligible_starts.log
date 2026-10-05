@@ -1,0 +1,8 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/03b_eligible_starts.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=shared
+[campaign c2026-10-03 | scope shared] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/results
+2016 curated molecules
+  primary window 20-39: 1833 eligible; excluded by reason: {'size': 183}
+  relaxed window 15-50: 2001 eligible; excluded by reason: {'size': 15}
+  tautomer enumeration status among molecules reaching standardization: {'Completed': 1813, '': 183, 'MaxTransformsReached': 20}
+Wrote /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared/processed/eligible_starts.csv

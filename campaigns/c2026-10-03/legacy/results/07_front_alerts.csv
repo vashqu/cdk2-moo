@@ -1,0 +1,125 @@
+smiles,pred,qed,sa,max_tanimoto,size_pctile,n_heavy_atoms,arms,pains,brenk,n_pains,n_brenk,any_alert,candidate_class,stage4_can_estimate_error
+CN1CCN(c2cccc(-c3cccc(Nc4ncc5c(n4)-c4c(c(C(N)=O)nn4C)CC5)c3)c2)CC1,8.7117,0.4388,2.7437,0.9048,74.9254,37,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+C=C(C)C(=O)NC(=O)c1ccc(Nc2ncc(F)c(-c3cnc(C)n3C(C)C)n2)cc1F,8.6500,0.5602,2.9097,0.7231,22.6481,32,activity_only,,Michael_acceptor_1,0,1,True,"A: high prediction, supported (raw >= 0.6)",True
+C=C(C)NC(=O)c1ccc(Nc2ncc(F)c(-c3cnc(C)n3C(C)C)n2)cc1F,8.6460,0.6221,2.9181,0.7460,32.0251,30,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+C=C(C)CNC(=O)c1ccc(Nc2ncc(F)c(-c3cnc(C)n3C(C)C)n2)cc1F,8.6322,0.5414,2.8230,0.7500,30.8703,31,activity_only,,isolated_alkene,0,1,True,"A: high prediction, supported (raw >= 0.6)",True
+CC(=O)Nc1ccc(C(=O)c2ccc(Nc3ncc(F)c(-c4cnc(C)n4C(C)C)n3)cc2)cc1,8.6084,0.3540,2.5676,0.7586,22.6829,35,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+CCCNC(=O)c1ccc(Nc2ncc(F)c(-c3cnc(C)n3C(C)C)n2)cc1F,8.6031,0.5990,2.6437,0.8281,65.4631,30,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+C=C(C)N(C)C(=O)c1ccc(Nc2ncc(F)c(-c3cnc(C)n3C(C)C)n2)cc1,8.6026,0.6388,2.9275,0.8136,59.6546,30,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+CC(=O)c1ccc(Nc2ncc(F)c(-c3cnc(C)n3C(C)C)n2)cc1,8.6008,0.6919,2.5080,0.8302,79.2295,26,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+CC(=O)Nc1ccc(Nc2ncc(F)c(-c3cnc(C)n3C(C)C)n2)cc1,8.5748,0.7090,2.4973,0.7636,43.0843,27,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2nc(Nc3ccc(C(=O)N(C)C)cc3)ncc2F)n1C(C)C,8.5367,0.7261,2.5667,1.0000,100.0000,28,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2nc(Nc3ccc(C(N)=O)cc3)ncc2F)n1C(C)C,8.5278,0.7329,2.5296,0.8148,72.1943,26,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2nc(Nc3ccc(C(=O)O)cc3)ncc2F)n1C(C)C,8.5160,0.7228,2.4933,0.8302,79.2295,26,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cn1nc(C(N)=O)c2c1-c1nc(Nc3ccccc3)ncc1CC2,8.5016,0.7667,2.4696,1.0000,100.0000,24,activity_only|multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ccc(Nc2ncc(F)c(-c3cnc(C)n3C(C)C)n2)cc1,8.4186,0.7712,2.4597,0.7500,50.2058,24,multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2nc(Nc3ccc(C(=O)c4ccccc4)cc3)ncc2F)n1C(C)C,8.4075,0.4303,2.4567,0.7857,43.0213,31,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2ccnc(Nc3ccc(C(N)=O)cc3)n2)n1C(C)C,8.4024,0.7458,2.4120,1.0000,100.0000,25,activity_only|multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2ccnc(Nc3ccc(Nc4ccc(F)cc4)cc3)n2)n1C(C)C,8.3555,0.4230,2.3970,0.9767,89.7959,30,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2nc(Nc3cccnc3)ncc2F)n1C(C)C,8.3289,0.7982,2.6415,0.6491,20.2046,23,multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+COc1ccc(Nc2ncc(F)c(-c3cnc(C)n3C(C)C)n2)cc1,8.3250,0.7561,2.4434,0.6964,26.7148,25,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2nc(Nc3cnn(C)c3)ncc2F)n1C(C)C,8.3084,0.8012,2.8305,0.6271,17.6471,23,multi_scrambled,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+CC(=O)Nc1ncc(F)c(-c2cnc(C)n2C(C)C)n1,8.2830,0.9341,2.6984,0.6364,24.8366,20,multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2nc(Nc3ccccc3)ncc2F)n1C(C)C,8.2505,0.7875,2.4263,0.7170,39.3862,23,activity_only|multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2ccnc(Nc3ccc(CO)cc3)n2)n1C(C)C,8.2059,0.7518,2.4225,0.7400,45.4733,24,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ccc(Nc2ccc(Nc3nccc(-c4cnc(C)n4C(C)C)n3)cc2)cc1,8.2032,0.4153,2.3815,0.8044,54.3171,30,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2ccnc(Nc3ccc(C(C)C)cc3)n2)n1C(C)C,8.1943,0.7048,2.4093,0.7872,60.8303,25,activity_only|multi_real|multi_scrambled,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+CCC(=O)Nc1ncc(F)c(-c2cnc(C)n2C(C)C)n1,8.1894,0.9397,2.7013,0.6035,18.4332,21,multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+CC(C)CCNC(=O)c1ccc2[nH]c(O)c(-c3ccc(S(N)(=O)=O)cc3)c2c1,8.1804,0.5065,2.3738,0.4865,5.9748,28,activity_only,,,0,0,False,"B: high prediction, weak support (raw < 0.6)",False
+Cc1ncc(-c2ccnc(Nc3ccc(Cl)cc3)n2)n1C(C)C,8.1708,0.7589,2.3506,0.7872,70.3325,23,multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2nc(NC(=O)C(C)(C)C)ncc2F)n1C(C)C,8.1670,0.9413,2.7872,0.6035,15.3453,23,multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2nc(NC(=O)C(C)C)ncc2F)n1C(C)C,8.1558,0.9422,2.7119,0.6250,17.9661,22,multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+CCCC(=O)Nc1ncc(F)c(-c2cnc(C)n2C(C)C)n1,8.1500,0.9209,2.6697,0.5833,14.9153,22,multi_real,,,0,0,False,"B: high prediction, weak support (raw < 0.6)",False
+Cc1ncc(-c2nc(NC(=O)N(C)C)ncc2F)n1C(C)C,8.1491,0.9448,2.8274,0.6667,25.7627,22,multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2nc(NC(=O)C3CC3)ncc2F)n1C(C)C,8.1257,0.9423,2.6585,0.5833,14.9153,22,multi_real,,,0,0,False,"B: high prediction, weak support (raw < 0.6)",False
+Cc1ncc(-c2ccnc(Nc3ccc(Nc4ccccc4)cc3)n2)n1C(C)C,8.1166,0.4451,2.3414,0.7872,49.2958,29,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2ccnc(Nc3ccncc3)n2)n1C(C)C,8.1160,0.7987,2.5351,0.7826,73.8983,22,multi_scrambled,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2ccnc(Nc3ccc(-c4ccccc4)cc3)n2)n1C(C)C,8.1117,0.4945,2.2774,0.7551,37.1069,28,activity_only,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+Cc1ncc(-c2ccnc(Nc3ccccc3)n2)n1C(C)C,8.0558,0.7904,2.2994,0.7826,73.8983,22,multi_real,,,0,0,False,"A: high prediction, supported (raw >= 0.6)",True
+CC(C)c1ccc(Nc2nccc(-c3ccc(S(N)(=O)=O)cc3)n2)cc1,8.0428,0.7161,2.0247,0.5636,6.8677,26,multi_real,,,0,0,False,"B: high prediction, weak support (raw < 0.6)",False
+CC(Br)Cc1ccc(Nc2ccc(S(N)(=O)=O)cc2)cc1,7.9930,0.7938,2.4312,0.4259,8.2949,21,multi_real,,alkyl_halide,0,1,True,C: prediction < 8,True
+C[C@@H](c1ccc(CS(N)(=O)=O)cc1)c1ccc(S(N)(=O)=O)cc1,7.9858,0.8397,2.5846,0.3273,2.5575,23,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)c1cccc(C(C)c2ccc(S(N)(=O)=O)cc2)c1,7.9857,0.9376,2.4243,0.4231,7.8341,21,multi_real,,,0,0,False,C: prediction < 8,True
+CCC(=O)c1ccc([C@H](C)c2ccc(S(N)(=O)=O)cc2)cc1,7.9633,0.8609,2.4143,0.3607,4.0678,22,multi_real,,,0,0,False,C: prediction < 8,True
+COc1ccc([C@H](C)c2ccc(S(N)(=O)=O)cc2)cc1,7.9518,0.9406,2.2299,0.3846,9.1503,20,multi_real,,,0,0,False,C: prediction < 8,True
+CC(c1ccc(S(N)(=O)=O)cc1)c1ccc(S(N)(=O)=O)cc1,7.9445,0.8664,1.9893,0.3830,5.7627,22,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)Cc1ccc(-c2ccc(S(N)(=O)=O)cc2)nc1,7.9248,0.9403,1.9261,0.3333,5.8823,20,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)c1cccc(Nc2ccc(S(N)(=O)=O)cc2)c1,7.9208,0.9079,1.7846,0.4717,11.7647,20,multi_real,,,0,0,False,C: prediction < 8,True
+CC(c1ccc(S(N)(=O)=O)cc1)c1ccnc(C(C)(C)C)c1,7.9098,0.9443,2.7405,0.3333,3.3898,22,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)Cc1ccc(Nc2ccc(S(N)(=O)=O)cc2)cc1,7.8464,0.8901,1.7517,0.4259,8.2949,21,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)c1cc(C(C)c2ccc(S(N)(=O)=O)cc2)ccn1,7.8348,0.9433,2.7039,0.3684,5.9908,21,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)NC(=O)c1ccc(-c2ccc(S(N)(=O)=O)cc2)cc1,7.8285,0.9048,1.6888,0.3390,3.3898,22,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)Cc1ccc(-c2ccc(S(N)(=O)=O)cc2)cc1,7.8148,0.9392,1.6656,0.3214,5.2288,20,multi_real,,,0,0,False,C: prediction < 8,True
+CC(c1ccc(C2CC2)cc1)c1ccc(S(N)(=O)=O)cc1,7.7612,0.9409,2.3931,0.3214,3.6866,21,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)c1cccc(Cc2ccc(S(N)(=O)=O)cc2)c1,7.7226,0.9401,1.7934,0.3750,9.1503,20,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)c1ccc(Oc2ccc(S(N)(=O)=O)cc2)cc1,7.7132,0.9397,1.6772,0.3922,9.8039,20,multi_real,,,0,0,False,C: prediction < 8,True
+Cc1cc(-c2ccc(S(N)(=O)=O)cc2)ccc1C(C)C,7.7126,0.9406,1.8172,0.3454,7.1895,20,multi_real,,,0,0,False,C: prediction < 8,True
+CCNC(=O)c1ccc(-c2ccc(S(N)(=O)=O)cc2)cc1,7.7075,0.9015,1.6602,0.3810,6.4516,21,multi_real,,,0,0,False,C: prediction < 8,True
+Cc1ncc(C=Cc2ccc(S(N)(=O)=O)cc2)n1C(C)C,7.6752,0.9427,2.5671,0.3548,5.0691,21,multi_real,,,0,0,False,C: prediction < 8,True
+Cc1ncc(CC(=O)NC(=O)c2ccccc2F)n1C(C)C,7.6345,0.9431,2.4066,0.3684,5.4237,22,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)c1ccc(Cc2ccc(S(N)(=O)=O)cc2)cc1,7.6252,0.9401,1.7037,0.3922,9.8039,20,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)(C)Cc1ccc(-c2ccc(S(N)(=O)=O)cc2)cc1,7.6072,0.9416,1.8351,0.3265,4.1475,21,multi_real,,,0,0,False,C: prediction < 8,True
+Cc1nc(C(C)C)nc(-c2ccc(S(N)(=O)=O)cc2)c1F,7.5958,0.9427,2.3759,0.3500,5.0691,21,multi_real,,,0,0,False,C: prediction < 8,True
+COc1ccc(NCc2ccc(S(N)(=O)=O)cc2)cc1,7.5931,0.8823,1.6200,0.4182,10.4575,20,multi_real,anil_di_alk_C(246),,1,0,True,C: prediction < 8,True
+CC=C(C)c1cc(-c2ccc(S(N)(=O)=O)cc2)ccn1,7.5907,0.9434,2.3466,0.3621,7.8431,20,multi_real,,,0,0,False,C: prediction < 8,True
+COc1ccc(C(=O)c2ccc(S(N)(=O)=O)cc2)cc1,7.5899,0.8663,1.5937,0.4118,10.4575,20,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)c1ccc(NC(=O)c2ccc(S(N)(=O)=O)cc2)cc1,7.5676,0.9080,1.6354,0.4314,8.1356,22,multi_real,,,0,0,False,C: prediction < 8,True
+NS(=O)(=O)c1ccc(-c2ccc(-c3ccc(S(N)(=O)=O)cc3)cc2)cc1,7.5529,0.7123,1.4789,0.3846,3.8526,26,multi_real,,,0,0,False,C: prediction < 8,True
+NS(=O)(=O)c1ccc(-c2ccc(S(N)(=O)=O)cc2)cc1,7.5529,0.8639,1.5743,0.3846,9.1503,20,multi_real,,,0,0,False,C: prediction < 8,True
+CCCCc1ccc(-c2ccc(S(N)(=O)=O)cc2)cc1,7.5282,0.9173,1.6128,0.3333,5.8823,20,multi_real,,,0,0,False,C: prediction < 8,True
+COC(C)(C)c1ccc(-c2ccc(S(N)(=O)=O)cc2)cc1,7.5111,0.9439,2.0148,0.3158,3.6866,21,multi_real,,,0,0,False,C: prediction < 8,True
+COc1ccc(NC(=O)c2ccc(S(N)(=O)=O)cc2)cc1,7.4882,0.8958,1.5152,0.4314,8.7558,21,multi_real,,,0,0,False,C: prediction < 8,True
+CC(=O)Nc1ccc(-c2ccc(S(N)(=O)=O)cc2)cc1,7.4799,0.9051,1.6041,0.4255,10.4575,20,druglike_only|multi_real,,,0,0,False,C: prediction < 8,True
+CCc1ccc(NC(=O)c2ccc(S(N)(=O)=O)cc2)cc1,7.4648,0.9066,1.5668,0.4314,8.7558,21,multi_real,,,0,0,False,C: prediction < 8,True
+CC(C)c1cc(-c2ccc(S(N)(=O)=O)cc2)c(F)cn1,7.4412,0.9454,2.1524,0.3729,9.1503,20,multi_real,,,0,0,False,C: prediction < 8,True
+Cc1cc(-c2ccc(S(N)(=O)=O)cc2)ccc1C1CC1,7.4115,0.9421,1.8703,0.3051,5.2288,20,multi_real,,,0,0,False,C: prediction < 8,True
+Cc1ncc(-c2ccnc(C3CNCC(C)C3)n2)n1C(C)C,7.4021,0.9465,3.7147,0.4667,9.8305,22,activity_only,,,0,0,False,C: prediction < 8,True
+NS(=O)(=O)c1ccc(C(=O)Nc2cccc(Cl)c2)cc1,7.3588,0.9107,1.5784,0.3962,9.8039,20,druglike_only,,,0,0,False,C: prediction < 8,True
+NS(=O)(=O)c1ccc(-c2ccc(-c3ccccc3)cc2)cc1,7.3402,0.8022,1.4603,0.3674,5.4237,22,druglike_only|multi_real,,,0,0,False,C: prediction < 8,True
+NS(=O)(=O)c1ccc(-c2ccc(N3CCCC3)cc2)cc1,7.3029,0.9476,1.7025,0.3684,5.9908,21,multi_real,,,0,0,False,C: prediction < 8,True
+NS(=O)(=O)c1ccc(CCCc2ccc(Cl)cc2)cc1,7.2904,0.9219,1.6528,0.3409,6.5359,20,multi_real,,,0,0,False,C: prediction < 8,True
+COc1ccc(Nc2ccc(S(=O)(=O)N(C)C)cc2)cc1,7.0558,0.9225,1.6587,0.3860,6.4516,21,druglike_only,,,0,0,False,C: prediction < 8,True
+CCS(=O)(=O)c1ccc(-c2ccc(NC(C)=O)cc2)cc1,6.9871,0.9436,1.6897,0.3333,4.6083,21,druglike_only,,,0,0,False,C: prediction < 8,True
+CC(=O)Nc1ccc(-c2ccc(S(=O)(=O)N(C)C)cc2)cc1,6.9341,0.9419,1.6780,0.3684,5.4237,22,druglike_only,,,0,0,False,C: prediction < 8,True
+CN(C)S(=O)(=O)c1ccc(Nc2ccc(F)cc2)cc1,6.9104,0.9430,1.6740,0.4423,10.4575,20,druglike_only,,,0,0,False,C: prediction < 8,True
+CC(C)NS(=O)(=O)c1ccc(-c2ccc(Cl)cc2)cc1,6.8735,0.9359,1.6509,0.2687,2.6144,20,multi_real,,,0,0,False,C: prediction < 8,True
+O=C(NN1CCCC1=O)Oc1ccc(-c2cccs2)cc1,6.6219,0.9477,2.4024,0.2941,3.6866,21,druglike_only,,,0,0,False,C: prediction < 8,True
+O=C(Nc1ccc(F)cc1)N1CCN(c2ccccc2)CC1,6.6115,0.9242,1.5999,0.4528,9.1525,22,druglike_only,,,0,0,False,C: prediction < 8,True
+O=C(CN1CCN(Cc2ccc(F)cc2)CC1)Nc1ccccc1,6.5848,0.9168,1.5939,0.3559,3.9095,24,druglike_only,,,0,0,False,C: prediction < 8,True
+Cc1cccc(C(=O)Nc2ccc(N3CCOCC3)cc2)c1,6.5608,0.9461,1.6566,0.3881,5.7627,22,druglike_only,anil_di_alk_A(478),,1,0,True,C: prediction < 8,True
+CN1CCN(c2ccc(NC(=O)c3ccccc3F)cc2)CC1,6.4583,0.9463,1.6902,0.3478,2.5575,23,multi_scrambled,anil_di_alk_A(478),,1,0,True,C: prediction < 8,True
+O=C(Nc1ccccc1)N1CCN(c2ccccc2)CC1,6.4546,0.9181,1.5196,0.5319,12.9032,21,druglike_only,,,0,0,False,C: prediction < 8,True
+O=C(Nc1ccc(N2Cc3ccccc3C2=O)nc1)C1CCC1,6.4398,0.9479,2.1258,0.3600,2.8133,23,druglike_only,,,0,0,False,C: prediction < 8,True
+COc1cccc(NC(=O)N2CCN(Cc3ccccc3)CC2)c1,6.4246,0.9396,1.6500,0.4697,7.6132,24,druglike_only,,,0,0,False,C: prediction < 8,True
+COc1cccc(NC(=O)N2CCN(c3ccccc3)CC2)c1,6.4056,0.9474,1.6478,0.5075,9.4629,23,druglike_only,,,0,0,False,C: prediction < 8,True
+O=C(Cc1ccc(N2CCOCC2)cc1)Nc1ccccc1,6.4025,0.9429,1.6383,0.3810,5.7627,22,druglike_only,anil_di_alk_E(186),,1,0,True,C: prediction < 8,True
+O=C(Nc1ccccc1)N1CCN(Cc2ccccc2)CC1,6.3989,0.9445,1.5224,0.5306,11.8644,22,druglike_only,,,0,0,False,C: prediction < 8,True
+O=C(Nc1ccc(N2CCCOCC2)cc1)c1ccccc1,6.3387,0.9456,1.6431,0.3594,4.0678,22,druglike_only,anil_di_alk_A(478),,1,0,True,C: prediction < 8,True
+CC(=O)Nc1ccc(C(=O)N2CCN(c3ccccc3)CC2)cc1,6.2958,0.9445,1.6223,0.3818,4.9383,24,druglike_only,,,0,0,False,C: prediction < 8,True
+O=C1CCCN1Nc1ccc(N2Cc3ccccc3C2=O)cc1,6.2857,0.9484,2.4122,0.3714,4.3478,23,druglike_only,,,0,0,False,C: prediction < 8,True
+CC(=O)Nc1ccc(N2CCN(c3ccccc3)CC2)cc1,6.2790,0.9454,1.5919,0.3860,5.7627,22,druglike_only,anil_di_alk_A(478),,1,0,True,C: prediction < 8,True
+O=C(Nc1ccc(NC(=O)C2CCC2)cc1)c1ccccc1,6.2746,0.9034,1.4551,0.4231,7.1186,22,druglike_only,,,0,0,False,C: prediction < 8,True
+CN1CCCN(c2ccc(NC(=O)c3ccccc3)cc2)CC1,6.2725,0.9462,1.6387,0.4203,5.6266,23,druglike_only,anil_di_alk_A(478),,1,0,True,C: prediction < 8,True
+O=C1c2ccccc2CN1Nc1ccc(N2CCCC2=O)cc1,6.2707,0.9484,2.3326,0.3188,2.3018,23,druglike_only,,,0,0,False,C: prediction < 8,True
+CN1CCN(c2ccc(NC(=O)c3ccccc3)cc2)CC1,6.2538,0.9454,1.5573,0.4461,8.8136,22,druglike_only|multi_scrambled,anil_di_alk_A(478),,1,0,True,C: prediction < 8,True
+Cc1cccc(NC(=O)CNC(=O)c2ccccc2)c1,6.2040,0.8940,1.4372,0.3750,9.1503,20,druglike_only,,,0,0,False,C: prediction < 8,True
+O=C1Cc2cc(-c3ccc(CN4CCOCC4)cc3)ccc2N1,6.1940,0.9477,2.0492,0.3594,2.8133,23,multi_scrambled,,,0,0,False,C: prediction < 8,True
+CC(=O)Nc1ccc(NC(=O)c2ccc(F)cc2)cc1,6.1814,0.9019,1.4039,0.5366,15.6863,20,druglike_only,,,0,0,False,C: prediction < 8,True
+COc1ccccc1N1CCN(C(=O)Nc2ccccc2)CC1,6.1781,0.9474,1.6403,0.4915,8.6957,23,multi_scrambled,,,0,0,False,C: prediction < 8,True
+COc1ccc(NC(=O)Cc2cccc(OC)c2)cc1,6.1525,0.9092,1.4432,0.5385,15.6863,20,druglike_only,,,0,0,False,C: prediction < 8,True
+O=C(Nc1ccc(C(=O)N2CCOCC2)cc1)c1ccccc1,6.1443,0.9469,1.5773,0.3704,4.3478,23,druglike_only,,,0,0,False,C: prediction < 8,True
+COc1ccc(OCC(=O)Nc2cccc(C)c2)cc1,6.1245,0.9089,1.4413,0.3454,7.1895,20,druglike_only,,,0,0,False,C: prediction < 8,True
+COc1ccc(C(=O)Nc2ccc(C(C)C)cc2)cc1,6.0894,0.9082,1.4022,0.4286,10.4575,20,druglike_only,,,0,0,False,C: prediction < 8,True
+CCC(=O)Nc1ccc(NC(=O)c2ccccc2)cc1,6.0743,0.8935,1.3787,0.4255,10.4575,20,druglike_only,,,0,0,False,C: prediction < 8,True
+COc1ccc(C(=O)Nc2cc(OC)ccc2F)cc1,6.0566,0.9323,1.4787,0.4400,10.4575,20,druglike_only,,,0,0,False,C: prediction < 8,True
+Cc1cc(C(=O)Nc2ccc(C(=O)N(C)C)c(C)c2)cc(C)n1,6.0274,0.9476,2.0444,0.4219,5.6266,23,druglike_only,,,0,0,False,C: prediction < 8,True
+CCC(=O)Nc1ccc(C(=O)Nc2ccccc2)cc1,5.9949,0.8935,1.3782,0.3902,9.1503,20,druglike_only,,,0,0,False,C: prediction < 8,True
+O=C(NC1CCN(C(=O)c2ccccc2)CC1)c1ccccc1,5.9912,0.9476,1.5702,0.3654,3.8363,23,multi_scrambled,,,0,0,False,C: prediction < 8,True
+COc1ccc(NC(=O)Nc2ccc(OC)cc2)cc1,5.9586,0.8969,1.3850,0.4634,11.1111,20,druglike_only,,,0,0,False,C: prediction < 8,True
+COc1ccc(C(=O)NC(=O)Cc2ccccc2)cc1,5.9234,0.9253,1.4688,0.3729,9.1503,20,druglike_only,,,0,0,False,C: prediction < 8,True
+COc1ccc(CNC(=O)c2ccc(OC)cc2)cc1,5.8747,0.9090,1.3562,0.4694,11.7647,20,druglike_only,,,0,0,False,C: prediction < 8,True
+CN(C)C(=O)c1ccc(NC(=O)c2ccccc2)cc1,5.8400,0.9300,1.4277,0.4167,10.4575,20,druglike_only|multi_scrambled,,,0,0,False,C: prediction < 8,True
+CCOc1ccc(C(=O)Nc2ccc(OC)cc2)cc1,5.8365,0.9068,1.3479,0.4286,10.4575,20,druglike_only,,,0,0,False,C: prediction < 8,True
+CN(C)C(=O)c1ccc(NC(=O)c2ccccc2Cl)cc1,5.8330,0.9455,1.5539,0.4038,7.3733,21,druglike_only,,,0,0,False,C: prediction < 8,True
+COc1ccc(C(=O)Nc2ccc(C(=O)N(C)C)cc2)cc1,5.7937,0.9437,1.5111,0.4400,8.1356,22,druglike_only,,,0,0,False,C: prediction < 8,True
+CN(C)C(=O)c1ccc(CNC(=O)c2ccccc2)cc1,5.5758,0.9353,1.5062,0.3273,4.1475,21,druglike_only,,,0,0,False,C: prediction < 8,True

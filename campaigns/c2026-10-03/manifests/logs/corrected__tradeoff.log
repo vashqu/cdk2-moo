@@ -1,0 +1,79 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/10b_analyze_tradeoff.py
+# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=corrected
+[campaign c2026-10-03 | scope corrected] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results
+A. COST: primary surrogate (all 2,016 molecules), generation 50, generated molecules
+   median over 5 seeds [min, max]; change is paired with the same seed's unconstrained run
+
+   multi_real
+   floor       predicted pActivity          change vs none    raw similarity    QED    SA  atoms  n/seed
+   none        7.71 [7.65, 8.12]        0.00 [+0.00, +0.00]              0.36   0.91  2.07     21     100
+   0.4         7.89 [7.68, 8.10]        0.06 [-0.07, +0.32]              0.54   0.91  2.76     22     100
+   0.5         8.10 [7.70, 8.12]        0.14 [-0.02, +0.44]              0.59   0.88  2.73     22     100
+   0.6         7.87 [7.50, 8.08]       -0.01 [-0.25, +0.26]              0.67   0.85  2.70     23      96
+   0.7         8.21 [8.11, 8.26]        0.46 [+0.14, +0.53]              0.76   0.70  2.62     26      93
+
+   activity_only
+   floor       predicted pActivity          change vs none    raw similarity    QED    SA  atoms  n/seed
+   none        8.59 [8.37, 8.68]        0.00 [+0.00, +0.00]              0.70   0.25  3.12     35      99
+   0.4         8.56 [8.42, 8.60]       -0.00 [-0.11, +0.06]              0.69   0.26  3.08     36      99
+   0.5         8.59 [8.50, 8.66]       -0.01 [-0.06, +0.13]              0.72   0.27  3.33     35      99
+   0.6         8.54 [8.40, 8.63]        0.00 [-0.19, +0.04]              0.75   0.31  3.20     34      98
+   0.7         8.38 [8.37, 8.67]       -0.08 [-0.23, +0.01]              0.79   0.31  3.24     34      97
+
+B. TRANSFER: molecule-level held-out-actives control (surrogate never saw the actives)
+
+   multi_real
+   floor    predicted      proximity share >= 0.6   nearest is held-out  proximity recall    sim
+   none          7.23             1% [0, 7]                  24%               33%   0.34
+   0.4           7.29            20% [9, 40]                  44%               28%   0.48
+   0.5           7.27            48% [41, 64]                  47%               43%   0.60
+   0.6           7.37            76% [67, 83]                  41%               48%   0.70
+   0.7           7.42            80% [49, 87]                  32%               52%   0.75
+
+   activity_only
+   floor    predicted      proximity share >= 0.6   nearest is held-out  proximity recall    sim
+   none          7.87            95% [65, 99]                  84%               51%   0.70
+   0.4           7.83            93% [78, 94]                  67%               52%   0.69
+   0.5           7.90            95% [86, 100]                  79%               49%   0.71
+   0.6           7.86           100% [66, 100]                  72%               54%   0.75
+   0.7           7.72            74% [47, 100]                  29%               53%   0.79
+
+B. TRANSFER: scaffold-level held-out-actives control (surrogate never saw the actives)
+
+   multi_real
+   floor    predicted      proximity share >= 0.6   nearest is held-out  proximity recall    sim
+   none          7.46             5% [0, 15]                  19%               47%   0.49
+   0.4           7.65             5% [0, 16]                  14%               41%   0.53
+   0.5           7.63            10% [0, 20]                  35%               61%   0.57
+   0.6           7.60            11% [0, 22]                   8%               52%   0.68
+   0.7           7.58            10% [6, 19]                   4%               59%   0.75
+
+   activity_only
+   floor    predicted      proximity share >= 0.6   nearest is held-out  proximity recall    sim
+   none          8.40             0% [0, 35]                   0%               62%   0.68
+   0.4           8.37            16% [0, 45]                   6%               73%   0.75
+   0.5           8.36             6% [0, 58]                   0%               63%   0.71
+   0.6           8.25             5% [0, 74]                   1%               67%   0.70
+   0.7           8.06            10% [0, 70]                   3%               61%   0.78
+
+C. EXCHANGE RATE: percentage points of proximity share gained per 1.0 pActivity of predicted activity given up
+   (median paired change over seeds; 'n/a' where predicted activity does not fall by more than 0.05)
+   experimentarm             floor proximity change  predicted change   pp per pActivity lost
+   molecule  multi_real        0.4         +20.0 pp             +0.04                     n/a
+   molecule  multi_real        0.5         +48.5 pp             +0.04                     n/a
+   molecule  multi_real        0.6         +76.3 pp             +0.15                     n/a
+   molecule  multi_real        0.7         +80.0 pp             +0.19                     n/a
+   molecule  activity_only     0.4          -2.0 pp             -0.01                     n/a
+   molecule  activity_only     0.5          +1.0 pp             +0.01                     n/a
+   molecule  activity_only     0.6          +2.1 pp             -0.03                     n/a
+   molecule  activity_only     0.7         -17.7 pp             -0.10                  -174.5
+   scaffold  multi_real        0.4          +1.0 pp             +0.16                     n/a
+   scaffold  multi_real        0.5          +4.0 pp             +0.17                     n/a
+   scaffold  multi_real        0.6          +4.4 pp             +0.11                     n/a
+   scaffold  multi_real        0.7          +6.7 pp             +0.12                     n/a
+   scaffold  activity_only     0.4          +0.0 pp             -0.01                     n/a
+   scaffold  activity_only     0.5          +6.2 pp             -0.02                     n/a
+   scaffold  activity_only     0.6          +5.1 pp             -0.11                   +48.4
+   scaffold  activity_only     0.7         +10.0 pp             -0.34                   +29.7
+
+Wrote 10_tradeoff_v2.csv and 10_tradeoff_v2.png

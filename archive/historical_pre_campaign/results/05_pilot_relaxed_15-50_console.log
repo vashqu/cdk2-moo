@@ -1,0 +1,56 @@
+seeds = [42, 43, 44, 45, 46], generations = 50, arms = ['multi_real', 'multi_scrambled', 'activity_only', 'druglike_only']
+Training the surrogate on all 2016 molecules
+  seed 42  multi_real       pred_real 6.72 -> 7.73   max Tanimoto 1.00 -> 0.39
+  seed 42  multi_scrambled  pred_real 6.72 -> 6.32   max Tanimoto 1.00 -> 0.36
+  seed 42  activity_only    pred_real 6.72 -> 8.62   max Tanimoto 1.00 -> 0.64
+  seed 42  druglike_only    pred_real 6.72 -> 6.04   max Tanimoto 1.00 -> 0.40
+  seed 43  multi_real       pred_real 6.58 -> 7.63   max Tanimoto 1.00 -> 0.38
+  seed 43  multi_scrambled  pred_real 6.58 -> 5.74   max Tanimoto 1.00 -> 0.54
+  seed 43  activity_only    pred_real 6.58 -> 8.76   max Tanimoto 1.00 -> 0.78
+  seed 43  druglike_only    pred_real 6.58 -> 6.21   max Tanimoto 1.00 -> 0.37
+  seed 44  multi_real       pred_real 6.50 -> 7.96   max Tanimoto 1.00 -> 0.52
+  seed 44  multi_scrambled  pred_real 6.50 -> 6.13   max Tanimoto 1.00 -> 0.38
+  seed 44  activity_only    pred_real 6.50 -> 8.66   max Tanimoto 1.00 -> 0.66
+  seed 44  druglike_only    pred_real 6.50 -> 6.11   max Tanimoto 1.00 -> 0.38
+  seed 45  multi_real       pred_real 6.61 -> 7.75   max Tanimoto 1.00 -> 0.41
+  seed 45  multi_scrambled  pred_real 6.61 -> 6.38   max Tanimoto 1.00 -> 0.34
+  seed 45  activity_only    pred_real 6.61 -> 8.59   max Tanimoto 1.00 -> 0.78
+  seed 45  druglike_only    pred_real 6.61 -> 6.15   max Tanimoto 1.00 -> 0.38
+  seed 46  multi_real       pred_real 6.76 -> 7.67   max Tanimoto 1.00 -> 0.37
+  seed 46  multi_scrambled  pred_real 6.76 -> 6.55   max Tanimoto 1.00 -> 0.32
+  seed 46  activity_only    pred_real 6.76 -> 8.66   max Tanimoto 1.00 -> 0.67
+  seed 46  druglike_only    pred_real 6.76 -> 6.18   max Tanimoto 1.00 -> 0.36
+
+Wrote results/05_ga_populations.csv  (102000 rows)
+
+Population means, median over seeds, at generations [0, 10, 25, 50]:
+
+  multi_real
+     gen           pred_real      pred_scrambled                 qed                  sa        max_tanimoto       n_heavy_atoms  identical_to_train
+       0               6.606               6.571               0.514               3.018               1.000              30.020               1.000
+      10               7.462               6.664               0.830               2.424               0.466              21.180               0.070
+      25               7.634               6.645               0.893               2.039               0.406              19.950               0.000
+      50               7.728               6.699               0.915               1.949               0.391              20.210               0.000
+
+  multi_scrambled
+     gen           pred_real      pred_scrambled                 qed                  sa        max_tanimoto       n_heavy_atoms  identical_to_train
+       0               6.606               6.571               0.514               3.018               1.000              30.020               1.000
+      10               6.219               6.962               0.864               2.115               0.389              19.720               0.040
+      25               6.091               7.161               0.888               1.878               0.385              19.670               0.010
+      50               6.318               7.252               0.901               1.942               0.360              20.480               0.000
+
+  activity_only
+     gen           pred_real      pred_scrambled                 qed                  sa        max_tanimoto       n_heavy_atoms  identical_to_train
+       0               6.606               6.571               0.514               3.018               1.000              30.020               1.000
+      10               8.389               6.533               0.280               3.458               0.649              38.530               0.060
+      25               8.563               6.624               0.244               3.453               0.699              41.370               0.020
+      50               8.662               6.387               0.200               3.672               0.671              43.630               0.010
+
+  druglike_only
+     gen           pred_real      pred_scrambled                 qed                  sa        max_tanimoto       n_heavy_atoms  identical_to_train
+       0               6.606               6.571               0.514               3.018               1.000              30.020               1.000
+      10               6.133               6.620               0.881               2.042               0.358              19.620               0.010
+      25               6.221               6.622               0.910               1.706               0.359              20.220               0.000
+      50               6.149               6.686               0.925               1.588               0.380              20.190               0.000
+
+Next: inspect trajectories before any hypothesis analysis (stage 6/7).

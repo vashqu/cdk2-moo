@@ -1,0 +1,60 @@
+1. DIVERSITY: distinct scaffolds per population of 100 (median over seeds)
+    gen        multi_real   multi_scrambled     activity_only     druglike_only
+      0                85                85                85                85
+      1                43                44                49                44
+      3                68                65                62                76
+      5                68                73                67                80
+     10                59                77                59                82
+     20                44                72                45                79
+     30                35                67                35                74
+     50                22                70                21                62
+   (generation 0 = 100 random training molecules; later rows count only molecules born after gen 0)
+
+   Do different seeds collapse onto the SAME scaffolds? Mean Jaccard overlap of the
+   final-generation scaffold sets across the 10 pairs of seeds (0 = disjoint, 1 = identical):
+     multi_real       0.10
+     multi_scrambled  0.01
+     activity_only    0.13
+     druglike_only    0.05
+
+   Top scaffolds in the final populations (5 seeds pooled, 500 molecules per arm),
+   with how many training molecules share that scaffold and their mean measured pActivity:
+     multi_real
+       158/499  c1cc(-c2cnc[nH]2)ncn1                                       no training molecule has this scaffold
+       100/499  c1ccc(-c2ccccc2)cc1                                         no training molecule has this scaffold
+        32/499  c1ccc(-c2ccccn2)cc1                                         no training molecule has this scaffold
+        28/499  c1ccc(Cc2ccccc2)cc1                                         no training molecule has this scaffold
+     activity_only
+       236/492  c1ccc(Nc2nccc(-c3cnc[nH]3)n2)cc1                            31 training molecules, mean pActivity 8.01
+        30/492  c1ccc(Nc2nccc(-c3nccc(-c4cnc[nH]4)n3)n2)cc1                 no training molecule has this scaffold
+        22/492  O=C(c1ccccc1)c1ccc(Nc2nccc(-c3cnc[nH]3)n2)cc1               no training molecule has this scaffold
+        18/492  c1c[nH+]cc(CNc2cc(N3CCCCC3)nc3ccnn23)c1                     3 training molecules, mean pActivity 9.00
+
+   Nearest training molecule of each final generated molecule (by ECFP4 Tanimoto):
+   (training top decile = measured pActivity >= 8.05; training median 6.60)
+   arm                median pAct of NN    NN is top-decile   distinct NN   of
+   multi_real                      8.40                 62%            63  499
+   multi_scrambled                 6.77                  3%           112  499
+   activity_only                   8.52                 97%            14  492
+   druglike_only                   6.70                  5%           154  500
+
+2. BOUNDARY PILING: share of generated molecules at the window edges (20 or 39 heavy atoms)
+    gen        multi_real   multi_scrambled     activity_only     druglike_only
+      1    8% @20, 0% @39    6% @20, 0% @39    4% @20, 4% @39    5% @20, 0% @39
+      5   10% @20, 0% @39   16% @20, 0% @39    1% @20, 6% @39   13% @20, 0% @39
+     10   11% @20, 0% @39   19% @20, 0% @39    1% @20, 7% @39   17% @20, 0% @39
+     30   24% @20, 0% @39   11% @20, 0% @39   0% @20, 14% @39   19% @20, 0% @39
+     50   28% @20, 0% @39    8% @20, 0% @39   0% @20, 14% @39   19% @20, 0% @39
+
+   Does the drug-likeness objective itself prefer small molecules? Training molecules,
+   median QED and SA score by heavy-atom count (no GA involved):
+     20-20 atoms  n= 29  median QED 0.74  median SA 2.47  median measured pActivity 5.74
+     21-22 atoms  n= 85  median QED 0.64  median SA 2.57  median measured pActivity 6.23
+     23-25 atoms  n=306  median QED 0.62  median SA 2.66  median measured pActivity 7.05
+     26-30 atoms  n=636  median QED 0.55  median SA 2.85  median measured pActivity 6.72
+     31-35 atoms  n=519  median QED 0.47  median SA 2.94  median measured pActivity 6.55
+     36-39 atoms  n=258  median QED 0.38  median SA 3.31  median measured pActivity 6.53
+
+   Within the final multi_real generation, size vs the two things it trades off:
+     Spearman(heavy atoms, real prediction) = +0.39, Spearman(heavy atoms, QED) = -0.36
+     molecules with <=21 atoms: 289/499; their median real prediction 7.71 vs 7.96 for larger ones

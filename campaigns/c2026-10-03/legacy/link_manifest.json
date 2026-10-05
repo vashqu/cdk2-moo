@@ -1,0 +1,83 @@
+{
+  "files": {
+    "processed/cdk2_ic50_curated.csv": {
+      "bytes": 361575,
+      "sha256": "634c8603cbaba2424b99b9d2ddcb0f7f3ed0452c5c92ed6f6377961d922aa6b2"
+    },
+    "processed/cdk2_kikd_external.csv": {
+      "bytes": 100723,
+      "sha256": "2822d32df1de43eac95522121a4b46c52773dba4ede9f67e976f3d06046ea197"
+    },
+    "processed/cdk2_splits.csv": {
+      "bytes": 1875057,
+      "sha256": "fb0e99d050d0086c72f507748d986127de7f3afd42361caf5e817259162fea20"
+    },
+    "processed/ecfp4.npy": {
+      "bytes": 4128896,
+      "sha256": "9918f0f49e95c4699ddac5ca130403e95db76d58034eac4c04d9edebccbb4246"
+    },
+    "processed/eligible_starts.csv": {
+      "bytes": 109426,
+      "sha256": "2bff7da9700fc77071b70ffc0de33d296a13260b95c4253e80e280159d88ac92"
+    },
+    "results/02_curation_funnel.json": {
+      "bytes": 904,
+      "sha256": "2c8883535699f9cccab2d69b6c731b66f74e806509910aa616191097e50e0586"
+    },
+    "results/03_splits.json": {
+      "bytes": 20866,
+      "sha256": "b88d274722b30b5c7a8d895245c1942a8c2e946df5181098074492cdb3802434"
+    },
+    "results/04_surrogate_metrics.csv": {
+      "bytes": 11424,
+      "sha256": "e9f446b802994dd8fc12230bdda05b1420d7a7f67826eecccdc63b9af11cc589"
+    },
+    "results/04_test_predictions.csv": {
+      "bytes": 1161847,
+      "sha256": "b2e69d8f2b28bb656531f186c329708bf49d1535f41744882cb430faef61018e"
+    },
+    "results/05e_heldout_predictions.csv": {
+      "bytes": 12633,
+      "sha256": "9445177a3c606f065cade5d3ba519721cd229d4c6e4d18fb59bfd58918093b78"
+    },
+    "results/05e_holdout_sets.csv": {
+      "bytes": 275849,
+      "sha256": "ab1181502a9ee0e6de4a92f686c0f0ab16d16d24e50f0d9474844a9e3426a5f2"
+    },
+    "results/05e_setup_report.json": {
+      "bytes": 1307,
+      "sha256": "5b8fbd380dbef8935bfe961235367771a6b74846b48d487ec05097c4bd70a9c8"
+    },
+    "results/08b_redocking.json": {
+      "bytes": 1203,
+      "sha256": "908830e8856b52108673a025b5bbfd0cbd013c2a498044f6d85e2e915e23bc80"
+    },
+    "structures/4KD1.pdb": {
+      "bytes": 245997,
+      "sha256": "f902a65172345488551d1eb14659d2e24094aa82b5b882d88ddecccdf0811f5c"
+    },
+    "structures/4kd1_1QK_crystal.sdf": {
+      "bytes": 3452,
+      "sha256": "154ef0db46fed220680b8e0943dc270d8416353af89adc3754e0f4373a2e8c08"
+    },
+    "structures/receptor.pdbqt": {
+      "bytes": 233120,
+      "sha256": "fde7f70acec038884a533e4d96cdf7399e044452cc5203fee04d3c6cb2949751"
+    },
+    "structures/receptor_H.pdb": {
+      "bytes": 392840,
+      "sha256": "96537fffdaae953920a8a7c0b77d51937dafb720371ff670c7a81f3b24930e48"
+    },
+    "structures/receptor_box.txt": {
+      "bytes": 48,
+      "sha256": "e2db9a29e5a80e81fccb611184599117c253a7b91dfd7a81bb847eff9aab89b8"
+    }
+  },
+  "linked_from": "/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/shared",
+  "linked_utc": "2026-10-03T17:34:05+00:00",
+  "validated": {
+    "curated": 2016,
+    "fingerprint_bits": 2048,
+    "split_seeds": 10
+  }
+}

@@ -1,0 +1,234 @@
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "shared/curate", "status": "planned", "script": "02_curate.py", "args": [], "deps": []}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "shared/features_splits", "status": "planned", "script": "03_features_and_splits.py", "args": [], "deps": ["shared/curate"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "shared/eligible_starts", "status": "planned", "script": "03b_eligible_starts.py", "args": [], "deps": ["shared/curate"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "shared/surrogate_eval", "status": "planned", "script": "04_train_surrogate.py", "args": [], "deps": ["shared/features_splits"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "shared/holdout_setup", "status": "planned", "script": "05e_positive_control_setup.py", "args": [], "deps": ["shared/features_splits"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "shared/receptor", "status": "planned", "script": "08_prepare_receptor.py", "args": [], "deps": []}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "shared/redock", "status": "planned", "script": "08b_redock_native_ligand.py", "args": [], "deps": ["shared/receptor"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/link", "status": "planned", "script": "@link", "args": [], "deps": ["shared/curate", "shared/features_splits", "shared/eligible_starts", "shared/surrogate_eval", "shared/holdout_setup", "shared/receptor", "shared/redock"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/ga_primary", "status": "planned", "script": "05_run_ga.py", "args": [], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/size_percentile", "status": "planned", "script": "05b_size_conditioned_similarity.py", "args": [], "deps": ["legacy/ga_primary"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/summarize_ga", "status": "planned", "script": "05c_summarize_ga.py", "args": [], "deps": ["legacy/size_percentile"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/descriptive", "status": "planned", "script": "05d_ga_descriptive_checks.py", "args": [], "deps": ["legacy/size_percentile"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/holdout_molecule", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "molecule"], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/holdout_scaffold", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold"], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/robust_scaffold_split", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split"], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/robust_scaffold_split_s43", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s43"], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/robust_scaffold_split_s44", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s44"], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/robust_scaffold_split_s45", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s45"], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/robust_scaffold_split_s46", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s46"], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/robustness_eval", "status": "planned", "script": "05h_scaffold_surrogate_robustness.py", "args": [], "deps": ["legacy/ga_primary", "legacy/robust_scaffold_split", "legacy/robust_scaffold_split_s43", "legacy/robust_scaffold_split_s44", "legacy/robust_scaffold_split_s45", "legacy/robust_scaffold_split_s46"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/holdout_eval", "status": "planned", "script": "05g_positive_control_eval.py", "args": [], "deps": ["legacy/holdout_molecule", "legacy/holdout_scaffold"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/pareto", "status": "planned", "script": "06_pareto.py", "args": [], "deps": ["legacy/size_percentile"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/ad_reliability", "status": "planned", "script": "07_ad_reliability.py", "args": [], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/ad_overlay", "status": "planned", "script": "07b_ad_generated_overlay.py", "args": [], "deps": ["legacy/size_percentile", "legacy/pareto", "legacy/ad_reliability"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/alerts", "status": "planned", "script": "07c_structural_alerts.py", "args": [], "deps": ["legacy/ad_overlay"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/constrained_primary", "status": "planned", "script": "10_run_constrained_ga.py", "args": ["--experiments", "primary"], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/constrained_molecule", "status": "planned", "script": "10_run_constrained_ga.py", "args": ["--experiments", "molecule"], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/constrained_scaffold", "status": "planned", "script": "10_run_constrained_ga.py", "args": ["--experiments", "scaffold"], "deps": ["legacy/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/tradeoff", "status": "planned", "script": "10b_analyze_tradeoff.py", "args": [], "deps": ["legacy/ga_primary", "legacy/holdout_molecule", "legacy/holdout_scaffold", "legacy/constrained_primary", "legacy/constrained_molecule", "legacy/constrained_scaffold"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/dock_sets", "status": "planned", "script": "08c_select_docking_sets.py", "args": [], "deps": ["legacy/size_percentile", "legacy/pareto", "legacy/holdout_molecule", "legacy/holdout_scaffold"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/dock", "status": "planned", "script": "08d_dock_sets.py", "args": [], "deps": ["legacy/dock_sets"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/dock_analysis", "status": "planned", "script": "08e_docking_analysis.py", "args": [], "deps": ["legacy/dock"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/posebusters", "status": "planned", "script": "08f_posebusters.py", "args": [], "deps": ["legacy/dock"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/hinge", "status": "planned", "script": "08g_hinge_contacts.py", "args": [], "deps": ["legacy/dock"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/figures", "status": "planned", "script": "11_make_figures.py", "args": [], "deps": ["legacy/dock_analysis", "legacy/posebusters", "legacy/hinge", "legacy/summarize_ga", "legacy/pareto", "legacy/ad_reliability"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/table1", "status": "planned", "script": "11b_table1.py", "args": [], "deps": ["legacy/dock_analysis", "legacy/posebusters", "legacy/hinge"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "legacy/audit", "status": "planned", "script": "12_audit_leakage_and_artifacts.py", "args": [], "deps": ["legacy/dock", "legacy/posebusters", "legacy/hinge"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/link", "status": "planned", "script": "@link", "args": [], "deps": ["shared/curate", "shared/features_splits", "shared/eligible_starts", "shared/surrogate_eval", "shared/holdout_setup", "shared/receptor", "shared/redock"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/ga_primary", "status": "planned", "script": "05_run_ga.py", "args": [], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/size_percentile", "status": "planned", "script": "05b_size_conditioned_similarity.py", "args": [], "deps": ["corrected/ga_primary"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/summarize_ga", "status": "planned", "script": "05c_summarize_ga.py", "args": [], "deps": ["corrected/size_percentile"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/descriptive", "status": "planned", "script": "05d_ga_descriptive_checks.py", "args": [], "deps": ["corrected/size_percentile"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/holdout_molecule", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "molecule"], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/holdout_scaffold", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold"], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/robust_scaffold_split", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split"], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/robust_scaffold_split_s43", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s43"], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/robust_scaffold_split_s44", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s44"], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/robust_scaffold_split_s45", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s45"], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/robust_scaffold_split_s46", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s46"], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/robustness_eval", "status": "planned", "script": "05h_scaffold_surrogate_robustness.py", "args": [], "deps": ["corrected/ga_primary", "corrected/robust_scaffold_split", "corrected/robust_scaffold_split_s43", "corrected/robust_scaffold_split_s44", "corrected/robust_scaffold_split_s45", "corrected/robust_scaffold_split_s46"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/holdout_eval", "status": "planned", "script": "05g_positive_control_eval.py", "args": [], "deps": ["corrected/holdout_molecule", "corrected/holdout_scaffold"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/pareto", "status": "planned", "script": "06_pareto.py", "args": [], "deps": ["corrected/size_percentile"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/ad_reliability", "status": "planned", "script": "07_ad_reliability.py", "args": [], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/ad_overlay", "status": "planned", "script": "07b_ad_generated_overlay.py", "args": [], "deps": ["corrected/size_percentile", "corrected/pareto", "corrected/ad_reliability"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/alerts", "status": "planned", "script": "07c_structural_alerts.py", "args": [], "deps": ["corrected/ad_overlay"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/constrained_primary", "status": "planned", "script": "10_run_constrained_ga.py", "args": ["--experiments", "primary"], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/constrained_molecule", "status": "planned", "script": "10_run_constrained_ga.py", "args": ["--experiments", "molecule"], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/constrained_scaffold", "status": "planned", "script": "10_run_constrained_ga.py", "args": ["--experiments", "scaffold"], "deps": ["corrected/link"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/tradeoff", "status": "planned", "script": "10b_analyze_tradeoff.py", "args": [], "deps": ["corrected/ga_primary", "corrected/holdout_molecule", "corrected/holdout_scaffold", "corrected/constrained_primary", "corrected/constrained_molecule", "corrected/constrained_scaffold"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/dock_sets", "status": "planned", "script": "08c_select_docking_sets.py", "args": [], "deps": ["corrected/size_percentile", "corrected/pareto", "corrected/holdout_molecule", "corrected/holdout_scaffold"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/dock", "status": "planned", "script": "08d_dock_sets.py", "args": [], "deps": ["corrected/dock_sets", "legacy/dock"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/dock_analysis", "status": "planned", "script": "08e_docking_analysis.py", "args": [], "deps": ["corrected/dock"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/posebusters", "status": "planned", "script": "08f_posebusters.py", "args": [], "deps": ["corrected/dock"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/hinge", "status": "planned", "script": "08g_hinge_contacts.py", "args": [], "deps": ["corrected/dock"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/figures", "status": "planned", "script": "11_make_figures.py", "args": [], "deps": ["corrected/dock_analysis", "corrected/posebusters", "corrected/hinge", "corrected/summarize_ga", "corrected/pareto", "corrected/ad_reliability"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/table1", "status": "planned", "script": "11b_table1.py", "args": [], "deps": ["corrected/dock_analysis", "corrected/posebusters", "corrected/hinge"]}
+{"time_utc": "2026-10-03T17:27:00+00:00", "stage": "corrected/audit", "status": "planned", "script": "12_audit_leakage_and_artifacts.py", "args": [], "deps": ["corrected/dock", "corrected/posebusters", "corrected/hinge"]}
+{"time_utc": "2026-10-03T17:28:25+00:00", "stage": "plan", "status": "plan_frozen", "plan_sha256": "18e4d79245021d493c38395a2b22c268a9f40c009d114dc78e289d4c1c3e66be"}
+{"time_utc": "2026-10-03T17:28:25+00:00", "stage": "shared/curate", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/shared__curate.log"}
+{"time_utc": "2026-10-03T17:28:25+00:00", "stage": "shared/receptor", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/shared__receptor.log"}
+{"time_utc": "2026-10-03T17:28:27+00:00", "stage": "shared/receptor", "status": "completed", "seconds": 2.6, "n_outputs": 3}
+{"time_utc": "2026-10-03T17:28:30+00:00", "stage": "shared/redock", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/shared__redock.log"}
+{"time_utc": "2026-10-03T17:28:56+00:00", "stage": "shared/redock", "status": "completed", "seconds": 26.1, "n_outputs": 1}
+{"time_utc": "2026-10-03T17:29:40+00:00", "stage": "shared/curate", "status": "completed", "seconds": 74.8, "n_outputs": 3}
+{"time_utc": "2026-10-03T17:29:40+00:00", "stage": "shared/eligible_starts", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/shared__eligible_starts.log"}
+{"time_utc": "2026-10-03T17:29:40+00:00", "stage": "shared/features_splits", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/shared__features_splits.log"}
+{"time_utc": "2026-10-03T17:29:42+00:00", "stage": "shared/features_splits", "status": "completed", "seconds": 1.9, "n_outputs": 3}
+{"time_utc": "2026-10-03T17:29:45+00:00", "stage": "shared/surrogate_eval", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/shared__surrogate_eval.log"}
+{"time_utc": "2026-10-03T17:29:45+00:00", "stage": "shared/holdout_setup", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/shared__holdout_setup.log"}
+{"time_utc": "2026-10-03T17:30:33+00:00", "stage": "shared/holdout_setup", "status": "completed", "seconds": 48.3, "n_outputs": 3}
+{"time_utc": "2026-10-03T17:31:40+00:00", "stage": "shared/eligible_starts", "status": "completed", "seconds": 119.7, "n_outputs": 1}
+{"time_utc": "2026-10-03T17:33:52+00:00", "stage": "shared/surrogate_eval", "status": "completed", "seconds": 246.9, "n_outputs": 2}
+{"time_utc": "2026-10-03T17:34:04+00:00", "stage": "legacy/link", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__link.log"}
+{"time_utc": "2026-10-03T17:34:04+00:00", "stage": "corrected/link", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__link.log"}
+{"time_utc": "2026-10-03T17:34:05+00:00", "stage": "corrected/link", "status": "completed", "seconds": 0.2, "n_outputs": 0}
+{"time_utc": "2026-10-03T17:34:05+00:00", "stage": "legacy/link", "status": "completed", "seconds": 0.2, "n_outputs": 0}
+{"time_utc": "2026-10-03T17:34:09+00:00", "stage": "legacy/holdout_molecule", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__holdout_molecule.log"}
+{"time_utc": "2026-10-03T17:34:09+00:00", "stage": "legacy/robust_scaffold_split", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__robust_scaffold_split.log"}
+{"time_utc": "2026-10-03T17:34:09+00:00", "stage": "legacy/ga_primary", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__ga_primary.log"}
+{"time_utc": "2026-10-03T17:34:09+00:00", "stage": "legacy/robust_scaffold_split_s43", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__robust_scaffold_split_s43.log"}
+{"time_utc": "2026-10-03T17:34:09+00:00", "stage": "legacy/holdout_scaffold", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__holdout_scaffold.log"}
+{"time_utc": "2026-10-03T17:34:09+00:00", "stage": "legacy/robust_scaffold_split_s46", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__robust_scaffold_split_s46.log"}
+{"time_utc": "2026-10-03T17:34:09+00:00", "stage": "legacy/robust_scaffold_split_s45", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__robust_scaffold_split_s45.log"}
+{"time_utc": "2026-10-03T17:34:09+00:00", "stage": "legacy/robust_scaffold_split_s44", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__robust_scaffold_split_s44.log"}
+{"time_utc": "2026-10-03T17:38:03+00:00", "stage": "legacy/endpoints", "status": "planned", "script": "13_hypothesis_endpoints.py", "args": [], "deps": ["legacy/size_percentile", "legacy/holdout_molecule", "legacy/holdout_scaffold", "legacy/constrained_primary", "legacy/constrained_molecule", "legacy/constrained_scaffold"]}
+{"time_utc": "2026-10-03T17:38:03+00:00", "stage": "corrected/endpoints", "status": "planned", "script": "13_hypothesis_endpoints.py", "args": [], "deps": ["corrected/size_percentile", "corrected/holdout_molecule", "corrected/holdout_scaffold", "corrected/constrained_primary", "corrected/constrained_molecule", "corrected/constrained_scaffold"]}
+{"time_utc": "2026-10-03T17:48:08+00:00", "stage": "legacy/robust_scaffold_split_s45", "status": "completed", "seconds": 838.4, "n_outputs": 1}
+{"time_utc": "2026-10-03T17:48:10+00:00", "stage": "legacy/robust_scaffold_split_s44", "status": "completed", "seconds": 840.2, "n_outputs": 1}
+{"time_utc": "2026-10-03T17:48:10+00:00", "stage": "legacy/holdout_molecule", "status": "completed", "seconds": 841.0, "n_outputs": 1}
+{"time_utc": "2026-10-03T17:48:11+00:00", "stage": "legacy/constrained_scaffold", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__constrained_scaffold.log"}
+{"time_utc": "2026-10-03T17:48:11+00:00", "stage": "legacy/constrained_molecule", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__constrained_molecule.log"}
+{"time_utc": "2026-10-03T17:48:11+00:00", "stage": "legacy/constrained_primary", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__constrained_primary.log"}
+{"time_utc": "2026-10-03T17:48:13+00:00", "stage": "legacy/robust_scaffold_split_s46", "status": "completed", "seconds": 843.5, "n_outputs": 1}
+{"time_utc": "2026-10-03T17:48:16+00:00", "stage": "corrected/ga_primary", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__ga_primary.log"}
+{"time_utc": "2026-10-03T17:48:19+00:00", "stage": "legacy/robust_scaffold_split", "status": "completed", "seconds": 849.9, "n_outputs": 1}
+{"time_utc": "2026-10-03T17:48:21+00:00", "stage": "corrected/holdout_molecule", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__holdout_molecule.log"}
+{"time_utc": "2026-10-03T17:48:23+00:00", "stage": "legacy/ga_primary", "status": "completed", "seconds": 853.9, "n_outputs": 1}
+{"time_utc": "2026-10-03T17:48:26+00:00", "stage": "corrected/holdout_scaffold", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__holdout_scaffold.log"}
+{"time_utc": "2026-10-03T17:48:29+00:00", "stage": "legacy/holdout_scaffold", "status": "completed", "seconds": 859.7, "n_outputs": 1}
+{"time_utc": "2026-10-03T17:48:30+00:00", "stage": "legacy/robust_scaffold_split_s43", "status": "completed", "seconds": 860.1, "n_outputs": 1}
+{"time_utc": "2026-10-03T17:48:31+00:00", "stage": "corrected/robust_scaffold_split", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__robust_scaffold_split.log"}
+{"time_utc": "2026-10-03T17:48:31+00:00", "stage": "corrected/robust_scaffold_split_s43", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__robust_scaffold_split_s43.log"}
+{"time_utc": "2026-10-03T18:13:25+00:00", "stage": "legacy/constrained_molecule", "status": "completed", "seconds": 1514.5, "n_outputs": 1}
+{"time_utc": "2026-10-03T18:13:28+00:00", "stage": "corrected/robust_scaffold_split_s44", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__robust_scaffold_split_s44.log"}
+{"time_utc": "2026-10-03T18:13:37+00:00", "stage": "legacy/constrained_scaffold", "status": "completed", "seconds": 1526.4, "n_outputs": 1}
+{"time_utc": "2026-10-03T18:13:38+00:00", "stage": "corrected/robust_scaffold_split_s45", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__robust_scaffold_split_s45.log"}
+{"time_utc": "2026-10-03T18:13:42+00:00", "stage": "legacy/constrained_primary", "status": "completed", "seconds": 1531.2, "n_outputs": 1}
+{"time_utc": "2026-10-03T18:13:43+00:00", "stage": "corrected/robust_scaffold_split_s46", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__robust_scaffold_split_s46.log"}
+{"time_utc": "2026-10-03T18:42:29+00:00", "stage": "corrected/robust_scaffold_split", "status": "completed", "seconds": 3237.8, "n_outputs": 1}
+{"time_utc": "2026-10-03T18:42:30+00:00", "stage": "corrected/constrained_primary", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__constrained_primary.log"}
+{"time_utc": "2026-10-03T18:59:58+00:00", "stage": "corrected/holdout_molecule", "status": "completed", "seconds": 4297.2, "n_outputs": 1}
+{"time_utc": "2026-10-03T19:00:01+00:00", "stage": "corrected/constrained_molecule", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__constrained_molecule.log"}
+{"time_utc": "2026-10-03T19:12:38+00:00", "stage": "corrected/holdout_scaffold", "status": "completed", "seconds": 5051.9, "n_outputs": 1}
+{"time_utc": "2026-10-03T19:12:42+00:00", "stage": "corrected/constrained_scaffold", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__constrained_scaffold.log"}
+{"time_utc": "2026-10-03T19:13:42+00:00", "stage": "corrected/robust_scaffold_split_s45", "status": "completed", "seconds": 3604.2, "n_outputs": 1}
+{"time_utc": "2026-10-03T19:17:25+00:00", "stage": "corrected/ga_primary", "status": "completed", "seconds": 5349.2, "n_outputs": 1}
+{"time_utc": "2026-10-03T19:26:47+00:00", "stage": "corrected/robust_scaffold_split_s43", "status": "completed", "seconds": 5896.8, "n_outputs": 1}
+{"time_utc": "2026-10-03T19:26:48+00:00", "stage": "corrected/robust_scaffold_split_s44", "status": "completed", "seconds": 4400.8, "n_outputs": 1}
+{"time_utc": "2026-10-03T19:29:41+00:00", "stage": "corrected/robust_scaffold_split_s46", "status": "completed", "seconds": 4558.6, "n_outputs": 1}
+{"time_utc": "2026-10-03T22:05:01+00:00", "stage": "corrected/constrained_primary", "status": "completed", "seconds": 12151.0, "n_outputs": 1}
+{"time_utc": "2026-10-03T22:05:39+00:00", "stage": "corrected/constrained_molecule", "status": "completed", "seconds": 11137.3, "n_outputs": 1}
+{"time_utc": "2026-10-03T22:07:43+00:00", "stage": "corrected/constrained_scaffold", "status": "completed", "seconds": 10500.7, "n_outputs": 1}
+{"time_utc": "2026-10-04T10:30:04+00:00", "stage": "legacy/size_percentile", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__size_percentile.log"}
+{"time_utc": "2026-10-04T10:30:04+00:00", "stage": "legacy/robustness_eval", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__robustness_eval.log"}
+{"time_utc": "2026-10-04T10:30:04+00:00", "stage": "legacy/holdout_eval", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__holdout_eval.log"}
+{"time_utc": "2026-10-04T10:30:04+00:00", "stage": "legacy/ad_reliability", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__ad_reliability.log"}
+{"time_utc": "2026-10-04T10:30:04+00:00", "stage": "legacy/tradeoff", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__tradeoff.log"}
+{"time_utc": "2026-10-04T10:30:04+00:00", "stage": "corrected/size_percentile", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__size_percentile.log"}
+{"time_utc": "2026-10-04T10:30:04+00:00", "stage": "corrected/robustness_eval", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__robustness_eval.log"}
+{"time_utc": "2026-10-04T10:30:04+00:00", "stage": "corrected/holdout_eval", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__holdout_eval.log"}
+{"time_utc": "2026-10-04T10:30:06+00:00", "stage": "legacy/size_percentile", "status": "completed", "seconds": 2.1, "n_outputs": 2}
+{"time_utc": "2026-10-04T10:30:06+00:00", "stage": "corrected/size_percentile", "status": "completed", "seconds": 2.2, "n_outputs": 2}
+{"time_utc": "2026-10-04T10:30:09+00:00", "stage": "legacy/ad_reliability", "status": "completed", "seconds": 5.0, "n_outputs": 2}
+{"time_utc": "2026-10-04T10:30:09+00:00", "stage": "legacy/summarize_ga", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__summarize_ga.log"}
+{"time_utc": "2026-10-04T10:30:09+00:00", "stage": "legacy/pareto", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__pareto.log"}
+{"time_utc": "2026-10-04T10:30:09+00:00", "stage": "legacy/descriptive", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__descriptive.log"}
+{"time_utc": "2026-10-04T10:30:10+00:00", "stage": "legacy/robustness_eval", "status": "completed", "seconds": 6.7, "n_outputs": 1}
+{"time_utc": "2026-10-04T10:30:11+00:00", "stage": "corrected/robustness_eval", "status": "completed", "seconds": 6.6, "n_outputs": 1}
+{"time_utc": "2026-10-04T10:30:12+00:00", "stage": "legacy/summarize_ga", "status": "completed", "seconds": 2.4, "n_outputs": 2}
+{"time_utc": "2026-10-04T10:30:15+00:00", "stage": "legacy/endpoints", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__endpoints.log"}
+{"time_utc": "2026-10-04T10:30:15+00:00", "stage": "corrected/summarize_ga", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__summarize_ga.log"}
+{"time_utc": "2026-10-04T10:30:15+00:00", "stage": "corrected/descriptive", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__descriptive.log"}
+{"time_utc": "2026-10-04T10:30:18+00:00", "stage": "corrected/summarize_ga", "status": "completed", "seconds": 3.0, "n_outputs": 2}
+{"time_utc": "2026-10-04T10:30:20+00:00", "stage": "corrected/pareto", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__pareto.log"}
+{"time_utc": "2026-10-04T10:30:22+00:00", "stage": "legacy/descriptive", "status": "completed", "seconds": 12.5, "n_outputs": 0}
+{"time_utc": "2026-10-04T10:30:25+00:00", "stage": "corrected/ad_reliability", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__ad_reliability.log"}
+{"time_utc": "2026-10-04T10:30:26+00:00", "stage": "legacy/pareto", "status": "completed", "seconds": 17.0, "n_outputs": 1}
+{"time_utc": "2026-10-04T10:30:30+00:00", "stage": "legacy/ad_overlay", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__ad_overlay.log"}
+{"time_utc": "2026-10-04T10:30:31+00:00", "stage": "legacy/tradeoff", "status": "completed", "seconds": 27.6, "n_outputs": 1}
+{"time_utc": "2026-10-04T10:30:32+00:00", "stage": "corrected/ad_reliability", "status": "completed", "seconds": 7.2, "n_outputs": 2}
+{"time_utc": "2026-10-04T10:30:34+00:00", "stage": "corrected/descriptive", "status": "completed", "seconds": 19.0, "n_outputs": 0}
+{"time_utc": "2026-10-04T10:30:35+00:00", "stage": "legacy/ad_overlay", "status": "completed", "seconds": 4.3, "n_outputs": 1}
+{"time_utc": "2026-10-04T10:30:36+00:00", "stage": "legacy/alerts", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__alerts.log"}
+{"time_utc": "2026-10-04T10:30:36+00:00", "stage": "corrected/tradeoff", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__tradeoff.log"}
+{"time_utc": "2026-10-04T10:30:36+00:00", "stage": "corrected/endpoints", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__endpoints.log"}
+{"time_utc": "2026-10-04T10:30:42+00:00", "stage": "corrected/pareto", "status": "completed", "seconds": 22.3, "n_outputs": 1}
+{"time_utc": "2026-10-04T10:30:46+00:00", "stage": "corrected/ad_overlay", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__ad_overlay.log"}
+{"time_utc": "2026-10-04T10:30:50+00:00", "stage": "corrected/ad_overlay", "status": "completed", "seconds": 4.0, "n_outputs": 1}
+{"time_utc": "2026-10-04T10:30:51+00:00", "stage": "corrected/alerts", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__alerts.log"}
+{"time_utc": "2026-10-04T10:31:02+00:00", "stage": "legacy/endpoints", "status": "completed", "seconds": 47.1, "n_outputs": 4}
+{"time_utc": "2026-10-04T10:31:07+00:00", "stage": "corrected/tradeoff", "status": "completed", "seconds": 31.1, "n_outputs": 1}
+{"time_utc": "2026-10-04T10:31:13+00:00", "stage": "corrected/endpoints", "status": "completed", "seconds": 37.6, "n_outputs": 4}
+{"time_utc": "2026-10-04T10:31:43+00:00", "stage": "legacy/alerts", "status": "completed", "seconds": 67.1, "n_outputs": 2}
+{"time_utc": "2026-10-04T10:31:48+00:00", "stage": "corrected/alerts", "status": "completed", "seconds": 56.7, "n_outputs": 2}
+{"time_utc": "2026-10-04T10:31:49+00:00", "stage": "legacy/holdout_eval", "status": "failed", "exit_code": 1, "seconds": 104.9, "log_tail": ["  File \"/Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05g_positive_control_eval.py\", line 141, in <module>", "    main()", "  File \"/Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05g_positive_control_eval.py\", line 93, in main", "    print(f\"  {name:<20}{m['n_weighted']:>7} ({m['n_distinct']:>3}){m['median_proximity_to_held_actives']:>8.2f}\"", "                                                                    ~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", "KeyError: 'median_proximity_to_held_actives'"]}
+{"time_utc": "2026-10-04T10:31:49+00:00", "stage": "corrected/holdout_eval", "status": "failed", "exit_code": 1, "seconds": 104.6, "log_tail": ["  File \"/Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05g_positive_control_eval.py\", line 141, in <module>", "    main()", "  File \"/Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05g_positive_control_eval.py\", line 93, in main", "    print(f\"  {name:<20}{m['n_weighted']:>7} ({m['n_distinct']:>3}){m['median_proximity_to_held_actives']:>8.2f}\"", "                                                                    ~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", "KeyError: 'median_proximity_to_held_actives'"]}
+{"time_utc": "2026-10-04T10:40:15+00:00", "stage": "legacy/holdout_eval", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__holdout_eval.log"}
+{"time_utc": "2026-10-04T10:40:15+00:00", "stage": "corrected/holdout_eval", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__holdout_eval.log"}
+{"time_utc": "2026-10-04T10:41:50+00:00", "stage": "corrected/holdout_eval", "status": "failed", "exit_code": 1, "seconds": 95.0, "log_tail": ["  File \"/Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05g_positive_control_eval.py\", line 141, in <module>", "    main()", "  File \"/Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05g_positive_control_eval.py\", line 110, in main", "    share, hits = recall_of_held_actives(generated, reference, held_actives, config.REDISCOVERY_SIM)", "    ^^^^^^^^^^^", "ValueError: too many values to unpack (expected 2)"]}
+{"time_utc": "2026-10-04T10:41:53+00:00", "stage": "legacy/holdout_eval", "status": "failed", "exit_code": 1, "seconds": 98.5, "log_tail": ["  File \"/Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05g_positive_control_eval.py\", line 141, in <module>", "    main()", "  File \"/Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/05g_positive_control_eval.py\", line 110, in main", "    share, hits = recall_of_held_actives(generated, reference, held_actives, config.REDISCOVERY_SIM)", "    ^^^^^^^^^^^", "ValueError: too many values to unpack (expected 2)"]}
+{"time_utc": "2026-10-04T10:42:12+00:00", "stage": "legacy/holdout_eval", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__holdout_eval.log"}
+{"time_utc": "2026-10-04T10:42:12+00:00", "stage": "corrected/holdout_eval", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__holdout_eval.log"}
+{"time_utc": "2026-10-04T10:51:03+00:00", "stage": "corrected/holdout_eval", "status": "completed", "seconds": 530.8, "n_outputs": 1}
+{"time_utc": "2026-10-04T10:52:09+00:00", "stage": "legacy/holdout_eval", "status": "completed", "seconds": 596.9, "n_outputs": 1}
+{"time_utc": "2026-10-04T10:52:30+00:00", "stage": "legacy/dock_sets", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__dock_sets.log"}
+{"time_utc": "2026-10-04T10:52:30+00:00", "stage": "corrected/dock_sets", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__dock_sets.log"}
+{"time_utc": "2026-10-04T10:52:39+00:00", "stage": "corrected/dock_sets", "status": "completed", "seconds": 9.7, "n_outputs": 2}
+{"time_utc": "2026-10-04T10:52:40+00:00", "stage": "legacy/dock_sets", "status": "completed", "seconds": 9.9, "n_outputs": 2}
+{"time_utc": "2026-10-04T10:52:40+00:00", "stage": "legacy/dock", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__dock.log"}
+{"time_utc": "2026-10-04T16:04:49+00:00", "stage": "legacy/dock", "status": "failed", "exit_code": 1, "seconds": 18729.1, "log_tail": ["  File \"/Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/08d_dock_sets.py\", line 106, in main", "    table = export(store, export_dir, only_smiles=set(sets[\"smiles\"]))", "            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", "  File \"/Users/vashqu/Desktop/drug-design/cdk2-moo/src/cdk2moo/dock_jobs.py\", line 264, in export", "    raise ResumeRefused(f\"cannot export an inconsistent run directory: {sorted(found)}\")", "cdk2moo.dock_jobs.ResumeRefused: cannot export an inconsistent run directory: ['pose_mismatch']"]}
+{"time_utc": "2026-10-04T18:45:57+00:00", "stage": "legacy/dock", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__dock.log"}
+{"time_utc": "2026-10-04T18:46:22+00:00", "stage": "legacy/dock", "status": "completed", "seconds": 24.5, "n_outputs": 1}
+{"time_utc": "2026-10-04T18:46:22+00:00", "stage": "legacy/posebusters", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__posebusters.log"}
+{"time_utc": "2026-10-04T18:46:22+00:00", "stage": "legacy/hinge", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__hinge.log"}
+{"time_utc": "2026-10-04T18:46:23+00:00", "stage": "legacy/hinge", "status": "completed", "seconds": 0.9, "n_outputs": 2}
+{"time_utc": "2026-10-04T19:20:09+00:00", "stage": "legacy/posebusters", "status": "completed", "seconds": 2026.4, "n_outputs": 1}
+{"time_utc": "2026-10-04T19:20:10+00:00", "stage": "legacy/dock_analysis", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__dock_analysis.log"}
+{"time_utc": "2026-10-04T19:20:22+00:00", "stage": "legacy/dock_analysis", "status": "completed", "seconds": 12.4, "n_outputs": 1}
+{"time_utc": "2026-10-04T19:20:25+00:00", "stage": "corrected/dock", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__dock.log"}
+{"time_utc": "2026-10-04T22:36:26+00:00", "stage": "corrected/dock", "status": "completed", "seconds": 11761.3, "n_outputs": 1}
+{"time_utc": "2026-10-04T22:36:26+00:00", "stage": "corrected/posebusters", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__posebusters.log"}
+{"time_utc": "2026-10-04T22:36:26+00:00", "stage": "corrected/hinge", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__hinge.log"}
+{"time_utc": "2026-10-04T22:36:27+00:00", "stage": "corrected/hinge", "status": "completed", "seconds": 0.9, "n_outputs": 2}
+{"time_utc": "2026-10-04T23:05:03+00:00", "stage": "corrected/posebusters", "status": "completed", "seconds": 1716.5, "n_outputs": 1}
+{"time_utc": "2026-10-04T23:05:04+00:00", "stage": "corrected/dock_analysis", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__dock_analysis.log"}
+{"time_utc": "2026-10-04T23:05:16+00:00", "stage": "corrected/dock_analysis", "status": "completed", "seconds": 11.5, "n_outputs": 1}
+{"time_utc": "2026-10-05T07:41:42+00:00", "stage": "legacy/figures", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__figures.log"}
+{"time_utc": "2026-10-05T07:41:42+00:00", "stage": "legacy/table1", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__table1.log"}
+{"time_utc": "2026-10-05T07:41:42+00:00", "stage": "legacy/audit", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__audit.log"}
+{"time_utc": "2026-10-05T07:41:42+00:00", "stage": "corrected/figures", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__figures.log"}
+{"time_utc": "2026-10-05T07:41:42+00:00", "stage": "corrected/table1", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__table1.log"}
+{"time_utc": "2026-10-05T07:41:42+00:00", "stage": "corrected/audit", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__audit.log"}
+{"time_utc": "2026-10-05T07:41:43+00:00", "stage": "corrected/table1", "status": "failed", "exit_code": 1, "seconds": 1.2, "log_tail": ["    self.handles = get_handle(", "                   ^^^^^^^^^^^", "  File \"/opt/anaconda3/envs/cdk2/lib/python3.11/site-packages/pandas/io/common.py\", line 930, in get_handle", "    handle = open(", "             ^^^^^", "FileNotFoundError: [Errno 2] No such file or directory: '/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results/08f_posebusters_by_molecule.csv'"]}
+{"time_utc": "2026-10-05T07:41:44+00:00", "stage": "legacy/table1", "status": "failed", "exit_code": 1, "seconds": 1.3, "log_tail": ["    self.handles = get_handle(", "                   ^^^^^^^^^^^", "  File \"/opt/anaconda3/envs/cdk2/lib/python3.11/site-packages/pandas/io/common.py\", line 930, in get_handle", "    handle = open(", "             ^^^^^", "FileNotFoundError: [Errno 2] No such file or directory: '/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results/08f_posebusters_by_molecule.csv'"]}
+{"time_utc": "2026-10-05T07:41:44+00:00", "stage": "corrected/audit", "status": "completed", "seconds": 1.6, "n_outputs": 1}
+{"time_utc": "2026-10-05T07:41:44+00:00", "stage": "legacy/audit", "status": "completed", "seconds": 1.7, "n_outputs": 1}
+{"time_utc": "2026-10-05T07:41:45+00:00", "stage": "legacy/figures", "status": "failed", "exit_code": 2, "seconds": 3.0, "log_tail": ["  legacy/figures/final/fig5_docking_M.png", "  legacy/figures/final/fig5_docking_P.png", "  legacy/figures/final/fig5_docking_S.png", "  legacy/figures/final/fig6_pose_checks.png", "", "# declared outputs missing after a clean exit: ['figures/final/fig1_surrogate_honesty.png', 'figures/final/fig5_orthogonal_validation.png']"]}
+{"time_utc": "2026-10-05T07:41:45+00:00", "stage": "corrected/figures", "status": "failed", "exit_code": 2, "seconds": 3.0, "log_tail": ["  corrected/figures/final/fig5_docking_M.png", "  corrected/figures/final/fig5_docking_P.png", "  corrected/figures/final/fig5_docking_S.png", "  corrected/figures/final/fig6_pose_checks.png", "", "# declared outputs missing after a clean exit: ['figures/final/fig1_surrogate_honesty.png', 'figures/final/fig5_orthogonal_validation.png']"]}
+{"time_utc": "2026-10-05T07:42:44+00:00", "stage": "legacy/table1", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__table1.log"}
+{"time_utc": "2026-10-05T07:42:44+00:00", "stage": "legacy/figures", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__figures.log"}
+{"time_utc": "2026-10-05T07:42:44+00:00", "stage": "corrected/table1", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__table1.log"}
+{"time_utc": "2026-10-05T07:42:44+00:00", "stage": "corrected/figures", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__figures.log"}
+{"time_utc": "2026-10-05T07:42:45+00:00", "stage": "legacy/figures", "status": "failed", "exit_code": 1, "seconds": 0.7, "log_tail": ["$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/11_make_figures.py", "# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=legacy", "[campaign c2026-10-03 | scope legacy] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/results", "figures exist and are not replaced: ['/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/figures/final/fig3_pareto_fronts.png', '/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/legacy/figures/final/fig3b_pareto_structures.png']..."]}
+{"time_utc": "2026-10-05T07:42:45+00:00", "stage": "corrected/figures", "status": "failed", "exit_code": 1, "seconds": 0.7, "log_tail": ["$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug-design/cdk2-moo/scripts/11_make_figures.py", "# CDK2_CAMPAIGN=c2026-10-03 CDK2_SCOPE=corrected", "[campaign c2026-10-03 | scope corrected] results -> /Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/results", "figures exist and are not replaced: ['/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/figures/final/fig3_pareto_fronts.png', '/Users/vashqu/Desktop/drug-design/cdk2-moo/campaigns/c2026-10-03/corrected/figures/final/fig3b_pareto_structures.png']..."]}
+{"time_utc": "2026-10-05T07:42:58+00:00", "stage": "corrected/table1", "status": "completed", "seconds": 14.6, "n_outputs": 2}
+{"time_utc": "2026-10-05T07:42:59+00:00", "stage": "legacy/table1", "status": "completed", "seconds": 14.7, "n_outputs": 2}
+{"time_utc": "2026-10-05T07:43:09+00:00", "stage": "legacy/figures", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__figures.log"}
+{"time_utc": "2026-10-05T07:43:09+00:00", "stage": "corrected/figures", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__figures.log"}
+{"time_utc": "2026-10-05T07:43:11+00:00", "stage": "legacy/figures", "status": "completed", "seconds": 1.9, "n_outputs": 9}
+{"time_utc": "2026-10-05T07:43:11+00:00", "stage": "corrected/figures", "status": "completed", "seconds": 1.9, "n_outputs": 9}
+{"time_utc": "2026-10-05T07:44:07+00:00", "stage": "legacy/figures", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/legacy__figures.log"}
+{"time_utc": "2026-10-05T07:44:07+00:00", "stage": "corrected/figures", "status": "running", "log": "campaigns/c2026-10-03/manifests/logs/corrected__figures.log"}
+{"time_utc": "2026-10-05T07:44:08+00:00", "stage": "legacy/figures", "status": "completed", "seconds": 1.7, "n_outputs": 9}
+{"time_utc": "2026-10-05T07:44:08+00:00", "stage": "corrected/figures", "status": "completed", "seconds": 1.7, "n_outputs": 9}
