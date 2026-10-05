@@ -13,8 +13,10 @@ Three splits over the same molecules, the same test fraction and the same seed:
                   test and a better proxy for what a generative optimizer
                   asks of a surrogate: predictions on new chemistry.
 
-  paper split     same idea, but grouped by the paper a molecule first appeared
-                  in. Analogue series are published together, and a new scaffold
+  paper split     same idea, but grouped by `primary_document`: the first non-null
+                  document met when a structure's records were aggregated. That is
+                  NOT a verified earliest publication (no dates were checked) and this
+                  is not a temporal split. Analogue series are published together, and a new scaffold
                   is often one ring swapped in a known series, so the scaffold
                   split still leaves near-relatives across the divide. The
                   paper split is the strictest of the three.
@@ -82,7 +84,7 @@ def overlap_report(train, test, scaffolds, fps, primary_docs, all_docs, pactivit
     Four different yardsticks, because no single one settles it:
       scaffolds  - does the test molecule's ring skeleton appear in train?
       papers     - did a training molecule come from the same paper? Counted
-                   twice: by the test molecule's first paper only, and by ANY
+                   twice: by the test molecule's primary document only, and by ANY
                    paper that measured it (strict; catches reference compounds
                    that appear in many papers)
       max Tanimoto - similarity to the nearest training molecule

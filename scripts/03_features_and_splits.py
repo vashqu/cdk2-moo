@@ -29,6 +29,7 @@ from cdk2moo.splits import random_split, group_split, overlap_report
 
 
 def main():
+    config.require_campaign()
     ap = argparse.ArgumentParser()
     ap.add_argument("--seeds", type=int, nargs="+", default=config.SPLIT_SEEDS,
                     help="split seeds (default: the predetermined list in config)")

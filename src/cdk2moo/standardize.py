@@ -83,6 +83,56 @@ def standardize_mol(mol, canonical_tautomer=True):
     return mol, None
 
 
+def standardize_with_status(mol):
+    """
+    The same steps as standardize_mol (cleanup, salt stripping, neutralising, canonical tautomer, element
+    check), but also reports whether tautomer enumeration ran to completion.
+
+    Returns (mol, None, status) or (None, reason, status); `status` is the name of RDKit's
+    TautomerEnumeratorStatus ("Completed", "MaxTransformsReached", "MaxTautomersReached", "Canceled") or
+    None if enumeration was not reached. Only "Completed" shows the search for the canonical tautomer
+    was exhaustive; otherwise the result is a canonical choice among the tautomers found so far, and two
+    tautomers of one compound are NOT guaranteed to map to the same structure. In the 2,016 curated
+    training molecules enumeration was incomplete for 23 (1.1%), all "MaxTransformsReached".
+    """
+    if mol is None:
+        return None, "unparseable", None
+    status = None
+    try:
+        mol = rdMolStandardize.Cleanup(mol)
+        mol = rdMolStandardize.FragmentParent(mol)
+        mol = _uncharger.uncharge(mol)
+        enumeration = _tautomer_enumerator.Enumerate(mol)
+        status = str(enumeration.status).split(".")[-1]
+        mol = _tautomer_enumerator.PickCanonical(enumeration)
+    except Exception as exc:
+        return None, f"standardization_error: {type(exc).__name__}", status
+    if mol is None or mol.GetNumAtoms() == 0:
+        return None, "empty_after_standardization", status
+    symbols = {a.GetSymbol() for a in mol.GetAtoms()}
+    if not symbols <= ORGANIC_ELEMENTS:
+        return None, f"inorganic: {','.join(sorted(symbols - ORGANIC_ELEMENTS))}", status
+    return mol, None, status
+
+
+def stereo_preserving_form(mol):
+    """
+    Cleanup, largest fragment and neutralising ONLY: no tautomer canonicalization, so stereochemistry is kept as given.
+
+    Why it exists: RDKit's tautomer canonicalization removes sp3 and double-bond stereochemistry at positions where
+    tautomerism could interconvert it (by default, e.g. the alpha carbon of an amino acid), so the standard
+    pipeline above merges those stereoisomers. This form is the strict alternative for identity checks; it does not
+    merge tautomers. Returns a molecule or None.
+    """
+    if mol is None:
+        return None
+    try:
+        mol = _uncharger.uncharge(rdMolStandardize.FragmentParent(rdMolStandardize.Cleanup(mol)))
+    except Exception:
+        return None
+    return mol if mol is not None and mol.GetNumAtoms() > 0 else None
+
+
 def standardize_smiles(smiles, canonical_tautomer=True):
     """
     Standardize one SMILES string.

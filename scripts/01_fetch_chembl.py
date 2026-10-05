@@ -28,6 +28,7 @@ DOWNLOAD_TYPES = ["IC50", "Ki", "Kd"]
 
 
 def main():
+    config.require_campaign()
     ap = argparse.ArgumentParser()
     ap.add_argument("--force", action="store_true",
                     help="re-download even if the cache file exists")
@@ -48,6 +49,9 @@ def main():
         print("  Use --force to re-download.")
         return
 
+    if config.CAMPAIGN != "historical":
+        raise SystemExit(f"{out_path} is missing. A campaign uses the FROZEN cached download copied into its inputs/ by "
+                         "`scripts/campaign_run.py init`; it never downloads a newer ChEMBL release in place of it.")
     print(f"Target: {config.TARGET_CHEMBL_ID} (UniProt {config.TARGET_UNIPROT})")
     print(f"Types:  {', '.join(DOWNLOAD_TYPES)}\n")
 

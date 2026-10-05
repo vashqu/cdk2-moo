@@ -38,6 +38,7 @@ SPLITS = ["random", "scaffold", "paper"]
 
 
 def main():
+    config.require_campaign()
     ap = argparse.ArgumentParser()
     ap.add_argument("--seeds", type=int, nargs="+", default=config.SPLIT_SEEDS)
     args = ap.parse_args()

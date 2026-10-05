@@ -27,6 +27,7 @@ from cdk2moo.curate_set import curate_set
 
 
 def main():
+    config.require_campaign()
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-tautomer", action="store_true",
                     help="skip canonical tautomer generation (faster, less thorough)")

@@ -5,22 +5,78 @@ This is the ONLY place these values are defined. Every other module imports
 from here, so that reproducing the project means changing one file.
 """
 
+import os
 from pathlib import Path
 
-# --- Paths -------------------------------------------------------------
-# Resolved relative to this file, never hardcoded, so the repo works on any
-# machine after a clone.
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+# --- Paths and campaign selection --------------------------------------
+# A pipeline script reads and writes inside ONE selected campaign scope; nothing falls back to the historical
+# results. Select with environment variables:
+#   CDK2_CAMPAIGN=<id>         a campaign in campaigns/<id>/ (see cdk2moo/campaign.py for its layout)
+#   CDK2_CAMPAIGN=historical   explicit reanalysis of the historical artifacts in data/, results/, figures/
+#   CDK2_SCOPE=shared|legacy|corrected   which part of the campaign (default shared; legacy and corrected are the two
+#                                        candidate-preparation policies and are never pooled)
+#   CDK2_PROJECT_ROOT=<dir>    only for tests: a different project root
+# With no campaign selected the data paths point at a directory that does not exist, and scripts stop in
+# require_campaign() with an explanation. Importing this module never creates directories outside a selected campaign.
+PROJECT_ROOT = Path(os.environ.get("CDK2_PROJECT_ROOT") or Path(__file__).resolve().parents[2]).resolve()
+CAMPAIGN = os.environ.get("CDK2_CAMPAIGN") or None
+SCOPE = os.environ.get("CDK2_SCOPE", "shared")
+POLICY_SCOPES = ("legacy", "corrected")
+KNOWN_SCOPES = ("shared",) + POLICY_SCOPES
 
-DATA_DIR = PROJECT_ROOT / "data"
-RAW_DIR = DATA_DIR / "raw"              # downloaded; never edited
-PROCESSED_DIR = DATA_DIR / "processed"  # curated; regenerable
-STRUCTURES_DIR = DATA_DIR / "structures"
-RESULTS_DIR = PROJECT_ROOT / "results"
-FIGURES_DIR = PROJECT_ROOT / "figures"
+if CAMPAIGN is None:
+    _unselected = PROJECT_ROOT / "NO_CAMPAIGN_SELECTED"
+    DATA_DIR = RAW_DIR = PROCESSED_DIR = STRUCTURES_DIR = INPUT_STRUCTURES_DIR = _unselected / "data"
+    RESULTS_DIR = _unselected / "results"
+    FIGURES_DIR = _unselected / "figures"
+    CAMPAIGN_ROOT = DOCKING_STORE_DIR = None
+    SCOPE_POLICY = None
+elif CAMPAIGN == "historical":
+    DATA_DIR = PROJECT_ROOT / "data"
+    RAW_DIR = DATA_DIR / "raw"
+    PROCESSED_DIR = DATA_DIR / "processed"
+    STRUCTURES_DIR = INPUT_STRUCTURES_DIR = DATA_DIR / "structures"
+    RESULTS_DIR = PROJECT_ROOT / "results"
+    FIGURES_DIR = PROJECT_ROOT / "figures"
+    CAMPAIGN_ROOT = DOCKING_STORE_DIR = None
+    SCOPE_POLICY = None
+else:
+    if SCOPE not in KNOWN_SCOPES:
+        raise ValueError(f"CDK2_SCOPE must be one of {KNOWN_SCOPES}, got {SCOPE!r}")
+    CAMPAIGN_ROOT = PROJECT_ROOT / "campaigns" / CAMPAIGN
+    _scope_root = CAMPAIGN_ROOT / SCOPE
+    DATA_DIR = _scope_root
+    RAW_DIR = CAMPAIGN_ROOT / "inputs" / "raw"                 # frozen copy of the cached ChEMBL download
+    INPUT_STRUCTURES_DIR = CAMPAIGN_ROOT / "inputs" / "structures"   # frozen 4KD1 structure and crystal ligand
+    PROCESSED_DIR = _scope_root / "processed"
+    STRUCTURES_DIR = _scope_root / "structures"
+    RESULTS_DIR = _scope_root / "results"
+    FIGURES_DIR = _scope_root / "figures"
+    DOCKING_STORE_DIR = CAMPAIGN_ROOT / "docking_store"        # shared by all scopes: identical jobs are docked once
+    SCOPE_POLICY = SCOPE if SCOPE in POLICY_SCOPES else None
+    for _d in (PROCESSED_DIR, STRUCTURES_DIR, RESULTS_DIR, FIGURES_DIR):
+        _d.mkdir(parents=True, exist_ok=True)
 
-for _d in (RAW_DIR, PROCESSED_DIR, STRUCTURES_DIR, RESULTS_DIR, FIGURES_DIR):
-    _d.mkdir(parents=True, exist_ok=True)
+
+def require_campaign():
+    """Stop with an explanation if no campaign is selected; print what was selected otherwise."""
+    if CAMPAIGN is None:
+        raise SystemExit("No campaign selected. Set CDK2_CAMPAIGN=<id> (and CDK2_SCOPE=shared|legacy|corrected), or "
+                         "CDK2_CAMPAIGN=historical to reanalyse the historical artifacts explicitly. There is no default, "
+                         "so no script can silently read historical files.")
+    print(f"[campaign {CAMPAIGN} | scope {SCOPE if CAMPAIGN != 'historical' else 'n/a'}] results -> {RESULTS_DIR}", flush=True)
+
+
+def default_policy():
+    """The candidate-preparation policy a GA script should use when --policy is not given: the scope's, else legacy."""
+    return SCOPE_POLICY or "legacy"
+
+
+def check_policy(policy):
+    """In a policy scope, refuse a different policy (the scope's outputs belong to exactly one policy)."""
+    if SCOPE_POLICY is not None and policy != SCOPE_POLICY:
+        raise SystemExit(f"scope {SCOPE!r} holds policy {SCOPE_POLICY!r} results only; got --policy {policy!r}")
+
 
 # --- Reproducibility ---------------------------------------------------
 RANDOM_SEED = 42
@@ -110,10 +166,11 @@ GA_N_CHILDREN = 100               # new molecules proposed each generation
 GA_N_GENERATIONS = 50
 GA_MUTATION_PROB = 0.5            # chance a child is mutated after crossover
 
-# PRIMARY size window for generated molecules: the training set's observed
-# support (5th-95th percentile of heavy-atom count = 20-39; decisions.md D-19).
-# Outside it the surrogate has no training examples of that size, so any
-# "improvement" there would be extrapolation by construction.
+# PRIMARY size window for generated molecules: the central part of the training
+# set's heavy-atom counts, the 5th-95th percentile = 20-39 (decisions.md D-19). The
+# training set itself spans 5-78 heavy atoms, so this is NOT its full support: 10%
+# of the training molecules lie outside it. The window avoids the sparsely
+# populated extremes, where the surrogate has few examples.
 GA_MIN_HEAVY_ATOMS = 20
 GA_MAX_HEAVY_ATOMS = 39
 # RELAXED window, used only for the pilot / stress run (--relaxed). Training
@@ -170,3 +227,20 @@ DOCK_BOX_SIZE = 22.0          # Angstrom cube centred on the crystal ligand
 DOCK_EXHAUSTIVENESS = 8       # Vina search effort (default); higher = slower, slightly more reproducible
 DOCK_N_POSES = 9
 REDOCK_MAX_RMSD = 2.0         # Angstrom; above this nothing downstream is trustworthy
+
+
+def effective_parameters():
+    """Every constant that can change a result, for run manifests (so a manifest records the parameters actually in force)."""
+    names = ["RANDOM_SEED", "SURROGATE_SEED", "SCRAMBLE_SEED", "SPLIT_SEEDS", "TEST_FRAC", "FP_RADIUS", "FP_BITS", "RF_N_TREES",
+             "RF_MAX_FEATURES", "GA_SEEDS", "GA_POP_SIZE", "GA_N_CHILDREN", "GA_N_GENERATIONS", "GA_MUTATION_PROB", "GA_MIN_HEAVY_ATOMS",
+             "GA_MAX_HEAVY_ATOMS", "GA_RELAXED_MIN_HEAVY_ATOMS", "GA_RELAXED_MAX_HEAVY_ATOMS", "GA_ALLOWED_ELEMENTS", "ACTIVITY_LOW",
+             "ACTIVITY_HIGH", "SIZE_STRATUM_HALFWIDTH", "SIZE_STRATUM_MIN_N", "HOLDOUT_QUANTILE", "HOLDOUT_MIN_TOP_PER_FAMILY",
+             "REDISCOVERY_SIM", "REDISCOVERY_SIMS", "AD_RAW_EDGES", "AD_PCT_EDGES", "AD_MIN_UNIQUE", "AD_LARGE_ERROR", "DOCK_PH",
+             "DOCK_BOX_SIZE", "DOCK_EXHAUSTIVENESS", "DOCK_N_POSES", "REDOCK_MAX_RMSD", "KEEP_TYPES", "KEEP_UNITS", "KEEP_RELATION",
+             "KEEP_ASSAY_TYPES", "MUTANT_REGEX", "DROP_CURATOR_FLAGGED", "TARGET_CHEMBL_ID", "PDB_ID"]
+    values = {n: globals()[n] for n in names if n in globals()}
+    values.update({"fingerprint": "ECFP4: Morgan radius 2, 2048 bits, binary, chirality NOT included",
+                   "activity_scaling": "linear over pActivity [ACTIVITY_LOW, ACTIVITY_HIGH], clipped to 0-1, same for every arm",
+                   "standardization": "cleanup, largest fragment, neutralise, canonical tautomer (RDKit TautomerEnumerator defaults: 1000 transforms), organic-element check",
+                   "campaign": CAMPAIGN, "scope": SCOPE if CAMPAIGN not in (None, "historical") else None})
+    return values

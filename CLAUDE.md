@@ -13,7 +13,9 @@ The project's value is methodological rigour, not chemistry expertise.
 > objective reflect progress toward the target, or exploitation of the
 > surrogate's extrapolation error?
 
-### Hypotheses
+### Historical hypotheses (as originally worded; kept verbatim)
+
+These were written before any experiment. They are NOT restated in the light of results; the current state is in "Current evidence" below and in the README.
 
 - **H1** Predicted pActivity rises monotonically across GA generations. *(Expected, trivial — the setup, not the finding.)*
 - **H2** That rise coincides with increasing distance from the surrogate's training distribution: max Tanimoto to training set *falls* as predicted activity climbs.
@@ -22,6 +24,13 @@ The project's value is methodological rigour, not chemistry expertise.
 - **H5** Constraining the GA to stay near the training distribution attenuates H1 but improves transfer in H3. Measure the exchange rate.
 
 **H4 and H5 are the point.** H1 is the setup.
+
+### Current evidence (campaign `c2026-10-03`, documented 2026-10-05)
+
+The hypotheses above are history and are not reworded to fit outcomes. The current state is in `README.md` (methods, counting definitions, what the saved tables show), `presentation/CLAIMS_TO_EVIDENCE.md` (claim, policy, source table, counting definition, qualification) and `KNOWN_ISSUES.md`.
+In outline, reported per preparation policy and never pooled (unit = GA run, n = 5): predicted activity rises in the activity-driven arms (strictly monotone only for activity_only); the similarity trend of multi_real is matched by a drug-likeness-only arm; the scrambled-surrogate arm also produces a rising curve of its own surrogate;
+the docking validity gate was not passed, so docking-based H3 and H5-transfer were **not assessed** (an inconclusive benchmark, not evidence of no effect); the H5 exchange-rate estimates are **provisional** (unreliable estimator, see KNOWN_ISSUES #1); the endpoint pipeline counts raw population rows, not standardized-distinct molecules as the plan intended (#2).
+Unanswered: the activity of any generated molecule, the surrogate's error on generated molecules, and anything needing a validated orthogonal signal. A null or "not assessable" outcome is a result; implementation correctness (tests, hashes) is not scientific validity.
 
 ---
 
@@ -163,7 +172,7 @@ pip: `meeko`, `posebusters`, `chembl_webresource_client`
 
 - No GPU. No deep generative models. No large model training.
 - No molecular dynamics, no free-energy calculations.
-- Total compute budget under ~2 hours across the whole project.
+- Total compute budget under ~2 hours across the whole project. (The 2026-10 campaign ran with the user's explicit authorisation to exceed it: GA in parallel plus ~8.5 h of docking.)
 - **Never use ADFR Suite or MGLTools** — no arm64 builds exist. Receptor prep goes through `mk_prepare_receptor.py --read_pdb` (Meeko).
 - conda-forge packages install before pip packages. **Never `pip install vina`** — it builds from source and needs Boost/SWIG.
 - The ChEMBL API drops connections; the raw cache exists so a failure costs one command, not the data.
@@ -183,7 +192,13 @@ data/structures/ PDB, PDBQT, SDF
 results/         metrics as JSON/CSV
 figures/         every plot
 decisions.md     the judgment-call log
+campaigns/<id>/  one complete rerun: inputs/ plan/ manifests/ shared/ legacy/ corrected/ docking_store/ superseded/
+historical_record/  hashes of pre-campaign artifacts and the READMEs they came with
+archive/         historical (pre-campaign) data/results/figures moved here intact (see archive/RESTORE.md); results/, figures/ and most of data/ now hold only RELOCATED.md pointers
+presentation/    selected figure copies, captions, claims table (copies; originals stay in the campaign)
 ```
+
+- Campaign scripts select their directory through `CDK2_CAMPAIGN` / `CDK2_SCOPE` (see `config.py`). With no campaign selected they stop; historical files are read only with `CDK2_CAMPAIGN=historical`. Never mix scopes in a headline number.
 
 - A notebook that writes files or feeds a later stage is a script in the wrong place — promote its logic to `src/`.
 - A `def` never belongs in `scripts/`.
@@ -196,6 +211,8 @@ decisions.md     the judgment-call log
 
 ## Pipeline stages
 
+**Historical status table.** The table below is the status at the end of the pre-campaign project (the historical pass). Its counts and verdicts (for example the 788-molecule docking panel, "H3 inconclusive", "3 of 6 claims stable") are historical and are **not** the current campaign's; for the current state see `README.md` and the campaign row at the bottom. The output files of that pass (`results/`, `figures/final/`, most of `data/`) are archived in `archive/historical_pre_campaign/`; the scripts that produced them remain in `scripts/`.
+
 | # | Stage | Status |
 |---|-------|--------|
 | 0 | Environment, structure verification | **done** |
@@ -206,10 +223,11 @@ decisions.md     the judgment-call log
 | 5 | GB-GA optimization, 4 arms × 5 seeds | **done** (D-18..D-23): primary window 20–39, pilot 15–50 kept; H2 not supported, see D-23; held-out positive controls (D-26) and scaffold-trained robustness across 5 splits (D-27, D-28): 3 of 6 claims stable, 3 fragile |
 | 6 | Pareto analysis over (pActivity, QED, SA) | **done** (D-24); overlays are stand-ins, see D-24 |
 | 7 | Applicability-domain audit + structural-alert audit | **done** (D-25) |
-| 8 | Docking (Vina) — **timeboxed, droppable** | **done** (D-29, D-30): redocking 0.65 A; Vina does not discriminate actives from decoys, H3 inconclusive |
+| 8 | Docking (Vina) — **timeboxed, droppable** | **done** (D-29, D-30; PoseBusters re-audited with all 22 checks in D-34): redocking 0.65 A; Vina does not discriminate actives from decoys, H3 inconclusive |
 | 9 | Pose/score audit (PoseBusters, size confound, decoy ROC) | **done** (D-30): PoseBusters 99% pass, size confound quantified, decoy AUC 0.53 |
 | 10 | Mitigation arm (H5) | **done** (D-31, D-32): floor is nearly free in predicted activity; H5 not supported as worded |
-| 11 | Figures, README, slide deck | figures 1-5 and Table 1 **done** (`figures/final/`); README current; slide deck left to the author |
+| 11 | Figures, README, slide deck | figures 1-6 and Table 1 **done** per policy under `campaigns/c2026-10-03/<policy>/figures/final/` (the historical set is archived in `archive/historical_pre_campaign/figures/final/`); README current; slide deck left to the author |
+| C | Campaign `c2026-10-03`: both preparation policies, 69 stages, docking of ~2,000 molecules each | **executed** (D-40..D-44); documented and reviewed 2026-10-05 (D-45); open problems in `KNOWN_ISSUES.md`; docking-based H3 and H5-transfer not assessed (validity gate not passed) |
 
 Stages 1–7 + 10 are a complete, presentable project on their own. Stages 8–9
 are upside. **If docking is not working by the Day 3 midpoint, drop it and say
@@ -249,15 +267,22 @@ cLogP, internal diversity, %PAINS, %PoseBusters-pass, max Tanimoto to training).
 
 ## Limitations to state explicitly
 
+- Records with censored `>` values were dropped and each structure's pActivity is the median over curated **records** (not demonstrably independent experiments): modelling choices, not neutral facts.
+- Primary-document splitting is not temporal validation and not a guarantee that train and test share no source papers; scaffold separation is not chemical-series independence.
+- The docking decoys are property-matched putative inactives; a failed validity gate is an inconclusive benchmark, not proof that Vina carries no information.
+- Redocking, docking discrimination, PoseBusters plausibility, hinge proximity, synthetic feasibility and biological validation are different things; only redocking and plausibility checks exist here.
+- The scrambled-surrogate runs use one label permutation; the size-only control is a regression, not a GA; the corrected-vs-legacy comparison bundles three changes.
+- Open analysis and code problems are listed in `KNOWN_ISSUES.md` and were not repaired.
+
 - Assay heterogeneity: ATP concentration varies and is mostly unrecorded; demonstrated at 1.17 log units for one compound in one paper.
 - Ligand data is largely against CDK2/cyclin A; docking is into monomeric CDK2.
 - Censored `>` records dropped (31% of raw) — the training set is biased toward actives, so the surrogate has little experience of weak compounds.
 - No empirical noise floor obtainable from this data.
-- Docking scores are not binding free energies: rigid receptor, no explicit water, no entropy, no tautomer/protonation enumeration.
+- Docking scores are not binding free energies: rigid receptor, no explicit water, no rigorous treatment of binding entropy (Vina has only an approximate rotatable-bond penalty), no tautomer/protonation enumeration.
 - Single receptor conformation; induced fit ignored.
 - SA score is a fragment-frequency heuristic, not a synthetic route.
 - QED optimization is partly circular — it rewards resemblance to existing drugs.
-- ECFP-based models cannot represent activity cliffs.
+- ECFP-based models struggle with activity cliffs: molecules with identical fingerprints (e.g. stereoisomers; 166 curated molecules have an identical-fingerprint twin) cannot be told apart, and similarity-based learners tend to smooth over sharp activity changes between near neighbours. A cliff between molecules with different fingerprints is representable in principle but hard to learn from this much data.
 - GB-GA mutations are chemically naive graph edits.
 - No ADMET, selectivity or toxicity. No experimental validation of anything.
 

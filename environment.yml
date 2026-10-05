@@ -1,10 +1,11 @@
-# Direct dependencies only, hand-trimmed (no transitive dump).
+# PORTABLE specification: direct dependencies only, deliberately unpinned.
+# For the exact versions the recorded results were produced with (one machine), see
+# reproducibility/environment_snapshot_macos-arm64.txt. That file is a snapshot of an
+# existing environment, not an installation recipe for other platforms.
 #
-# NOTE: this file was written by hand, NOT exported from a live env -- the
-# `cdk2` env did not exist on this machine when the project was scaffolded.
-# Versions are therefore unpinned. Pin them from `conda env export` once the
-# env is built and stage 1 runs green; the project is not reproducible until
-# that is done.
+# gemmi and scipy were added after the first scaffold: Meeko's receptor preparation
+# needs gemmi, and several analyses import scipy. The tests use the standard-library
+# unittest (python -m unittest discover tests); no extra test dependency is required.
 #
 # Order matters: conda-forge packages install before the pip block.
 # Never `pip install vina`.
@@ -17,6 +18,8 @@ dependencies:
   - vina
   - pdbfixer
   - numpy
+  - scipy
+  - gemmi
   - pandas
   - scikit-learn
   - matplotlib
