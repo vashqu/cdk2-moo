@@ -46,7 +46,7 @@ def main():
 
     pred = pd.read_csv(R / "04_test_predictions.csv")
     metrics = pd.read_csv(R / "04_surrogate_metrics.csv")
-    fig_surrogate_honesty(pred, metrics, config.RANDOM_SEED, targets["fig1_surrogate.png"], tag + " Surrogate trained on each split's training set; 10 split seeds in the titles (median [quartiles]).")
+    fig_surrogate_honesty(pred, metrics, config.RANDOM_SEED, targets["fig1_surrogate.png"], f"Campaign {config.CAMPAIGN}; the surrogate evaluation does not depend on the preparation policy. Surrogate trained on each split's training set; 10 split seeds in the titles (median [quartiles]).")
     fig_trajectories(pd.read_csv(R / "05_ga_per_run.csv"), targets["fig2_trajectories.png"], tag + " Primary experiment (surrogate trained on all 2,016 molecules).")
     shutil.copy(F / "06_pareto_fronts.png", targets["fig3_pareto_fronts.png"])
     shutil.copy(F / "06_pareto_structures.png", targets["fig3b_pareto_structures.png"])

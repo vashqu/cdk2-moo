@@ -1638,3 +1638,7 @@ saved test results are attributed to the review's run of 2026-10-05, not to this
 **How I'd defend it.** "I corrected the claims that the saved tables did not support, labelled what I could not verify as provisional, and moved the old results out of the way without losing a byte; I did not pretend that rewording fixes the estimator."
 
 **What would change my mind.** A recomputation of the H5 and counting analyses with a corrected estimator and standardized-distinct views: the documents would then be rewritten from the new tables as a recorded amendment.
+
+---
+
+*Note on paths (2026-11-22 tidy-up): entries above were written against earlier layouts. Documentation now lives in `docs/`, `CLAUDE.md` and `historical_record/` were moved under `archive/`, and `presentation/` was folded into `docs/`.*

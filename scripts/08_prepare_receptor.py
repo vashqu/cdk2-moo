@@ -30,6 +30,8 @@ Run:
 
 import shutil
 import subprocess
+from pathlib import Path
+import sys
 import urllib.request
 
 import numpy as np
@@ -85,7 +87,10 @@ def main():
 
     # ---- 3. PDBQT with Meeko --------------------------------------------------
     base = config.STRUCTURES_DIR / "receptor"
-    cmd = ["mk_prepare_receptor.py", "--read_pdb", str(receptor_h), "-o", str(base), "-p", "-v",
+    # Meeko's command-line tool lives next to the interpreter of the active environment; look there first so the stage works
+    # without `conda activate` (for example when launched by the campaign driver through the environment's python).
+    tool = Path(sys.executable).parent / "mk_prepare_receptor.py"
+    cmd = [str(tool) if tool.exists() else "mk_prepare_receptor.py", "--read_pdb", str(receptor_h), "-o", str(base), "-p", "-v",
            "--box_center", *[f"{c:.3f}" for c in centre], "--box_size", *[str(config.DOCK_BOX_SIZE)] * 3,
            "--default_altloc", "A"]
     result = subprocess.run(cmd, capture_output=True, text=True)

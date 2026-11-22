@@ -5,7 +5,7 @@ split's training set (1,613 molecules) instead of all 2,016?
 
 Reads : results/05_ga_populations.csv                    (primary: surrogate on all 2,016)
         results/05f_scaffold_split[_sNN]_populations.csv (secondary: five scaffold splits,
-                                                           split seeds 42-46, 5 GA seeds each)
+                                                           split seeds 42-46, all GA seeds each)
         results/04_surrogate_metrics.csv
 Writes: results/05h_robustness_summary.csv
 
@@ -28,6 +28,7 @@ import numpy as np
 import pandas as pd
 
 from cdk2moo import config
+from cdk2moo.distinct import require_distinct_standardized
 from cdk2moo.features import murcko_scaffold
 from cdk2moo.objectives import ARMS
 
@@ -46,6 +47,7 @@ def main():
     rows = []
     for exp, filename in EXPERIMENTS.items():
         pop = pd.read_csv(config.RESULTS_DIR / filename)
+        require_distinct_standardized(pop, filename)
         final = pop[(pop["generation"] == pop["generation"].max()) & (pop["birth_generation"] > 0)]
         scaffold_of = {s: murcko_scaffold(s) for s in final["smiles"].unique()}
         for (arm, seed), g in final.groupby(["arm", "seed"]):
@@ -65,7 +67,7 @@ def main():
 
     # ---- key statistics: primary vs the scaffold-trained splits --------------------------
     print("Generation 50, generated molecules.")
-    print("  primary: median [min, max] over 5 GA seeds.")
+    print("  primary: median [min, max] over all GA seeds.")
     print(f"  scaffold-trained: median [min, max] over the {len(SPLITS)} splits of each split's median.")
     for col, label in [("pred_real", "median real prediction"), ("max_tanimoto", "median raw max Tanimoto"),
                        ("qed", "median QED"), ("sa", "median SA"), ("atoms", "median heavy atoms"),

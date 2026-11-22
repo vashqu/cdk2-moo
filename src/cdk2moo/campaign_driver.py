@@ -31,7 +31,9 @@ import pandas as pd
 from cdk2moo import campaign, config
 
 SCRIPTS = Path(__file__).resolve().parents[2] / "scripts"
-POLICY_SCOPES = ("legacy", "corrected")
+# Campaign c2026-10-03 ran both preparation policies. New campaigns run only the corrected policy: the legacy policy scored candidates as edited
+# (radical-bearing and duplicate candidates) and is kept in config.py only so the historical campaign can be re-analysed.
+POLICY_SCOPES = ("corrected",)
 ROBUSTNESS_CONTROLS = ["scaffold_split", "scaffold_split_s43", "scaffold_split_s44", "scaffold_split_s45", "scaffold_split_s46"]
 
 # files copied from the shared scope into each policy scope (relative to a scope root)
@@ -46,8 +48,8 @@ def stage(sid, scope, script, args=(), deps=(), outputs=(), cores=1, note=""):
     return {"id": sid, "scope": scope, "script": script, "args": list(args), "deps": list(deps), "outputs": list(outputs), "cores": cores, "note": note}
 
 
-def build_stages():
-    """The full stage table. Dependencies are (scope, id) pairs written as 'scope/id'."""
+def build_stages(policy_scopes=None):
+    """The full stage table (for POLICY_SCOPES unless `policy_scopes` is given). Dependencies are (scope, id) pairs written as 'scope/id'."""
     st = [
         stage("curate", "shared", "02_curate.py", outputs=["processed/cdk2_ic50_curated.csv", "processed/cdk2_kikd_external.csv", "results/02_curation_funnel.json"]),
         stage("features_splits", "shared", "03_features_and_splits.py", deps=["shared/curate"],
@@ -62,14 +64,14 @@ def build_stages():
     ]
     shared_done = [f"shared/{s}" for s in ("curate", "features_splits", "eligible_starts", "surrogate_eval", "holdout_setup", "receptor", "redock")]
     previous_dock = None
-    for scope in POLICY_SCOPES:
+    for scope in (policy_scopes or POLICY_SCOPES):
         P = lambda sid: f"{scope}/{sid}"                         # noqa: E731  (a tiny local name helper)
-        st.append(stage("link", scope, "@link", deps=shared_done, note="copy shared inputs into this scope with hash checks and alignment validation"))
+        st.append(stage("link", scope, "@link", deps=shared_done, outputs=LINKED_FILES + ["link_manifest.json"], note="copy shared inputs into this scope with hash checks and alignment validation"))
         st += [
             stage("ga_primary", scope, "05_run_ga.py", deps=[P("link")], outputs=["results/05_ga_populations.csv"]),
             stage("size_percentile", scope, "05b_size_conditioned_similarity.py", deps=[P("ga_primary")],
                   outputs=["results/05_ga_populations_scored.csv", "results/05_training_loo_similarity.csv"]),
-            stage("summarize_ga", scope, "05c_summarize_ga.py", deps=[P("size_percentile")], outputs=["results/05_ga_per_run.csv", "results/05_ga_final_summary.csv"]),
+            stage("summarize_ga", scope, "05c_summarize_ga.py", deps=[P("size_percentile")], outputs=["results/05_ga_per_run.csv", "results/05_ga_final_summary.csv", "figures/05_ga_trajectories.png", "figures/05_ga_final_generation.png"]),
             stage("descriptive", scope, "05d_ga_descriptive_checks.py", deps=[P("size_percentile")], outputs=["@log"]),
             stage("holdout_molecule", scope, "05f_positive_control_ga.py", ["--controls", "molecule"], [P("link")], ["results/05f_molecule_populations.csv"]),
             stage("holdout_scaffold", scope, "05f_positive_control_ga.py", ["--controls", "scaffold"], [P("link")], ["results/05f_scaffold_populations.csv"]),
@@ -81,34 +83,34 @@ def build_stages():
             stage("robustness_eval", scope, "05h_scaffold_surrogate_robustness.py", deps=[P("ga_primary")] + [P(f"robust_{c}") for c in ROBUSTNESS_CONTROLS],
                   outputs=["results/05h_robustness_summary.csv"]),
             stage("holdout_eval", scope, "05g_positive_control_eval.py", deps=[P("holdout_molecule"), P("holdout_scaffold")],
-                  outputs=["results/05g_positive_control_summary_v2.csv"]),
-            stage("pareto", scope, "06_pareto.py", deps=[P("size_percentile")], outputs=["results/06_pareto_front.csv"]),
-            stage("ad_reliability", scope, "07_ad_reliability.py", deps=[P("link")], outputs=["results/07_stage4_ad.csv", "results/07_reliability_bins.csv"]),
+                  outputs=["results/05g_positive_control_summary_v2.csv", "figures/05g_positive_control_v2.png"]),
+            stage("pareto", scope, "06_pareto.py", deps=[P("size_percentile")], outputs=["results/06_pareto_front.csv", "figures/06_pareto_fronts.png", "figures/06_pareto_structures.png"]),
+            stage("ad_reliability", scope, "07_ad_reliability.py", deps=[P("link")], outputs=["results/07_stage4_ad.csv", "results/07_reliability_bins.csv", "figures/07_reliability_curves.png"]),
             stage("ad_overlay", scope, "07b_ad_generated_overlay.py", deps=[P("size_percentile"), P("pareto"), P("ad_reliability")],
                   outputs=["results/07_generated_regions.csv"]),
-            stage("alerts", scope, "07c_structural_alerts.py", deps=[P("ad_overlay")], outputs=["results/07_generated_alerts.csv", "results/07_front_alerts.csv"]),
+            stage("alerts", scope, "07c_structural_alerts.py", deps=[P("ad_overlay")], outputs=["results/07_generated_alerts.csv", "results/07_front_alerts.csv", "figures/07_generated_on_domain.png"]),
         ]
         for experiment in ("primary", "molecule", "scaffold"):
             st.append(stage(f"constrained_{experiment}", scope, "10_run_constrained_ga.py", ["--experiments", experiment], [P("link")],
                             [f"results/10_constrained_{experiment}_populations.csv"]))
         st += [
             stage("tradeoff", scope, "10b_analyze_tradeoff.py", deps=[P("ga_primary"), P("holdout_molecule"), P("holdout_scaffold")]
-                  + [P(f"constrained_{e}") for e in ("primary", "molecule", "scaffold")], outputs=["results/10_tradeoff_v2.csv"]),
+                  + [P(f"constrained_{e}") for e in ("primary", "molecule", "scaffold")], outputs=["results/10_tradeoff_v2.csv", "figures/10_tradeoff_v2.png"]),
             stage("endpoints", scope, "13_hypothesis_endpoints.py", deps=[P("size_percentile"), P("holdout_molecule"), P("holdout_scaffold")]
                   + [P(f"constrained_{e}") for e in ("primary", "molecule", "scaffold")],
-                  outputs=["results/13_h1_summary.csv", "results/13_h2_summary.csv", "results/13_h4_summary.csv", "results/13_h5_summary.csv"]),
+                  outputs=["results/13_*.csv"]),
             stage("dock_sets", scope, "08c_select_docking_sets.py", deps=[P("size_percentile"), P("pareto"), P("holdout_molecule"), P("holdout_scaffold")],
                   outputs=["results/08c_docking_sets.csv", "results/08c_selection_report.json"]),
             stage("dock", scope, "08d_dock_sets.py", deps=[P("dock_sets")] + ([previous_dock] if previous_dock else []),
-                  outputs=["results/08d_export/docking_scores.csv"], cores=8, note="all docking stages need the full machine; the store is shared and has one writer"),
-            stage("dock_analysis", scope, "08e_docking_analysis.py", deps=[P("dock"), P("posebusters")], outputs=["results/08e_docking_by_molecule.csv"]),
-            stage("posebusters", scope, "08f_posebusters.py", deps=[P("dock")], outputs=["results/posebusters_audit/posebusters_checks.csv"]),
+                  outputs=["results/08d_export/*"], cores=8, note="all docking stages need the full machine; the store is shared and has one writer"),
+            stage("dock_analysis", scope, "08e_docking_analysis.py", deps=[P("dock"), P("posebusters")], outputs=["results/08e_*.csv", "figures/08_docking_*.png"]),
+            stage("posebusters", scope, "08f_posebusters.py", deps=[P("dock")], outputs=["results/posebusters_audit/*"]),
             stage("hinge", scope, "08g_hinge_contacts.py", deps=[P("dock")], outputs=["results/08g_hinge_contacts.csv", "results/08g_hinge_by_set.csv"]),
             stage("figures", scope, "11_make_figures.py", deps=[P("dock_analysis"), P("posebusters"), P("hinge"), P("summarize_ga"), P("pareto"), P("ad_reliability")],
                   outputs=["figures/final/fig1_surrogate.png", "figures/final/fig2_trajectories.png", "figures/final/fig3_pareto_fronts.png", "figures/final/fig3b_pareto_structures.png", "figures/final/fig4_similarity_vs_prediction.png",
                            "figures/final/fig5_docking_P.png", "figures/final/fig5_docking_M.png", "figures/final/fig5_docking_S.png", "figures/final/fig6_pose_checks.png"]),
             stage("table1", scope, "11b_table1.py", deps=[P("dock_analysis"), P("posebusters"), P("hinge")], outputs=["results/table1.csv", "figures/final/table1.md"]),
-            stage("audit", scope, "12_audit_leakage_and_artifacts.py", deps=[P("dock"), P("posebusters"), P("hinge")], outputs=["results/audit/leakage_summary.csv"]),
+            stage("audit", scope, "12_audit_leakage_and_artifacts.py", deps=[P("dock"), P("posebusters"), P("hinge")], outputs=["results/audit/*"]),
         ]
         previous_dock = P("dock")
     return st
@@ -149,9 +151,12 @@ def init_campaign(project_root, cid, historical_record_file):
     root = campaign_root(project_root, cid)
     for sub in ("inputs/raw", "inputs/structures", "manifests/stages", "manifests/logs", "shared", "legacy", "corrected", "docking_store", "plan"):
         (root / sub).mkdir(parents=True, exist_ok=True)
-    frozen = {"inputs/raw/chembl_CHEMBL301_activities.csv": project_root / "data/raw/chembl_CHEMBL301_activities.csv",
-              "inputs/structures/4KD1.pdb": project_root / "data/structures/4KD1.pdb",
-              "inputs/structures/4kd1_1QK_crystal.sdf": project_root / "data/structures/4kd1_1QK_crystal.sdf"}
+    # The three inputs come from data/ if present; a fresh clone has no data/, so fall back to the copies frozen inside the recorded campaign.
+    frozen = {}
+    for rel in ("inputs/raw/chembl_CHEMBL301_activities.csv", "inputs/structures/4KD1.pdb", "inputs/structures/4kd1_1QK_crystal.sdf"):
+        candidates = [project_root / "data" / rel.split("/", 1)[1], *sorted((project_root / "campaigns").glob(f"*/{rel}"))]
+        candidates = [c for c in candidates if c.exists() and c != root / rel]
+        frozen[rel] = candidates[0] if candidates else project_root / "data" / rel.split("/", 1)[1]
     inputs = {}
     for rel, source in frozen.items():
         target = root / rel
@@ -249,19 +254,39 @@ def _declared_outputs(project_root, cid, s):
     return found, missing
 
 
-def stage_complete(project_root, cid, key):
-    """True if the stage's manifest says complete and every recorded output still has the recorded hash."""
+def stage_complete(project_root, cid, key, code_sha256=None):
+    """
+    True only if the stage's manifest says complete AND all of the following still hold:
+      * every declared output exists with the recorded hash;
+      * every upstream output the stage consumed still has the hash it had when the stage ran;
+      * if `code_sha256` is given, the code (src/ and scripts/) is the code the stage ran with.
+    Any failure means the stage is rerun, never trusted.
+    """
+    why = stage_incomplete_reason(project_root, cid, key, code_sha256)
+    return why is None
+
+
+def stage_incomplete_reason(project_root, cid, key, code_sha256=None):
+    """None if the stage is complete and still valid, otherwise a short reason."""
+    project_root = Path(project_root)
     path = stage_manifest_path(project_root, cid, key)
     if not path.exists():
-        return False
+        return "no manifest"
     manifest = json.loads(path.read_text())
     if not manifest.get("complete"):
-        return False
+        return "manifest not marked complete"
     for rel, info in manifest["outputs"].items():
-        file = Path(project_root) / rel
-        if not file.is_file() or campaign.sha256_file(file) != info["sha256"]:
-            return False
-    return True
+        file = project_root / rel
+        if info is None or not file.is_file() or campaign.sha256_file(file) != info["sha256"]:
+            return f"output {rel} missing or changed"
+    for dep, outputs in manifest.get("consumed_upstream_outputs", {}).items():
+        for rel, info in outputs.items():
+            file = project_root / rel
+            if info is None or not file.is_file() or campaign.sha256_file(file) != info["sha256"]:
+                return f"consumed input {rel} (from {dep}) missing or changed since this stage ran"
+    if code_sha256 is not None and manifest.get("code_sha256") != code_sha256:
+        return "code in src/ or scripts/ differs from the code this stage ran with"
+    return None
 
 
 def run_stage(project_root, cid, key, log_dir):
@@ -312,7 +337,7 @@ def run_stage(project_root, cid, key, log_dir):
     manifest = {"complete": True, "stage": key, "script": s["script"], "args": s["args"], "exit_code": 0, "seconds": round(seconds, 1),
                 "finished_utc": campaign.now_utc(), "log": str(log_path.relative_to(project_root)), "campaign": cid, "scope": s["scope"],
                 "outputs": campaign.hash_files(outputs, project_root), "log_sha256": campaign.sha256_file(log_path),
-                "consumed_upstream_outputs": upstream,
+                "consumed_upstream_outputs": upstream, "code_sha256": campaign.code_identity(project_root),
                 "source": {k: identity[k] for k in ("source_tree_sha256", "git_head", "working_tree_clean", "git_status_lines")}}
     campaign.write_json_atomic(stage_manifest_path(project_root, cid, key), manifest)
     campaign.ledger_append(ledger, stage=key, status="completed", seconds=round(seconds, 1), n_outputs=len(outputs))
@@ -331,8 +356,9 @@ def run_campaign(project_root, cid, cores=8, only=None, poll=5.0):
     log_dir.mkdir(parents=True, exist_ok=True)
     wanted = [s for s in STAGES if only is None or any(fnmatch.fnmatch(f"{s['scope']}/{s['id']}", p) for p in only)]
     keys = [f"{s['scope']}/{s['id']}" for s in wanted]
-    done = {k for k in keys if stage_complete(project_root, cid, k)}
-    external_done = lambda dep: stage_complete(project_root, cid, dep)           # noqa: E731
+    code = campaign.code_identity(project_root)       # computed once; a code edit during the run does not silently mix versions into one campaign
+    done = {k for k in keys if stage_complete(project_root, cid, k, code)}
+    external_done = lambda dep: stage_complete(project_root, cid, dep, code)     # noqa: E731
     running, failed = {}, []
     from concurrent.futures import ThreadPoolExecutor
     pool = ThreadPoolExecutor(max_workers=max(1, cores))
@@ -366,9 +392,10 @@ def status(project_root, cid):
     latest = {}
     for event in campaign.ledger_read(ledger_path(project_root, cid)):
         latest[event["stage"]] = event["status"]
+    code = campaign.code_identity(project_root)
     for key in BY_KEY:
-        if key in latest and latest[key] == "completed" and not stage_complete(project_root, cid, key):
-            latest[key] = "completed_but_outputs_changed"
+        if key in latest and latest[key] == "completed" and not stage_complete(project_root, cid, key, code):
+            latest[key] = "completed_but_invalidated"      # outputs, consumed inputs or code changed since it ran
     counts = {}
     for v in latest.values():
         counts[v] = counts.get(v, 0) + 1

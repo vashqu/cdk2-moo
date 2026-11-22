@@ -7,7 +7,7 @@ Reads : results/05_ga_populations_scored.csv (primary GA with size percentile), 
 Writes: results/13_h1_runs.csv, 13_h1_summary.csv, 13_h2_runs.csv, 13_h2_summary.csv, 13_h4_runs.csv, 13_h4_summary.csv, 13_h5_runs.csv, 13_h5_summary.csv,
         13_final_generation.csv
 
-Definitions are in the campaign plan, section 3 (src/cdk2moo/endpoints.py has the trajectory statistics). A RUN is one arm x one GA seed; n = 5 runs per arm
+Definitions are in the campaign plan, section 3 (src/cdk2moo/endpoints.py has the trajectory statistics). A RUN is one arm x one GA seed; n = number of GA seeds (10) runs per arm
 and condition; comparisons are paired by seed. Statistics about generated chemistry use molecules born after generation 0; a generation needs at least 10 such
 molecules to enter step and trend statistics. Nothing here pools policies, experiments or training subsets.
 
@@ -22,6 +22,7 @@ import numpy as np
 import pandas as pd
 
 from cdk2moo import config, endpoints as ep
+from cdk2moo.distinct import require_distinct_standardized
 from cdk2moo.features import ecfp4
 from cdk2moo.recovery import tanimoto_matrix
 from cdk2moo.surrogate import fit_forest, scramble_labels
@@ -40,8 +41,10 @@ def main():
     print(f"policy scope: {config.SCOPE}; campaign {config.CAMPAIGN}")
 
     pop = pd.read_csv(R / "05_ga_populations_scored.csv")
+    print("  counting unit: distinct standardized molecules;", require_distinct_standardized(pop, "05_ga_populations_scored.csv"))
     seeds = sorted(pop["seed"].unique())
     last = int(pop["generation"].max())
+    n_runs, need = len(seeds), config.runs_needed(len(seeds))      # decision rules: at least `need` of `n_runs` runs (80%, as 4 of 5 before)
     tables = {}
     for arm in ARMS:
         for seed in seeds:
@@ -58,10 +61,10 @@ def main():
         summary.append({"arm": arm, "runs": len(d), "net_rise_median": d["net_rise"].median(), "net_rise_min": d["net_rise"].min(), "net_rise_max": d["net_rise"].max(),
                         "runs_with_rise": int((d["net_rise"] > 0).sum()), "runs_spearman_ge_0.9": int((d["spearman_generation"] >= 0.9).sum()),
                         "runs_literally_monotone": int((d["fraction_nondecreasing"] == 1).sum()), "fraction_nondecreasing_median": d["fraction_nondecreasing"].median(),
-                        "rises_by_plan": bool((d["net_rise"] > 0).all() and (d["spearman_generation"] >= 0.9).sum() >= 4),
+                        "rises_by_plan": bool((d["net_rise"] > 0).all() and (d["spearman_generation"] >= 0.9).sum() >= need),
                         "monotone_by_plan": bool((d["fraction_nondecreasing"] == 1).all())})
     pd.DataFrame(summary).to_csv(R / "13_h1_summary.csv", index=False)
-    print("\nH1  predicted pActivity (real surrogate) of generated molecules over generations; 5 runs per arm")
+    print(f"\nH1  predicted pActivity (real surrogate) of generated molecules over generations; {n_runs} runs per arm")
     for r in summary:
         print(f"  {r['arm']:<16} net rise median {r['net_rise_median']:+.2f} [{r['net_rise_min']:+.2f}, {r['net_rise_max']:+.2f}]; rises in {r['runs_with_rise']}/{r['runs']} runs, "
               f"Spearman >= 0.9 in {r['runs_spearman_ge_0.9']}, literally monotone in {r['runs_literally_monotone']}  -> rises: {r['rises_by_plan']}, monotone: {r['monotone_by_plan']}")
@@ -89,22 +92,24 @@ def main():
                         "delta_similarity_median": d["delta_similarity_vs_druglike"].median(), "delta_similarity_min": d["delta_similarity_vs_druglike"].min(),
                         "delta_similarity_max": d["delta_similarity_vs_druglike"].max(), "runs_farther_than_baseline": int((d["delta_similarity_vs_druglike"] < 0).sum()),
                         "delta_size_percentile_median": d["delta_size_percentile_vs_druglike"].median(), "delta_heavy_atoms_median": d["delta_heavy_atoms_vs_druglike"].median(),
-                        "literal_by_plan": bool((d["spearman_activity_vs_similarity"] < 0).sum() >= 4),
-                        "attributable_by_plan": bool((d["delta_similarity_vs_druglike"] < 0).sum() >= 4)})
+                        "literal_by_plan": bool((d["spearman_activity_vs_similarity"] < 0).sum() >= need),
+                        "attributable_by_plan": bool((d["delta_similarity_vs_druglike"] < 0).sum() >= need)})
     pd.DataFrame(summary).to_csv(R / "13_h2_summary.csv", index=False)
     print("\nH2  (literal) Spearman between predicted activity and similarity across generations 1-50; (attributable) final similarity minus the druglike_only baseline of the same seed")
     for r in summary:
-        print(f"  {r['arm']:<16} Spearman median {r['spearman_median']:+.2f}, negative in {r['runs_negative_literal']}/5 -> literal: {r['literal_by_plan']};  "
+        print(f"  {r['arm']:<16} Spearman median {r['spearman_median']:+.2f}, negative in {r['runs_negative_literal']}/{n_runs} -> literal: {r['literal_by_plan']};  "
               f"delta similarity median {r['delta_similarity_median']:+.3f} [{r['delta_similarity_min']:+.3f}, {r['delta_similarity_max']:+.3f}], farther in "
-              f"{r['runs_farther_than_baseline']}/5 -> attributable: {r['attributable_by_plan']}  (delta heavy atoms {r['delta_heavy_atoms_median']:+.1f})")
+              f"{r['runs_farther_than_baseline']}/{n_runs} -> attributable: {r['attributable_by_plan']}  (delta heavy atoms {r['delta_heavy_atoms_median']:+.1f})")
 
     # ---- H4: do real and scrambled surrogates give similar-looking curves, and does the real prediction move? ------------------
     curated = pd.read_csv(config.PROCESSED_DIR / "cdk2_ic50_curated.csv")
     train_fps = np.load(config.PROCESSED_DIR / "ecfp4.npy")
     y = curated["pactivity"].to_numpy()
     real = fit_forest(train_fps, y, config.SURROGATE_SEED)
-    scrambled = fit_forest(train_fps, scramble_labels(y, config.SCRAMBLE_SEED), config.SCRAMBLE_SEED)
-    sd = {"pred_real": float(np.std(real.predict(train_fps))), "pred_scrambled": float(np.std(scrambled.predict(train_fps)))}
+    sd_real = float(np.std(real.predict(train_fps)))
+    sd_scrambled = {seed: float(np.std(fit_forest(train_fps, scramble_labels(y, config.scramble_seed_for(seed)), config.scramble_seed_for(seed)).predict(train_fps)))
+                    for seed in seeds}                                   # each GA seed follows its own label permutation
+    sd_of = lambda column, seed: sd_real if column in (None, "pred_real") else sd_scrambled[seed]   # noqa: E731
     rows = []
     for arm in ARMS:
         column = FOLLOWED[arm]
@@ -113,8 +118,8 @@ def main():
             base = [r for r in tables[("druglike_only", seed)]["pred_real"] if r["generation"] == last][0]["median"]
             real_final = [r for r in tables[(arm, seed)]["pred_real"] if r["generation"] == last][0]["median"]
             rows.append({"arm": arm, "seed": seed, "followed": column or "none (real shown)", "net_rise_followed": followed["net_rise"],
-                         "spearman_followed": followed["spearman_generation"], "surrogate_sd_on_training": sd[column or "pred_real"],
-                         "standardized_rise": followed["net_rise"] / sd[column or "pred_real"], "real_prediction_minus_druglike": real_final - base})
+                         "spearman_followed": followed["spearman_generation"], "surrogate_sd_on_training": sd_of(column, seed),
+                         "standardized_rise": followed["net_rise"] / sd_of(column, seed), "real_prediction_minus_druglike": real_final - base})
     h4 = pd.DataFrame(rows)
     h4.to_csv(R / "13_h4_runs.csv", index=False)
     summary = []
@@ -127,12 +132,12 @@ def main():
     summary = pd.DataFrame(summary)
     summary.to_csv(R / "13_h4_summary.csv", index=False)
     mr, ms = summary.set_index("arm").loc["multi_real"], summary.set_index("arm").loc["multi_scrambled"]
-    shape = bool(mr["runs_spearman_ge_0.9"] >= 4 and ms["runs_spearman_ge_0.9"] >= 4)
-    print(f"\nH4  followed-prediction curves (surrogate SD over its own training molecules: real {sd['pred_real']:.3f}, scrambled {sd['pred_scrambled']:.3f})")
+    shape = bool(mr["runs_spearman_ge_0.9"] >= need and ms["runs_spearman_ge_0.9"] >= need)
+    print(f"\nH4  followed-prediction curves (surrogate SD over its own training molecules: real {sd_real:.3f}, scrambled median over seeds {np.median(list(sd_scrambled.values())):.3f})")
     for _, r in summary.iterrows():
-        print(f"  {r['arm']:<16} follows {r['followed']:<18} net rise {r['net_rise_median']:+.2f} (standardized {r['standardized_rise_median']:+.2f}), Spearman >= 0.9 in {r['runs_spearman_ge_0.9']}/5; "
-              f"real prediction minus druglike_only: {r['real_minus_druglike_median']:+.2f} [{r['real_minus_druglike_min']:+.2f}, {r['real_minus_druglike_max']:+.2f}], above in {r['runs_real_above_baseline']}/5")
-    print(f"  similar-looking curve by the plan's shape criterion (Spearman >= 0.9 in >= 4/5 runs for both arms): {shape}; "
+        print(f"  {r['arm']:<16} follows {r['followed']:<18} net rise {r['net_rise_median']:+.2f} (standardized {r['standardized_rise_median']:+.2f}), Spearman >= 0.9 in {r['runs_spearman_ge_0.9']}/{n_runs}; "
+              f"real prediction minus druglike_only: {r['real_minus_druglike_median']:+.2f} [{r['real_minus_druglike_min']:+.2f}, {r['real_minus_druglike_max']:+.2f}], above in {r['runs_real_above_baseline']}/{n_runs}")
+    print(f"  similar-looking curve by the plan's shape criterion (Spearman >= 0.9 in >= {need}/{n_runs} runs for both arms): {shape}; "
           f"standardized-rise ratio scrambled / real = {ms['standardized_rise_median'] / mr['standardized_rise_median']:.2f} (no threshold)")
 
     # ---- H5: attenuation and (amended, fingerprint) proximity transfer -------------------------------------------------------
@@ -141,7 +146,9 @@ def main():
     rows = []
     for experiment, path in unconstrained.items():
         base = pd.read_csv(path)
+        require_distinct_standardized(base, path.name)
         cons = pd.read_csv(R / f"10_constrained_{experiment}_populations.csv")
+        require_distinct_standardized(cons, f"10_constrained_{experiment}_populations.csv")
         held = np.where((roles[f"{experiment}_control"] == "held") & roles["is_top_decile"])[0] if experiment != "primary" else None
         held_fps = train_fps[held] if held is not None else None
         for arm in ("multi_real", "activity_only"):
@@ -162,17 +169,17 @@ def main():
     summary = []
     for (experiment, arm, floor), d in h5.groupby(["experiment", "arm", "floor"]):
         row = {"experiment": experiment, "arm": arm, "floor": floor, "seeds": len(d), "delta_pred_median": d["delta_pred"].median(), "delta_pred_min": d["delta_pred"].min(),
-               "delta_pred_max": d["delta_pred"].max(), "runs_attenuated": int((d["delta_pred"] < 0).sum()), "attenuation_by_plan": bool((d["delta_pred"] < 0).sum() >= 4),
+               "delta_pred_max": d["delta_pred"].max(), "runs_attenuated": int((d["delta_pred"] < 0).sum()), "attenuation_by_plan": bool((d["delta_pred"] < 0).sum() >= need),
                "delta_qed_median": d["delta_qed"].median(), "delta_heavy_atoms_median": d["delta_heavy_atoms"].median()}
         if "delta_proximity_pp" in d:
-            point, low, high, defined = ep.bootstrap_ratio(d["delta_proximity_pp"].fillna(0), d["delta_pred"])
+            point, low, high, defined = ep.bootstrap_ratio(d["delta_proximity_pp"], d["delta_pred"])   # missing pairs are dropped, never zero-filled
             row.update({"delta_proximity_pp_median": d["delta_proximity_pp"].median(), "delta_proximity_pp_min": d["delta_proximity_pp"].min(),
                         "delta_proximity_pp_max": d["delta_proximity_pp"].max(), "exchange_pp_per_pActivity": point, "exchange_low": low, "exchange_high": high,
                         "exchange_defined_share_of_resamples": defined})
         summary.append(row)
     summary = pd.DataFrame(summary)
     summary.to_csv(R / "13_h5_summary.csv", index=False)
-    print("\nH5  constrained minus unconstrained twin (paired by seed); attenuation = predicted activity lower in >= 4/5 seeds")
+    print(f"\nH5  constrained minus unconstrained twin (paired by seed); attenuation = predicted activity lower in >= {need}/{n_runs} seeds")
     for r in summary.itertuples():
         prox = (f"; proximity {r.delta_proximity_pp_median:+.1f} pp [{r.delta_proximity_pp_min:+.1f}, {r.delta_proximity_pp_max:+.1f}], exchange "
                 f"{'undefined' if not np.isfinite(r.exchange_pp_per_pActivity) else format(r.exchange_pp_per_pActivity, '+.1f') + ' pp per pActivity'}") if hasattr(r, "delta_proximity_pp_median") and np.isfinite(r.delta_proximity_pp_median) else ""

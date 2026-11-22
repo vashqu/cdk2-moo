@@ -5,7 +5,10 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cdk2moo"
 version = "0.1.0"
+description = "Does a surrogate-driven molecular optimizer improve the target, or exploit the surrogate? A CDK2 case study."
 requires-python = ">=3.11"
+# Dependencies live in environment.yml: rdkit and vina must come from conda-forge, not PyPI.
+dependencies = []
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -117,7 +117,7 @@ def main():
             elif not passed:
                 decision = "not assessable (validity gate failed or undefined)"
             else:
-                decision = "exceeded" if cmp["p_sup_low"] > 0.5 else "not exceeded"
+                decision = "exceeded" if cmp["p_sup_low"] > 0.5 else "superiority not established"   # NOT "no difference"
             h3_rows.append({"group": group, "sample": sample_name, "is_generated_arm": sample_name in ARMS or sample_name == "pareto_front", "decision": decision, **cmp})
             if pb is not None:
                 keep = S[S["pb_status"] == "pass"]

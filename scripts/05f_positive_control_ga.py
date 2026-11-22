@@ -61,15 +61,14 @@ def main():
         print(f"output: {out_path}")
         train = np.where(roles[f"{control}_control"] == "train")[0]
         print(f"\n{control} control: surrogate trained on {len(train)} molecules "
-              f"(seeds {config.SURROGATE_SEED} and {config.SCRAMBLE_SEED}), size window {size_range}")
+              f"(real seed {config.SURROGATE_SEED}; one scrambled surrogate per GA seed), size window {size_range}")
         real = fit_forest(fps[train], y[train], config.SURROGATE_SEED)
-        scrambled = fit_forest(fps[train], scramble_labels(y[train], config.SCRAMBLE_SEED),
-                               config.SCRAMBLE_SEED)
         eligible = load_eligible(df)
 
         runs, rejection_counts = [], {}
         for seed in args.seeds:
             _, start = select_start_population(eligible, train, df["std_smiles"].tolist(), config.GA_POP_SIZE, seed)
+            scrambled = fit_forest(fps[train], scramble_labels(y[train], config.scramble_seed_for(seed)), config.scramble_seed_for(seed))
             for arm in ARMS:
                 hist = run_ga(start, arm, real, scrambled, fps[train], seed, size_range,
                               args.generations, policy=args.policy)
@@ -84,7 +83,7 @@ def main():
                   "eligible_starts": config.PROCESSED_DIR / "eligible_starts.csv", "holdout_assignments": config.RESULTS_DIR / "05e_holdout_sets.csv"}
         write_manifest(out_path, {"control": control, "seeds": args.seeds, "generations": args.generations,
                                   "policy": args.policy, "size_window": list(size_range), "n_training_molecules": int(len(train)),
-                                  "surrogate_seed": config.SURROGATE_SEED, "scramble_seed": config.SCRAMBLE_SEED,
+                                  "surrogate_seed": config.SURROGATE_SEED, "scramble_seeds": {int(s): config.scramble_seed_for(s) for s in args.seeds},
                                   "training_subset": f"rows with role 'train' in column {control}_control of 05e_holdout_sets.csv",
                                   "rejection_counts": rejection_counts}, config.PROJECT_ROOT, inputs=inputs)
         print(f"Wrote {out_path} ({len(out)} rows) and its manifest")

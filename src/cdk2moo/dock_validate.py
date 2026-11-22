@@ -23,6 +23,7 @@ import math
 from pathlib import Path
 
 from rdkit import Chem
+from rdkit.Chem import rdMolTransforms
 
 OK, PREP_FAILED, DOCK_FAILED, POSE_FAILED = "ok", "prep_failed", "dock_failed", "pose_export_failed"
 STATUSES = (OK, PREP_FAILED, DOCK_FAILED, POSE_FAILED)
@@ -83,29 +84,86 @@ def read_pose(path):
         return [], False
 
 
+def _permutation_is_even(sequence, reference):
+    """True if `sequence` is an even permutation of `reference` (same elements, no repeats)."""
+    position = {x: i for i, x in enumerate(reference)}
+    order = [position[x] for x in sequence]
+    inversions = sum(1 for i in range(len(order)) for j in range(i + 1, len(order)) if order[i] > order[j])
+    return inversions % 2 == 0
+
+
+def _stereo_mismatch(inp, pose, mapping):
+    """
+    Compare the stereo the input SPECIFIES with the pose under one atom mapping (mapping[i] = pose atom matching input atom i).
+    Returns None if everything specified agrees, else "stereocentre" or "double bond".
+
+    Tetrahedral centres are compared by chiral TAG, corrected for the order of each atom's neighbours (the tag is defined relative to that
+    order), not by CIP label: CIP labels of pseudo-asymmetric centres (r/s, e.g. 1,4-disubstituted cyclohexanes) shift with stereo elsewhere in
+    the molecule. Double bonds are compared by the dihedral angle between the input's stereo atoms (cis within 90 degrees, else trans).
+    """
+    for atom in inp.GetAtoms():
+        if atom.GetChiralTag() not in (Chem.ChiralType.CHI_TETRAHEDRAL_CW, Chem.ChiralType.CHI_TETRAHEDRAL_CCW):
+            continue
+        other = pose.GetAtomWithIdx(mapping[atom.GetIdx()])
+        mapped_order = [mapping[b.GetOtherAtomIdx(atom.GetIdx())] for b in atom.GetBonds()]
+        pose_order = [b.GetOtherAtomIdx(other.GetIdx()) for b in other.GetBonds()]
+        if sorted(mapped_order) != sorted(pose_order) or other.GetChiralTag() not in (Chem.ChiralType.CHI_TETRAHEDRAL_CW, Chem.ChiralType.CHI_TETRAHEDRAL_CCW):
+            return "stereocentre"
+        same_tag = other.GetChiralTag() == atom.GetChiralTag()
+        if same_tag != _permutation_is_even(pose_order, mapped_order):
+            return "stereocentre"
+    conformer = pose.GetConformer() if pose.GetNumConformers() else None
+    for bond in inp.GetBonds():
+        if bond.GetStereo() not in (Chem.BondStereo.STEREOE, Chem.BondStereo.STEREOZ, Chem.BondStereo.STEREOCIS, Chem.BondStereo.STEREOTRANS):
+            continue
+        if conformer is None:
+            return "double bond"
+        a, b = bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
+        c, d = bond.GetStereoAtoms()
+        if mapping[a] is None:
+            return "double bond"
+        angle = rdMolTransforms.GetDihedralDeg(conformer, mapping[c], mapping[a], mapping[b], mapping[d])
+        pose_is_cis = abs(angle) < 90.0
+        input_is_cis = bond.GetStereo() in (Chem.BondStereo.STEREOZ, Chem.BondStereo.STEREOCIS)
+        if pose_is_cis != input_is_cis:
+            return "double bond"
+    return None
+
+
 def pose_identity(input_smiles, pose):
     """
     Is the pose the same molecule as the job's input? Returns (ok, reason).
 
-    Definition. Hydrogens are ignored on both sides (RemoveHs; the docked pose has only polar hydrogens). The two structures must
-    have the same InChIKey connectivity block (formula, connections, hydrogen layer), which is independent of 3-D coordinates. When
-    the input SMILES specifies EVERY stereocentre, the full InChIKey including the stereo layer must also match. When the input leaves
-    a stereocentre unspecified, the 3-D embedding chooses it, so stereochemistry is not compared (connectivity only). Preparation may
-    change the representation (explicit hydrogens, 3-D coordinates, atom order); none of that changes this identity. Fingerprint
-    equality is never used as identity.
+    Definition. Hydrogens are ignored on both sides. The two structures must have the same InChIKey connectivity block (formula,
+    connections, hydrogen layer), independent of 3-D coordinates. Stereochemistry is then compared ELEMENT BY ELEMENT: the input is mapped
+    onto the pose atom by atom, and every tetrahedral centre and every double bond whose configuration the input SPECIFIES must have the
+    same configuration in the pose as perceived from its 3-D coordinates (see _stereo_mismatch). Elements the input leaves unspecified are
+    chosen by the 3-D embedding and are not compared. (Comparing full InChIKeys only when every centre is specified, as an earlier version
+    did, let a changed alkene geometry and a reversed specified centre beside an unspecified one pass.) For molecules with symmetry the match
+    can be made in several ways; the pose passes if any mapping agrees. Preparation may change the representation (explicit hydrogens, 3-D
+    coordinates, atom order); none of that matters. Fingerprint equality is never used as identity.
     """
     inp = Chem.MolFromSmiles(input_smiles)
     if inp is None or pose is None:
         return False, "structure could not be built"
-    key_in, key_pose = Chem.MolToInchiKey(inp), Chem.MolToInchiKey(Chem.RemoveHs(pose))
+    pose = Chem.Mol(pose)
+    if pose.GetNumConformers():
+        Chem.AssignAtomChiralTagsFromStructure(pose, replaceExistingTags=True)       # configuration as drawn by the coordinates, not as tagged
+    pose = Chem.RemoveHs(pose)
+    key_in, key_pose = Chem.MolToInchiKey(inp), Chem.MolToInchiKey(pose)
     if not key_in or not key_pose:
         return False, "InChIKey unavailable"
     if key_in.split("-")[0] != key_pose.split("-")[0]:
         return False, "pose has different connectivity from the job's molecule"
-    centres = Chem.FindMolChiralCenters(inp, includeUnassigned=True, useLegacyImplementation=False)
-    if centres and all(label != "?" for _, label in centres) and key_in != key_pose:
-        return False, "stereochemistry specified in the input differs from the pose"
-    return True, ""
+    problem = None
+    matches = pose.GetSubstructMatches(inp, uniquify=False, useChirality=False, maxMatches=1000)
+    if not matches:
+        return False, "pose could not be mapped onto the input structure"
+    for mapping in matches:
+        problem = _stereo_mismatch(inp, pose, mapping)
+        if problem is None:
+            return True, ""
+    return False, f"stereochemistry specified in the input differs from the pose ({problem})"
 
 
 def check_pose(job_dir, jid, record):

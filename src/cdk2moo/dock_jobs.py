@@ -38,7 +38,7 @@ from pathlib import Path
 
 from rdkit import Chem
 
-from cdk2moo.dock_validate import (OK, PREP_FAILED, DOCK_FAILED, POSE_FAILED, STATUSES, ANOMALY_CLASSES, job_id, sha256_of,
+from cdk2moo.dock_validate import (OK, PREP_FAILED, DOCK_FAILED, POSE_FAILED, STATUSES, ANOMALY_CLASSES, job_id, sha256_of, pose_identity,
                                    reconcile, anomalies, validate_record, read_pose)
 
 
@@ -166,6 +166,11 @@ def _write_pose(jobs, jid, record, pose_mol):
         if not readable or len(mols) != 1 or mols[0] is None:
             tmp.unlink(missing_ok=True)
             record["status"], record["error"] = POSE_FAILED, "pose could not be read back as exactly one record"
+            return record
+        same, reason = pose_identity(record["smiles"], mols[0])
+        if not same:                                         # e.g. a macrocycle whose specified E double bond came out as Z
+            tmp.unlink(missing_ok=True)
+            record["status"], record["error"] = POSE_FAILED, f"pose is not the input molecule: {reason}"
             return record
         record["pose_sha256"] = sha256_of(tmp)
         os.replace(tmp, jobs / f"{jid}.sdf")                # pose first ...

@@ -77,6 +77,17 @@ def source_identity(project_root):
             "working_tree_clean": not status}
 
 
+def code_identity(project_root):
+    """
+    SHA-256 over the content of every .py file in src/ and scripts/ (not tests/). A stage that ran with different code than the code now on disk
+    must not be trusted as complete: its outputs may not be what the current code would produce.
+    """
+    project_root = Path(project_root)
+    files = sorted(p for d in ("src", "scripts") for p in (project_root / d).rglob("*.py"))
+    per_file = {str(p.relative_to(project_root)): sha256_file(p) for p in files}
+    return hashlib.sha256(json.dumps(per_file, sort_keys=True).encode()).hexdigest()
+
+
 def environment_identity():
     """What this machine and environment looked like when the campaign ran (a NEW capture, not evidence about older runs)."""
     import importlib.metadata as metadata

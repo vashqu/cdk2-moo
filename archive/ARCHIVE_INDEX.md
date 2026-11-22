@@ -14,15 +14,19 @@ Created 2026-10-05 in a documentation-and-archiving pass. Nothing was recomputed
 The files are the output of the project **before** campaign `c2026-10-03`: an earlier set of GA runs, surrogate evaluation, docking (788-molecule panel) and figures, including the relaxed-window pilot and
 definitions later corrected (`_v2` files). They are historical evidence, not the current evidence: counts, definitions and verdicts differ from the campaign, so they are kept out of the working tree to avoid mixing the two. The review of 2026-10-05 recommended archiving them intact
 (`review-2026-10-05/FILE_RETENTION.csv`, recommendation `ARCHIVE_HISTORICAL`); this pass checked that every listed file existed on disk and that the repository had not changed since the review before moving anything.
-Their original hashes are still recorded in `historical_record/` (not rewritten). One archived file, `data/raw/.gitkeep`, is an empty placeholder.
+Their original hashes are still recorded in `archive/historical_record/` (moved there during the 2026-11-22 tidy-up) (not rewritten). One archived file, `data/raw/.gitkeep`, is an empty placeholder.
 
 ## What was deliberately NOT moved
 
 * `data/raw/chembl_CHEMBL301_activities.csv`, `data/structures/4KD1.pdb`, `data/structures/4kd1_1QK_crystal.sdf`: `init_campaign` reads these original paths.
 * Everything under `campaigns/c2026-10-03/` (both policy scopes, constrained outputs, docking store, maps, exports, logs, superseded attempts, inventories). The review found all 7,770 inventoried files matched their hashes; this pass did not touch them.
-* `historical_record/`, `src/`, `scripts/`, `tests/`, `environment.yml`, `pyproject.toml`, `setup.py`, `reproducibility/`, `notebooks/`, `.git/`.
+* `archive/historical_record/` (moved there during the 2026-11-22 tidy-up), `src/`, `scripts/`, `tests/`, `environment.yml`, `pyproject.toml`, `setup.py`, `reproducibility/`, `notebooks/`, `.git/`.
 * `__pycache__/` directories (recommended for removal by the review; left alone because cache cleanup was optional and nothing needs it removed).
 
 ## Consequences
 
 `verify-historical` will report the 123 archived files as missing until they are restored; see `RESTORE.md`. `results/`, `figures/` and `data/` each contain a `RELOCATED.md` pointing here.
+
+## Moved in the 2026-11-22 tidy-up
+
+`historical_record/` now lives in `archive/historical_record/`; the former root `CLAUDE.md` (project rules and the original hypotheses) is `documentation_before_cleanup/CLAUDE_project_rules.md`. Top-level documentation is in `docs/`.

@@ -1,5 +1,7 @@
 """Figures for the Pareto stage: three 2-D views of the 3-objective trade-off, and a structure grid."""
 
+import textwrap
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -8,8 +10,8 @@ from rdkit.Chem import Draw
 
 from cdk2moo.ga_plots import ARM_STYLE, INK, MUTED, GRID
 
-VIEWS = [("qed", "pred", "QED (higher = better)", "predicted pActivity, real surrogate"),
-         ("sa", "pred", "SA score (lower = better)", "predicted pActivity, real surrogate"),
+VIEWS = [("qed", "pred", "QED (higher = better)", "pActivity (generated: predicted; reference: measured)"),
+         ("sa", "pred", "SA score (lower = better)", "pActivity (generated: predicted; reference: measured)"),
          ("qed", "sa", "QED (higher = better)", "SA score (lower = better)")]
 
 
@@ -44,8 +46,8 @@ def plot_fronts(by_arm, front, actives, reference, path, title):
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="lower center", ncol=3, frameon=False, fontsize=9,
                markerscale=2.2)
-    fig.suptitle(title, color=INK, fontsize=12, x=0.02, ha="left")
-    fig.tight_layout(rect=(0, 0.11, 1, 0.94))
+    fig.suptitle(textwrap.fill(title, 150), color=INK, fontsize=11, x=0.02, ha="left")
+    fig.tight_layout(rect=(0, 0.11, 1, 0.91))
     fig.savefig(path, dpi=150)
     plt.close(fig)
 

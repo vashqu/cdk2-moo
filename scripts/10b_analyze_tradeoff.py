@@ -29,10 +29,13 @@ import argparse
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import textwrap
+
 import numpy as np
 import pandas as pd
 
 from cdk2moo import config
+from cdk2moo.distinct import require_distinct_standardized
 from cdk2moo.features import ecfp4
 from cdk2moo.ga_plots import ARM_STYLE, INK, MUTED, GRID
 
@@ -61,6 +64,7 @@ def main():
         base = pd.read_csv(config.RESULTS_DIR / BASELINE_FILE[experiment])
         base = base[base["arm"].isin(ARMS)].assign(min_similarity=np.nan)
         cons = pd.read_csv(config.RESULTS_DIR / f"10_constrained_{experiment}_populations.csv")
+        require_distinct_standardized(cons, f"10_constrained_{experiment}_populations.csv")
         allpop = pd.concat([base[cons.columns.intersection(base.columns)], cons], ignore_index=True)
         if experiment != "primary":
             held = np.where((roles[f"{experiment}_control"] == "held") & roles["is_top_decile"])[0]
@@ -96,7 +100,7 @@ def main():
 
     # ---- A. what the floor costs (primary surrogate) ---------------------------------
     print("A. COST: primary surrogate (all 2,016 molecules), generation 50, generated molecules")
-    print("   median over 5 seeds [min, max]; change is paired with the same seed's unconstrained run")
+    print("   median over all GA seeds [min, max]; change is paired with the same seed's unconstrained run")
     for arm in ARMS:
         print(f"\n   {arm}")
         print(f"   {'floor':<7}{'predicted pActivity':>24}{'change vs none':>24}{'raw similarity':>18}{'QED':>7}{'SA':>6}{'atoms':>7}{'n/seed':>8}")
@@ -160,7 +164,7 @@ def main():
                 t_text = "none" if np.isnan(t) else f"{t:.1f}"
                 ax.annotate(t_text, (x, y), textcoords="offset points", xytext=(5, 5), fontsize=8, color=MUTED)
         ax.set_xlabel("predicted pActivity of generated molecules (control surrogate)", color=INK)
-        ax.set_ylabel("generated molecules with ECFP4 proximity >= 0.6 to a held-out active (%)", color=INK)
+        ax.set_ylabel("generated within ECFP4 0.6 of a held-out active (%)", color=INK)
         ax.set_title(f"{experiment}-level control; labels = similarity floor", color=INK, fontsize=10)
     for arm in ARMS:
         d = per_seed[(per_seed["experiment"] == "primary") & (per_seed["arm"] == arm)]
@@ -173,8 +177,9 @@ def main():
     axes[2].set_ylabel("predicted pActivity (primary surrogate)", color=INK)
     axes[2].set_title("what the floor costs in predicted activity", color=INK, fontsize=10)
     axes[0].legend(frameon=False, fontsize=9)
-    fig.suptitle("H5: similarity floor against predicted activity and proximity to held-out actives", color=INK, x=0.02, ha="left")
-    fig.tight_layout(rect=(0, 0, 1, 0.94))
+    fig.suptitle(textwrap.fill(f"H5: similarity floor against predicted activity and proximity to held-out actives. Campaign {config.CAMPAIGN}, {config.SCOPE} policy scope. "
+                 "Points: median over seeds; error bars: min to max over seeds. Proximity shares geometry with the floor and is not an independent endpoint.", 150), color=INK, x=0.02, ha="left", fontsize=10)
+    fig.tight_layout(rect=(0, 0, 1, 0.90))
     fig.savefig(fig_path, dpi=150)
     print(f"\nWrote {csv_path.name} and {fig_path.name}")
 

@@ -54,6 +54,15 @@ class FloorTests(unittest.TestCase):
         self.assertNotIn("CCCC", set(history["smiles"]))
         self.assertEqual(history.attrs["rejects"]["infeasible_similarity"], 1)
 
+    def test_history_under_a_floor_carries_full_provenance(self):
+        # scripts/10_run_constrained_ga.py exports the whole history; these columns are what make a molecule traceable
+        history = run(self.table(CCF={"act": 7.0, "sim": 0.8}), STARTS, [["CCF"]], floor=0.6)
+        for column in ("proposal_smiles", "parent_a", "parent_b", "origin", "tautomer_status", "policy", "min_similarity"):
+            self.assertIn(column, history.columns)
+        child_row = history[history["smiles"] == "CCF"].iloc[0]
+        self.assertEqual(child_row["parent_a"], "CCO")
+        self.assertEqual(child_row["min_similarity"], 0.6)
+
     def test_floor_off_keeps_legacy_behaviour(self):
         table = self.table(CCCC={"act": 9.0, "sim": 0.3})
         history = run(table, STARTS, [["CCCC"]], floor=None)

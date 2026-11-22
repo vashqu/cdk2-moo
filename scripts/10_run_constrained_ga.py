@@ -39,8 +39,8 @@ from cdk2moo.surrogate import fit_forest, scramble_labels
 DEFAULT_TAUS = [0.4, 0.5, 0.6, 0.7]
 DEFAULT_ARMS = ["multi_real", "activity_only"]
 
-KEEP = ["smiles", "pred_real", "qed", "sa", "max_tanimoto", "n_heavy_atoms", "fitness",
-        "birth_generation", "generation", "arm", "seed", "min_similarity"]
+# Columns that let a generated molecule be traced to its proposal and parents; the export must carry all of them.
+PROVENANCE = ["proposal_smiles", "parent_a", "parent_b", "origin", "tautomer_status", "policy", "min_similarity"]
 
 
 def main():
@@ -78,18 +78,21 @@ def main():
             train = np.where(roles[f"{experiment}_control"] == "train")[0]
         print(f"\n{experiment}: surrogate trained on {len(train)} molecules; floors {args.taus}", flush=True)
         real = fit_forest(fps[train], y[train], config.SURROGATE_SEED)
-        scrambled = fit_forest(fps[train], scramble_labels(y[train], config.SCRAMBLE_SEED), config.SCRAMBLE_SEED)
         eligible = load_eligible(df)
 
         runs, rejection_counts = [], {}
         for seed in args.seeds:
             _, start = select_start_population(eligible, train, df["std_smiles"].tolist(), config.GA_POP_SIZE, seed)
+            scrambled = fit_forest(fps[train], scramble_labels(y[train], config.scramble_seed_for(seed)), config.scramble_seed_for(seed))
             for arm in args.arms:
                 for tau in args.taus:
                     hist = run_ga(start, arm, real, scrambled, fps[train], seed, size_range,
                                   args.generations, min_similarity=tau, policy=args.policy)
                     rejection_counts[f"{arm}/tau{tau}/seed{seed}"] = hist.attrs.get("rejects", {})
-                    runs.append(hist[KEEP])
+                    missing = [c for c in PROVENANCE if c not in hist.columns]
+                    if missing:
+                        raise SystemExit(f"GA history lacks provenance columns {missing}; refusing to write a constrained table without them")
+                    runs.append(hist)     # every column: proposal SMILES, parents, origin, tautomer status and policy are provenance and are kept
                     last = hist[(hist["generation"] == args.generations) & (hist["birth_generation"] > 0)]
                     print(f"  seed {seed} {arm:<14} tau {tau}: {len(last):>3} generated; pred_real {last['pred_real'].median():.2f}, "
                           f"similarity {last['max_tanimoto'].median():.2f}", flush=True)

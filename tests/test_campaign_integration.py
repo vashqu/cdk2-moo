@@ -106,18 +106,22 @@ class StageTableTests(unittest.TestCase):
             visit(key)
         self.assertEqual(len(order), len(keys))
 
-    def test_both_policy_scopes_have_the_same_stages_and_never_share_outputs(self):
-        ids = {scope: {s["id"] for s in driver.STAGES if s["scope"] == scope} for scope in driver.POLICY_SCOPES}
+    def test_policy_scopes_have_the_same_stages_and_never_share_outputs(self):
+        both = driver.build_stages(("legacy", "corrected"))
+        ids = {scope: {s["id"] for s in both if s["scope"] == scope} for scope in ("legacy", "corrected")}
         self.assertEqual(ids["legacy"], ids["corrected"])
-        for s in driver.STAGES:
+        for s in both:
             for dep in s["deps"]:
-                dep_scope = dep.split("/")[0]
-                self.assertIn(dep_scope, ("shared", s["scope"]) if dep_scope != s["scope"] else (s["scope"],)) if not (
-                    s["id"] == "dock" and dep.endswith("/dock")) else None
+                if dep.split("/")[0] not in ("shared", s["scope"]):
+                    self.assertTrue(s["id"] == "dock" and dep.endswith("/dock"), f"{s['scope']}/{s['id']} depends across scopes on {dep}")
 
-    def test_the_two_docking_stages_are_serialized_through_the_shared_store(self):
-        self.assertIn("legacy/dock", driver.BY_KEY["corrected/dock"]["deps"])
-        self.assertEqual(driver.BY_KEY["legacy/dock"]["cores"], 8)
+    def test_new_campaigns_schedule_only_the_corrected_policy(self):
+        self.assertEqual({s["scope"] for s in driver.STAGES}, {"shared", "corrected"})
+
+    def test_two_policy_docking_stages_are_serialized_through_the_shared_store(self):
+        both = {f"{s['scope']}/{s['id']}": s for s in driver.build_stages(("legacy", "corrected"))}
+        self.assertIn("legacy/dock", both["corrected/dock"]["deps"])
+        self.assertEqual(both["legacy/dock"]["cores"], 8)
 
 
 class DriverTests(unittest.TestCase):
@@ -171,6 +175,23 @@ class DriverTests(unittest.TestCase):
         driver.run_campaign(self.project, "t", cores=2, only=["shared/a"], poll=0.05)            # redone; old output kept as evidence
         self.assertEqual(out.read_text(), "A")
         self.assertTrue(any((driver.campaign_root(self.project, "t") / "superseded").rglob("a.txt")))
+
+    def test_a_downstream_stage_is_invalidated_when_what_it_consumed_changes(self):
+        driver.run_campaign(self.project, "t", cores=2, only=["shared/a", "shared/b"], poll=0.05)
+        self.assertTrue(driver.stage_complete(self.project, "t", "shared/b"))
+        (driver.scope_root(self.project, "t", "shared") / "results" / "a.txt").write_text("TAMPERED")
+        # b's own output is untouched, but it was computed from the old a.txt
+        reason = driver.stage_incomplete_reason(self.project, "t", "shared/b")
+        self.assertIn("consumed input", reason)
+        self.assertFalse(driver.stage_complete(self.project, "t", "shared/b"))
+
+    def test_a_stage_is_not_trusted_after_the_code_changes(self):
+        driver.run_campaign(self.project, "t", cores=2, only=["shared/a"], poll=0.05)
+        code = campaign.code_identity(self.project)
+        self.assertTrue(driver.stage_complete(self.project, "t", "shared/a", code))
+        (self.scripts / "make_a.py").write_text((self.scripts / "make_a.py").read_text() + "\n# edited")
+        self.assertFalse(driver.stage_complete(self.project, "t", "shared/a", campaign.code_identity(self.project)))
+        self.assertTrue(driver.stage_complete(self.project, "t", "shared/a"))      # without a code argument only files are checked
 
     def test_linking_refuses_a_modified_shared_file(self):
         shared = driver.scope_root(self.project, "t", "shared")

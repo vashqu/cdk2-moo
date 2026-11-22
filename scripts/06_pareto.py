@@ -35,6 +35,7 @@ import numpy as np
 import pandas as pd
 
 from cdk2moo import config
+from cdk2moo.distinct import require_distinct_standardized
 from cdk2moo.objectives import qed_and_sa, ARMS
 from cdk2moo.pareto import non_dominated, dominated_by_any
 from cdk2moo.pareto_plots import plot_fronts, draw_structures
@@ -48,6 +49,7 @@ def main():
     print(f"seed = {args.seed} (random reference sample only)")
 
     pop = pd.read_csv(config.RESULTS_DIR / "05_ga_populations_scored.csv")
+    require_distinct_standardized(pop, "05_ga_populations_scored.csv")
     gen = pop[pop["birth_generation"] > 0]
     train = pd.read_csv(config.PROCESSED_DIR / "cdk2_ic50_curated.csv")
 
@@ -148,7 +150,8 @@ def main():
 
     plot_fronts(by_arm, front, actives, reference,
                 config.FIGURES_DIR / "06_pareto_fronts.png",
-                "Pareto view of generated molecules: predicted pActivity (real surrogate), QED, SA score")
+                f"Pareto view of generated molecules: predicted pActivity (real surrogate), QED, SA score. Campaign {config.CAMPAIGN}, {config.SCOPE} policy scope. "
+                "Generated molecules and the pooled front show PREDICTED pActivity; grey squares and diamonds show MEASURED pActivity.")
     draw_structures(chosen, legends, config.FIGURES_DIR / "06_pareto_structures.png")
     print("\nWrote results/06_pareto_front.csv, figures/06_pareto_fronts.png, figures/06_pareto_structures.png")
 

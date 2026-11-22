@@ -2,7 +2,7 @@
 
 Copies of existing images only; **none was regenerated or edited**. Originals stay in `campaigns/c2026-10-03/` (paths below). `corrected` and `legacy` are the two preparation policies of the campaign (bundled change: standardize like training data + closed-shell only + deduplicate after standardization);
 they are never pooled. "Predicted" always means the random-forest surrogate's prediction (or the scrambled one where stated); "measured" means a ChEMBL-derived pActivity; "Vina" is a docking score in kcal/mol (more negative = better).
-Where an embedded title says "distinct molecules", it means distinct **raw SMILES strings** within a set (not distinct standardized structures); see `KNOWN_ISSUES.md` #2. Known counting caveats apply to every figure that summarizes populations (raw stored strings, every occurrence).
+Where an embedded title says "distinct molecules", it means distinct **raw SMILES strings** within a set (not distinct standardized structures); see `known_issues.md` #2. Known counting caveats apply to every figure that summarizes populations (raw stored strings, every occurrence).
 
 | File here | Original | Quantity and counting | Policy | Limitations |
 |---|---|---|---|---|
@@ -17,6 +17,6 @@ Where an embedded title says "distinct molecules", it means distinct **raw SMILE
 
 ## Existing figures deliberately NOT selected (originals preserved in the campaign)
 
-* `10_tradeoff_v2.png` (H5 floor vs predicted activity and proximity): no policy label, y-axis label cut off, error-bar definition not stated in the image, and its proximity axis uses fingerprint geometry shared with the imposed similarity floor; H5 exchange quantities are provisional (`KNOWN_ISSUES.md` #1).
+* `10_tradeoff_v2.png` (H5 floor vs predicted activity and proximity): no policy label, y-axis label cut off, error-bar definition not stated in the image, and its proximity axis uses fingerprint geometry shared with the imposed similarity floor; H5 exchange quantities are provisional (`known_issues.md` #1).
 * `05g_positive_control_v2.png` (proximity to held-out actives), `07_generated_on_domain.png`, `05_ga_final_generation.png`, `05_ga_trajectories.png`, `fig3b_pareto_structures.png`, `06_pareto_*` and `08_docking_*` stage copies (byte-identical to the final copies of `fig3`/`fig5`): not inspected in this pass or redundant. Proximity views would need the same caveat as the tradeoff plot.
 * All historical (pre-campaign) figures: archived in `archive/historical_pre_campaign/figures/`; different definitions and counts.

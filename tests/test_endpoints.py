@@ -67,6 +67,17 @@ class ExchangeRateTests(unittest.TestCase):
         self.assertTrue(np.isnan(point))                                              # nothing given up: undefined, not infinite
         self.assertEqual(share, 0.0)
 
+    def test_interval_withheld_when_denominator_sign_is_unstable(self):
+        # the mean denominator is negative but a resample often is not: no interval may be reported
+        point, low, high, share = ep.bootstrap_ratio([1, 2, 3, 2, 1], [-0.1, 0.3, -0.2, 0.25, -0.05])
+        self.assertLess(share, 0.95)
+        self.assertTrue(np.isnan(low) and np.isnan(high))
+
+    def test_missing_pairs_are_dropped_not_zero_filled(self):
+        with_nan = ep.bootstrap_ratio([10, 12, np.nan, 11, 9], [-0.5, -0.4, -0.6, -0.5, -0.5])
+        without = ep.bootstrap_ratio([10, 12, 11, 9], [-0.5, -0.4, -0.5, -0.5])
+        self.assertAlmostEqual(with_nan[0], without[0])
+
 
 if __name__ == "__main__":
     unittest.main()

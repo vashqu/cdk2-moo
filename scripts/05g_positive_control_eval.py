@@ -130,7 +130,7 @@ def main():
         ax.set_title(f"{control}-level holdout ({len(held_actives)} held-out actives)", color=INK, fontsize=11)
     axes[0].legend(frameon=False, fontsize=8, loc="lower right")
     fig.suptitle(f"Proximity of generated molecules to held-out actives (fingerprint closeness; not identity, not measured activity). "
-                 f"Campaign {config.CAMPAIGN}, {config.SCOPE} policy; curves weight every occurrence of a molecule, 5 GA seeds pooled.",
+                 f"Campaign {config.CAMPAIGN}, {config.SCOPE} policy; curves weight every occurrence of a molecule, all GA seeds pooled.",
                  color=INK, fontsize=9, x=0.02, ha="left")
     fig.tight_layout(rect=(0, 0, 1, 0.94))
     fig.savefig(fig_path, dpi=150)

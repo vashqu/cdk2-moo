@@ -160,7 +160,8 @@ RF_N_TREES = 300
 RF_MAX_FEATURES = 0.33
 
 # --- Genetic algorithm (decisions.md D-18 .. D-20) ------------------------
-GA_SEEDS = [42, 43, 44, 45, 46]   # 5 runs per arm; fixed in advance
+GA_SEEDS = list(range(42, 52))    # 10 runs per arm; fixed in advance (c2026-10-03 used 42-46)
+GA_MAJORITY_FRACTION = 0.8        # a decision rule that read "at least 4 of 5 runs" reads "at least 80% of runs" for any number of seeds
 GA_POP_SIZE = 100                 # molecules kept each generation
 GA_N_CHILDREN = 100               # new molecules proposed each generation
 GA_N_GENERATIONS = 50
@@ -183,7 +184,21 @@ GA_ALLOWED_ELEMENTS = ["C", "N", "O", "F", "S", "Cl", "Br"]  # that mutation may
 # molecules and reused by every GA seed and arm (decisions.md D-18). GA seeds
 # then vary only the search, never the instrument.
 SURROGATE_SEED = RANDOM_SEED      # random_state of the real forest
-SCRAMBLE_SEED = 20260930          # seed of the one-off label shuffle AND of its forest
+SCRAMBLE_SEED = 20260930          # seed of the label shuffle AND of its forest for the FIRST GA seed (the permutation used in c2026-10-03)
+
+
+def scramble_seed_for(ga_seed):
+    """
+    Seed of the label permutation (and of its forest) followed by the multi_scrambled arm of one GA seed. Every GA seed has its own permutation, so
+    the scrambled-label control samples over permutations as well as over search. The first GA seed keeps the permutation of c2026-10-03.
+    """
+    return SCRAMBLE_SEED + (int(ga_seed) - GA_SEEDS[0])
+
+
+def runs_needed(n_runs):
+    """Number of runs that must agree for a majority-style decision rule: 80% of the runs, rounded up (4 of 5, 8 of 10)."""
+    import math
+    return math.ceil(GA_MAJORITY_FRACTION * n_runs - 1e-9)
 
 # Fixed linear rescaling of predicted pActivity to a 0-1 fitness term. The same
 # for every arm, so arms differ only in which surrogate they follow.
@@ -232,7 +247,7 @@ REDOCK_MAX_RMSD = 2.0         # Angstrom; above this nothing downstream is trust
 def effective_parameters():
     """Every constant that can change a result, for run manifests (so a manifest records the parameters actually in force)."""
     names = ["RANDOM_SEED", "SURROGATE_SEED", "SCRAMBLE_SEED", "SPLIT_SEEDS", "TEST_FRAC", "FP_RADIUS", "FP_BITS", "RF_N_TREES",
-             "RF_MAX_FEATURES", "GA_SEEDS", "GA_POP_SIZE", "GA_N_CHILDREN", "GA_N_GENERATIONS", "GA_MUTATION_PROB", "GA_MIN_HEAVY_ATOMS",
+             "RF_MAX_FEATURES", "GA_SEEDS", "GA_MAJORITY_FRACTION", "GA_POP_SIZE", "GA_N_CHILDREN", "GA_N_GENERATIONS", "GA_MUTATION_PROB", "GA_MIN_HEAVY_ATOMS",
              "GA_MAX_HEAVY_ATOMS", "GA_RELAXED_MIN_HEAVY_ATOMS", "GA_RELAXED_MAX_HEAVY_ATOMS", "GA_ALLOWED_ELEMENTS", "ACTIVITY_LOW",
              "ACTIVITY_HIGH", "SIZE_STRATUM_HALFWIDTH", "SIZE_STRATUM_MIN_N", "HOLDOUT_QUANTILE", "HOLDOUT_MIN_TOP_PER_FAMILY",
              "REDISCOVERY_SIM", "REDISCOVERY_SIMS", "AD_RAW_EDGES", "AD_PCT_EDGES", "AD_MIN_UNIQUE", "AD_LARGE_ERROR", "DOCK_PH",

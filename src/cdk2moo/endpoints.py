@@ -54,12 +54,20 @@ def association_across_generations(rows_a, rows_b, first_generation=1):
     return float(spearmanr([a[g] for g in common], [b[g] for g in common])[0]), len(common)
 
 
-def bootstrap_ratio(numerator, denominator, n_boot=2000, seed=42):
+def bootstrap_ratio(numerator, denominator, n_boot=2000, seed=42, min_defined_share=0.95):
     """
     Bootstrap over runs (seeds) of mean(numerator) / (-mean(denominator)): the exchange rate, defined only when the mean denominator is negative
-    (something was given up). Returns (estimate, low, high, share_of_resamples_defined); estimate NaN if the point estimate is undefined.
+    (something was given up). Returns (estimate, low, high, share_of_resamples_defined).
+
+    The interval is reported only when the ratio is defined in at least `min_defined_share` of the resamples. Keeping just the resamples whose
+    denominator is negative would condition the interval on the denominator's sign and can produce a tidy-looking interval around an undefined
+    point estimate; in that situation the interval is NaN instead. Pairs with a missing value are dropped, never filled in.
     """
     num, den = np.asarray(numerator, float), np.asarray(denominator, float)
+    keep = np.isfinite(num) & np.isfinite(den)
+    num, den = num[keep], den[keep]
+    if len(num) == 0:
+        return float("nan"), float("nan"), float("nan"), 0.0
     point = np.nan if den.mean() >= 0 else float(num.mean() / -den.mean())
     rng = np.random.default_rng(seed)
     values = []
@@ -67,6 +75,7 @@ def bootstrap_ratio(numerator, denominator, n_boot=2000, seed=42):
         idx = rng.integers(0, len(num), len(num))
         if den[idx].mean() < 0:
             values.append(num[idx].mean() / -den[idx].mean())
-    if not values:
-        return point, float("nan"), float("nan"), 0.0
-    return point, float(np.percentile(values, 2.5)), float(np.percentile(values, 97.5)), len(values) / n_boot
+    defined = len(values) / n_boot
+    if defined < min_defined_share:
+        return point, float("nan"), float("nan"), defined
+    return point, float(np.percentile(values, 2.5)), float(np.percentile(values, 97.5)), defined

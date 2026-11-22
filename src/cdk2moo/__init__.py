@@ -1,8 +1,8 @@
 """CDK2 multi-objective molecular optimization.
 
-A proof-of-concept asking whether improvement in a surrogate-driven molecular
-optimizer reflects progress toward the target or exploitation of the
-surrogate's extrapolation error.
+A methodological case study: when a genetic algorithm is driven by a machine-learned
+activity surrogate under drug-likeness constraints, does the objective improve because
+molecules get better, or because the optimizer exploits the surrogate's extrapolation error?
 
-Nothing is implemented yet; see the module docstrings for what goes where.
+Modules hold the logic; the numbered scripts in scripts/ are the pipeline stages that call them.
 """

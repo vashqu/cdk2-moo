@@ -37,6 +37,7 @@ import numpy as np
 import pandas as pd
 
 from cdk2moo import config
+from cdk2moo.distinct import require_distinct_standardized
 from cdk2moo.ga_plots import plot_trajectories, plot_final_generation
 
 STATS = ["median_pred_real", "best_pred_real", "median_pred_scrambled",
@@ -53,6 +54,7 @@ def main():
     tag = f"_{args.tag}" if args.tag else ""
 
     pop = pd.read_csv(config.RESULTS_DIR / args.pop)
+    require_distinct_standardized(pop, args.pop)
     last = int(pop["generation"].max())
     print(f"{args.pop}: {pop['arm'].nunique()} arms, {pop['seed'].nunique()} seeds, "
           f"{last} generations, {len(pop)} rows")
@@ -101,7 +103,7 @@ def main():
         n = a.groupby("seed").size()
         uniq = a["smiles"].nunique()
         print(f"  {arm:<16} per run min {n.min()}, median {int(n.median())}; "
-              f"unique SMILES across 5 runs {uniq} of {len(a)}")
+              f"unique SMILES across all runs {uniq} of {len(a)}")
 
     # ---- final generation, per arm: median [min, max] over seeds ---------
     print(f"\nGeneration {last}: per-seed population statistic, median [min, max] over seeds")
@@ -150,7 +152,7 @@ def main():
     # ---- figures -----------------------------------------------------------
     note = "20-39 heavy atoms"
     plot_trajectories(per_run, config.FIGURES_DIR / f"05_ga_trajectories{tag}.png",
-                      f"GA trajectories, 5 seeds, {note}; generation 0 = starting molecules, later generations = molecules born after gen 0; median over seeds, band = min-max")
+                      f"GA trajectories over all GA seeds, {note}; generation 0 = starting molecules, later generations = molecules born after gen 0; median over seeds, band = min-max")
     plot_final_generation(final.reset_index(), config.FIGURES_DIR / f"05_ga_final_generation{tag}.png",
                           f"Generation {last}, one dot per GA seed, bar = median ({note})")
     print(f"\nWrote figures/05_ga_trajectories{tag}.png and figures/05_ga_final_generation{tag}.png")

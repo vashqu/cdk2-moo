@@ -48,7 +48,7 @@ def plot_trajectories(per_run, path, title):
     """
     Eight panels over generation (the last shows, for each arm, the surrogate it
     is actually optimising; druglike_only follows none, so has no line there). Each arm: line = median across GA seeds of the
-    per-seed statistic, band = min to max across seeds (5 seeds: a range, not
+    per-seed statistic, band = min to max across seeds (a range over seeds, not
     a confidence interval).
     """
     fig, axes = plt.subplots(2, 4, figsize=(19, 8.5), facecolor="#fcfcfb")

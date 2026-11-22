@@ -24,9 +24,10 @@ def embed(smiles, seed=1):
 class Counter:
     """Fake preparation and docking that count their calls; poses are real 3-D embeddings of the job's own molecule."""
 
-    def __init__(self, fail_prep=(), pose_none=()):
+    def __init__(self, fail_prep=(), pose_none=(), pose_instead=None):
         self.prepared, self.docked = 0, 0
         self.fail_prep, self.pose_none = set(fail_prep), set(pose_none)
+        self.pose_instead = dict(pose_instead or {})        # input SMILES -> SMILES of the (wrong) molecule the fake pose is built from
 
     def prepare(self, smiles, prep_seed):
         self.prepared += 1
@@ -37,7 +38,7 @@ class Counter:
     def dock(self, pdbqt, vina_seed):
         self.docked += 1
         smiles = pdbqt.split(":", 1)[1]
-        return (-7.0, None) if smiles in self.pose_none else (-7.0 - 0.1 * len(smiles), embed(smiles))
+        return (-7.0, None) if smiles in self.pose_none else (-7.0 - 0.1 * len(smiles), embed(self.pose_instead.get(smiles, smiles)))
 
 
 A, B, C = ("CCO", 42), ("CCN", 42), ("CCCl", 42)
@@ -278,6 +279,16 @@ class AssociationTests(StoreCase):
                 self.assertNotIn(jid(A), report["complete"] + report["failed"])        # never a completed failure either
                 run(self.tmp, Counter(), [A], repair=True)                            # restore a valid record for the next case
 
+    def test_a_pose_that_changes_specified_stereo_is_a_recorded_failure_not_a_pose(self):
+        trans, cis = "C/C=C/C(=O)O", "C/C=C\\C(=O)O"
+        run(self.tmp, Counter(pose_instead={trans: cis}), [(trans, 42)])
+        record = json.loads((self.tmp / "jobs" / f"{dj.job_id(trans, 42, 42)}.json").read_text())
+        self.assertEqual(record["status"], "pose_export_failed")
+        self.assertIn("double bond", record["error"])
+        self.assertIsNone(record["pose_sha256"])
+        self.assertFalse((self.tmp / "jobs" / f"{dj.job_id(trans, 42, 42)}.sdf").exists())
+        self.assertEqual(dv.anomalies(dj.reconcile(self.tmp)), {})              # a recorded failure is a valid result
+
     def test_a_committed_failure_cannot_carry_a_pose(self):
         run(self.tmp, Counter(fail_prep={"CCCl"}), [C])
         (self.tmp / "jobs" / f"{jid(C)}.sdf").write_text(self.sdf(A).read_text())
@@ -300,6 +311,32 @@ class IdentityPolicyTests(unittest.TestCase):
         ok, reason = self.check("C[C@H](O)CC", "C[C@@H](O)CC")
         self.assertFalse(ok)
         self.assertIn("stereochemistry", reason)
+
+    def test_changed_double_bond_geometry_is_rejected(self):
+        # review case 1: the old rule ignored alkene geometry
+        self.assertTrue(self.check("C/C=C/C(=O)O", "C/C=C/C(=O)O")[0])
+        ok, reason = self.check("C/C=C/C(=O)O", "C/C=C\\C(=O)O")
+        self.assertFalse(ok)
+        self.assertIn("double bond", reason)
+
+    def test_specified_centre_is_checked_even_beside_an_unspecified_one(self):
+        # review case 2: a reversed specified centre next to an unspecified centre used to pass
+        self.assertTrue(self.check("C[C@H](O)C(F)Cl", "C[C@H](O)[C@H](F)Cl")[0])
+        self.assertTrue(self.check("C[C@H](O)C(F)Cl", "C[C@H](O)[C@@H](F)Cl")[0])      # the unspecified centre may be either
+        ok, reason = self.check("C[C@H](O)C(F)Cl", "C[C@@H](O)[C@H](F)Cl")
+        self.assertFalse(ok)
+        self.assertIn("stereocentre", reason)
+
+    def test_pseudo_asymmetric_ring_centres_are_judged_by_geometry_not_cip_labels(self):
+        # 1,4-disubstituted cyclohexane (trans) beside unspecified centres: a fresh embedding of the input must pass, the cis isomer must not
+        trans = "CC(=O)NC1CCC(c2nc3c(N[C@H]4CC[C@H](N)CC4)ccnc3[nH]2)C1"
+        cis = "CC(=O)NC1CCC(c2nc3c(N[C@H]4CC[C@@H](N)CC4)ccnc3[nH]2)C1"
+        self.assertTrue(self.check(trans, trans)[0])
+        self.assertFalse(self.check(trans, cis)[0])
+
+    def test_unspecified_double_bond_is_not_compared(self):
+        self.assertTrue(self.check("CC=CC(=O)O", "C/C=C/C(=O)O")[0])
+        self.assertTrue(self.check("CC=CC(=O)O", "C/C=C\\C(=O)O")[0])
 
     def test_different_molecules_are_never_identical_even_with_matching_fingerprint_features(self):
         self.assertFalse(self.check("CCO", "CCN")[0])

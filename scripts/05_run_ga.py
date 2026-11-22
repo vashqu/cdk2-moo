@@ -86,10 +86,9 @@ def main():
     fps = np.load(config.PROCESSED_DIR / "ecfp4.npy")
     y = df["pactivity"].to_numpy()
 
-    print(f"Training ONE real and ONE scrambled surrogate on all {len(df)} molecules "
-          f"(seeds {config.SURROGATE_SEED} and {config.SCRAMBLE_SEED})")
+    print(f"Training ONE real surrogate (seed {config.SURROGATE_SEED}) on all {len(df)} molecules; each GA seed gets its own scrambled surrogate "
+          f"(label permutation seed = {config.SCRAMBLE_SEED} + GA seed - {config.GA_SEEDS[0]})")
     real = fit_forest(fps, y, config.SURROGATE_SEED)
-    scrambled = fit_forest(fps, scramble_labels(y, config.SCRAMBLE_SEED), config.SCRAMBLE_SEED)
 
     eligible = load_eligible(df, args.relaxed)
     print(f"{len(eligible)} of {len(df)} training molecules are eligible as starting molecules (size window, unchanged by standardization, "
@@ -98,6 +97,7 @@ def main():
     runs, rejection_counts = [], {}
     for seed in args.seeds:
         _, start = select_start_population(eligible, np.arange(len(df)), df["std_smiles"].tolist(), config.GA_POP_SIZE, seed)
+        scrambled = fit_forest(fps, scramble_labels(y, config.scramble_seed_for(seed)), config.scramble_seed_for(seed))
         for arm in args.arms:
             hist = run_ga(start, arm, real, scrambled, fps, seed, size_range, args.generations, policy=args.policy)
             runs.append(hist)
@@ -116,7 +116,7 @@ def main():
         "seeds": args.seeds, "generations": args.generations, "arms": args.arms, "relaxed": args.relaxed,
         "size_window": list(size_range), "policy": args.policy, "population_size": config.GA_POP_SIZE,
         "children_per_generation": config.GA_N_CHILDREN, "mutation_probability": config.GA_MUTATION_PROB,
-        "surrogate_seed": config.SURROGATE_SEED, "scramble_seed": config.SCRAMBLE_SEED,
+        "surrogate_seed": config.SURROGATE_SEED, "scramble_seeds": {int(s): config.scramble_seed_for(s) for s in args.seeds},
         "rf_trees": config.RF_N_TREES, "rf_max_features": config.RF_MAX_FEATURES,
         "n_training_molecules": int(len(df)), "training_subset": "all curated molecules", "rejection_counts": rejection_counts},
         config.PROJECT_ROOT, inputs=inputs)

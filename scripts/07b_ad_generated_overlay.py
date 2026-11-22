@@ -25,6 +25,7 @@ import numpy as np
 import pandas as pd
 
 from cdk2moo import config
+from cdk2moo.distinct import require_distinct_standardized
 from cdk2moo.applicability import add_region, error_table
 
 ARMS = ["multi_real", "multi_scrambled", "activity_only", "druglike_only"]
@@ -35,6 +36,7 @@ PRED_NAMES = ["<6", "6-7", "7-8", ">=8"]
 def main():
     config.require_campaign()
     pop = pd.read_csv(config.RESULTS_DIR / "05_ga_populations_scored.csv")
+    require_distinct_standardized(pop, "05_ga_populations_scored.csv")
     gen = pop[pop["birth_generation"] > 0]          # generated molecules only (D-21)
     front = pd.read_csv(config.RESULTS_DIR / "06_pareto_front.csv")
     p4 = pd.read_csv(config.RESULTS_DIR / "07_stage4_ad.csv")

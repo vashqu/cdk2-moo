@@ -32,6 +32,7 @@ import numpy as np
 import pandas as pd
 
 from cdk2moo import config
+from cdk2moo.distinct import require_distinct_standardized
 from cdk2moo.docksets import ARMS, GROUP_ROLE, keyed_rng, match_decoys
 from cdk2moo.features import ecfp4, murcko_scaffold
 
@@ -68,6 +69,8 @@ def main():
 
     populations = {"P": pd.read_csv(R / "05_ga_populations.csv"), "M": pd.read_csv(R / "05f_molecule_populations.csv"),
                    "S": pd.read_csv(R / "05f_scaffold_populations.csv")}
+    for group, frame in populations.items():
+        require_distinct_standardized(frame, f"population for docking group {group}")
     front = pd.read_csv(R / "06_pareto_front.csv")
     rows, report = [], {"policy": policy, "seed": args.seed, "top_decile_cutoff": float(cutoff)}
 
