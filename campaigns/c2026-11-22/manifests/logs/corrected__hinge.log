@@ -1,0 +1,32 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug_design/cdk2-moo/scripts/08g_hinge_contacts.py
+# CDK2_CAMPAIGN=c2026-11-22 CDK2_SCOPE=corrected
+[campaign c2026-11-22 | scope corrected] results -> /Users/vashqu/Desktop/drug_design/cdk2-moo/campaigns/c2026-11-22/corrected/results
+[12:54:47] Warning: molecule is tagged as 2D, but at least one Z coordinate is not zero. Marking the mol as 3D.
+crystal dinaciclib: nearest ligand N/O to the 3 hinge atoms 2.65 A (reference)
+
+Ligand N/O within 3.5 A of Glu81 O / Leu83 N / Leu83 O (distance only; not a verified hydrogen bond)
+                  set  n_in_set  n_with_pose  n_contact  median_distance  share_of_set  share_of_posed
+P:training_top_decile       100           99         89             3.07          0.89            0.90
+    M:heldout_actives       100           99         87             3.07          0.87            0.88
+    S:heldout_actives        93           93         88             3.05          0.95            0.95
+    P:random_training       100          100         65             3.15          0.65            0.65
+   M:random_remaining       100           98         68             3.15          0.68            0.69
+   S:random_remaining       100          100         64             3.25          0.64            0.64
+         P:multi_real       100          100         46             3.90          0.46            0.46
+    P:multi_scrambled       100          100         51             3.47          0.51            0.51
+      P:activity_only       100          100         85             3.07          0.85            0.85
+      P:druglike_only       100          100         44             3.56          0.44            0.44
+       P:pareto_front       114          114         69             3.33          0.61            0.61
+             P:decoys       100          100         71             3.19          0.71            0.71
+         M:multi_real       100          100         53             3.48          0.53            0.53
+    M:multi_scrambled       100          100         36             3.90          0.36            0.36
+      M:activity_only       100          100         87             3.01          0.87            0.87
+      M:druglike_only       100          100         59             3.34          0.59            0.59
+             M:decoys       100          100         66             3.26          0.66            0.66
+         S:multi_real       100          100         69             3.20          0.69            0.69
+    S:multi_scrambled       100          100         55             3.30          0.55            0.55
+      S:activity_only       100          100         80             3.03          0.80            0.80
+      S:druglike_only       100          100         44             3.61          0.44            0.44
+             S:decoys        93           92         70             3.08          0.75            0.76
+
+Wrote /Users/vashqu/Desktop/drug_design/cdk2-moo/campaigns/c2026-11-22/corrected/results/08g_hinge_contacts.csv and 08g_hinge_by_set.csv

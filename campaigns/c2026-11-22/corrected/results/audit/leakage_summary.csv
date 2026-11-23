@@ -1,0 +1,6 @@
+,identity_full_test_molecules,identity_full_test_molecules,identity_full_test_molecules,identity_connectivity_test_molecules,identity_connectivity_test_molecules,identity_connectivity_test_molecules,fingerprint_test_molecules,fingerprint_test_molecules,fingerprint_test_molecules,scaffold_test_molecules,scaffold_test_molecules,scaffold_test_molecules,any_document_test_molecules,any_document_test_molecules,any_document_test_molecules,primary_document_test_molecules,primary_document_test_molecules,primary_document_test_molecules
+,median,min,max,median,min,max,median,min,max,median,min,max,median,min,max,median,min,max
+split,,,,,,,,,,,,,,,,,,
+paper,0.0,0,0,3.0,1,10,3.0,1,10,84.5,44,148,113.0,52,178,0.0,0,0
+random,0.0,0,0,23.0,16,29,27.0,21,33,266.0,249,281,387.5,384,389,381.5,376,384
+scaffold,0.0,0,0,0.0,0,0,0.0,0,1,0.0,0,0,380.0,340,389,357.0,333,382

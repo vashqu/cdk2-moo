@@ -1,0 +1,29 @@
+measure,region,n_rows,n_unique,mae,rmse,bias,supported,region2
+raw similarity region,<0.4,2604,987,0.9084,1.1041,-0.0142,True,
+raw similarity region,0.4-0.6,2526,915,0.7494,0.9301,-0.0084,True,
+raw similarity region,0.6-0.8,4492,1377,0.5700,0.7405,-0.0537,True,
+raw similarity region,>=0.8,2468,857,0.3873,0.5199,-0.0322,True,
+size-percentile region,<10 (novel for size),4636,1551,0.8312,1.0230,-0.0271,True,
+size-percentile region,10-50,4682,1462,0.5970,0.7754,-0.0304,True,
+size-percentile region,>=50 (typical or better),2772,1002,0.4064,0.5447,-0.0400,True,
+"raw similarity region, random split",<0.4,212,109,0.9746,1.2064,0.1724,True,
+"raw similarity region, random split",0.4-0.6,322,185,0.7477,0.9453,0.0958,True,
+"raw similarity region, random split",0.6-0.8,1782,885,0.5471,0.7184,-0.0166,True,
+"raw similarity region, random split",>=0.8,1714,802,0.3573,0.4848,-0.0210,True,
+"raw similarity region, scaffold split",<0.4,435,245,0.9826,1.1815,-0.0153,True,
+"raw similarity region, scaffold split",0.4-0.6,973,505,0.7565,0.9283,-0.0354,True,
+"raw similarity region, scaffold split",0.6-0.8,2001,981,0.5788,0.7457,-0.0966,True,
+"raw similarity region, scaffold split",>=0.8,621,321,0.4621,0.5995,-0.0487,True,
+"raw similarity region, paper split",<0.4,1957,932,0.8848,1.0743,-0.0342,True,
+"raw similarity region, paper split",0.4-0.6,1231,579,0.7443,0.9275,-0.0143,True,
+"raw similarity region, paper split",0.6-0.8,709,353,0.6029,0.7796,-0.0255,True,
+"raw similarity region, paper split",>=0.8,133,64,0.4246,0.5556,-0.1006,True,
+raw region x percentile region,<0.4,2573,982,0.9023,1.0958,-0.0312,True,<10 (novel for size)
+raw region x percentile region,<0.4,31,13,1.4175,1.6522,1.3933,False,10-50
+raw region x percentile region,0.4-0.6,1970,760,0.7486,0.9313,-0.0263,True,<10 (novel for size)
+raw region x percentile region,0.4-0.6,556,249,0.7522,0.9260,0.0550,True,10-50
+raw region x percentile region,0.6-0.8,93,57,0.6112,0.7616,0.0683,True,<10 (novel for size)
+raw region x percentile region,0.6-0.8,3802,1254,0.5842,0.7581,-0.0541,True,10-50
+raw region x percentile region,0.6-0.8,597,272,0.4733,0.6130,-0.0703,True,>=50 (typical or better)
+raw region x percentile region,>=0.8,293,143,0.3820,0.4848,-0.0358,True,10-50
+raw region x percentile region,>=0.8,2175,792,0.3880,0.5245,-0.0317,True,>=50 (typical or better)

@@ -1,0 +1,58 @@
+{
+  "funnel": [
+    [
+      "raw records",
+      5367
+    ],
+    [
+      "type in ['IC50']",
+      3692
+    ],
+    [
+      "relation == '='",
+      2826
+    ],
+    [
+      "units == 'nM'",
+      2798
+    ],
+    [
+      "no curator flag",
+      2725
+    ],
+    [
+      "not a mutant-CDK2 assay",
+      2715
+    ],
+    [
+      "assay_type in ['B']",
+      2680
+    ],
+    [
+      "positive value present",
+      2680
+    ],
+    [
+      "SMILES present",
+      2676
+    ],
+    [
+      "standardized ok",
+      2676
+    ],
+    [
+      "unique structures",
+      2016
+    ]
+  ],
+  "replicate_spread": {
+    "n_replicated": 439,
+    "frac_replicated": 0.2177579365079365,
+    "median_within_compound_sd": 1.5355012538187923e-05,
+    "mean_within_compound_sd": 0.17414491554887832,
+    "median_range": 2.1715266981914283e-05,
+    "max_range": 3.4480188730153545
+  },
+  "n_molecules": 2016,
+  "n_external": 602
+}

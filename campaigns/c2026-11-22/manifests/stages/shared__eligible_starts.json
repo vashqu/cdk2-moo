@@ -1,0 +1,45 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "shared/curate": {
+      "campaigns/c2026-11-22/shared/processed/cdk2_ic50_curated.csv": {
+        "bytes": 361575,
+        "sha256": "634c8603cbaba2424b99b9d2ddcb0f7f3ed0452c5c92ed6f6377961d922aa6b2"
+      },
+      "campaigns/c2026-11-22/shared/processed/cdk2_kikd_external.csv": {
+        "bytes": 100723,
+        "sha256": "2822d32df1de43eac95522121a4b46c52773dba4ede9f67e976f3d06046ea197"
+      },
+      "campaigns/c2026-11-22/shared/results/02_curation_funnel.json": {
+        "bytes": 904,
+        "sha256": "2c8883535699f9cccab2d69b6c731b66f74e806509910aa616191097e50e0586"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-22T21:41:15+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/shared__eligible_starts.log",
+  "log_sha256": "1b6ccafa8bbf544764144d92c6b2671cfb80874f3e7209295228c6ab9c7b7504",
+  "outputs": {
+    "campaigns/c2026-11-22/shared/processed/eligible_starts.csv": {
+      "bytes": 109426,
+      "sha256": "2bff7da9700fc77071b70ffc0de33d296a13260b95c4253e80e280159d88ac92"
+    }
+  },
+  "scope": "shared",
+  "script": "03b_eligible_starts.py",
+  "seconds": 152.8,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "shared/eligible_starts"
+}

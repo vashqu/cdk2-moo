@@ -1,0 +1,37 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug_design/cdk2-moo/scripts/05g_positive_control_eval.py
+# CDK2_CAMPAIGN=c2026-11-22 CDK2_SCOPE=corrected
+[campaign c2026-11-22 | scope corrected] results -> /Users/vashqu/Desktop/drug_design/cdk2-moo/campaigns/c2026-11-22/corrected/results
+
+===== MOLECULE-LEVEL CONTROL: 204 held-out actives (measured pActivity >= 8.05) =====
+  group                 n (distinct)  median  >=0.5  >=0.6  >=0.7  >=0.8  fp-ident  exact iso/strict  NN held  (prevalence)  annot.
+  multi_real              999 (712)    0.33     9%     3%     0%     0%      0.0%       0.0%/0.0%      25%           10%     68%
+  multi_scrambled         998 (991)    0.25     0%     0%     0%     0%      0.0%       0.0%/0.0%       7%           10%      0%
+  activity_only           976 (962)    0.69    98%    84%    48%    12%      0.7%       0.6%/0.6%      64%           10%     66%
+  druglike_only          1000 (952)    0.27     0%     0%     0%     0%      0.0%       0.0%/0.0%       4%           10%      0%
+  start molecules        1000 (740)    0.33    35%    28%    16%     6%      0.3%       0.0%/0.0%       8%           10%      8%
+  remaining training     1631 (1631)    0.33    34%    26%    14%     5%      0.3%       0.0%/0.0%       7%           10%      7%
+
+  Recall: share of held-out actives with >= 1 distinct generated molecule at proximity >= 0.6 (all generations, seeds pooled; proximity, not exact recovery)
+  multi_real         89 of 204 actives (44%); distinct generated molecules 5058 (distinct standardized isomeric identity); scaffold equality (not molecule identity; small scaffolds match by chance) for 27 of 100 held-out scaffolds
+  multi_scrambled    45 of 204 actives (22%); distinct generated molecules 5977 (distinct standardized isomeric identity); scaffold equality (not molecule identity; small scaffolds match by chance) for 17 of 100 held-out scaffolds
+  activity_only     129 of 204 actives (63%); distinct generated molecules 6474 (distinct standardized isomeric identity); scaffold equality (not molecule identity; small scaffolds match by chance) for 30 of 100 held-out scaffolds
+  druglike_only      56 of 204 actives (27%); distinct generated molecules 5961 (distinct standardized isomeric identity); scaffold equality (not molecule identity; small scaffolds match by chance) for 16 of 100 held-out scaffolds
+  (siblings alone: 88% of held-out actives already have a remaining-training molecule within 0.6)
+
+===== SCAFFOLD-LEVEL CONTROL: 93 held-out actives (measured pActivity >= 8.05) =====
+  group                 n (distinct)  median  >=0.5  >=0.6  >=0.7  >=0.8  fp-ident  exact iso/strict  NN held  (prevalence)  annot.
+  multi_real              999 (817)    0.32    16%     5%     0%     0%      0.1%       0.1%/0.1%      20%            5%     85%
+  multi_scrambled         996 (995)    0.20     0%     0%     0%     0%      0.0%       0.0%/0.0%       3%            5%     40%
+  activity_only           984 (971)    0.40    21%    10%     1%     0%      0.0%       0.0%/0.0%      11%            5%     92%
+  druglike_only          1000 (930)    0.21     0%     0%     0%     0%      0.0%       0.0%/0.0%       2%            5%    nan%
+  start molecules        1000 (759)    0.22    10%     8%     3%     0%      0.0%       0.0%/0.0%       1%            5%      7%
+  remaining training     1591 (1591)    0.21     9%     6%     2%     0%      0.0%       0.0%/0.0%       2%            5%      8%
+
+  Recall: share of held-out actives with >= 1 distinct generated molecule at proximity >= 0.6 (all generations, seeds pooled; proximity, not exact recovery)
+  multi_real         48 of 93 actives (52%); distinct generated molecules 5129 (distinct standardized isomeric identity); scaffold equality (not molecule identity; small scaffolds match by chance) for 7 of 9 held-out scaffolds
+  multi_scrambled    28 of 93 actives (30%); distinct generated molecules 6045 (distinct standardized isomeric identity); scaffold equality (not molecule identity; small scaffolds match by chance) for 5 of 9 held-out scaffolds
+  activity_only      65 of 93 actives (70%); distinct generated molecules 7512 (distinct standardized isomeric identity); scaffold equality (not molecule identity; small scaffolds match by chance) for 6 of 9 held-out scaffolds
+  druglike_only      22 of 93 actives (24%); distinct generated molecules 5958 (distinct standardized isomeric identity); scaffold equality (not molecule identity; small scaffolds match by chance) for 4 of 9 held-out scaffolds
+  (siblings alone: 76% of held-out actives already have a remaining-training molecule within 0.6)
+
+Wrote 05g_positive_control_summary_v2.csv and 05g_positive_control_v2.png

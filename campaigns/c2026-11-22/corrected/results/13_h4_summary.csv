@@ -1,0 +1,5 @@
+arm,followed,net_rise_median,standardized_rise_median,runs_spearman_ge_0.9,real_minus_druglike_median,real_minus_druglike_min,real_minus_druglike_max,runs_real_above_baseline
+multi_real,pred_real,1.1109624999999999,1.0994320643214028,8,1.5444700000000005,1.121855,2.16639,10
+multi_scrambled,pred_scrambled,0.6261324999999998,0.8396754267927957,10,-0.19667500000000038,-0.41579500000000014,-0.03552999999999962,0
+activity_only,pred_real,1.9387725000000007,1.9186504062239436,10,2.43314,1.930905000000001,2.6723100000000013,10
+druglike_only,none (real shown),-0.5057424999999998,-0.500493509717985,0,0.0,0.0,0.0,0

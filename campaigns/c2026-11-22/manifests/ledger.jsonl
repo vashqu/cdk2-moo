@@ -1,0 +1,114 @@
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "shared/curate", "status": "planned", "script": "02_curate.py", "args": [], "deps": []}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "shared/features_splits", "status": "planned", "script": "03_features_and_splits.py", "args": [], "deps": ["shared/curate"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "shared/eligible_starts", "status": "planned", "script": "03b_eligible_starts.py", "args": [], "deps": ["shared/curate"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "shared/surrogate_eval", "status": "planned", "script": "04_train_surrogate.py", "args": [], "deps": ["shared/features_splits"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "shared/holdout_setup", "status": "planned", "script": "05e_positive_control_setup.py", "args": [], "deps": ["shared/features_splits"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "shared/receptor", "status": "planned", "script": "08_prepare_receptor.py", "args": [], "deps": []}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "shared/redock", "status": "planned", "script": "08b_redock_native_ligand.py", "args": [], "deps": ["shared/receptor"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/link", "status": "planned", "script": "@link", "args": [], "deps": ["shared/curate", "shared/features_splits", "shared/eligible_starts", "shared/surrogate_eval", "shared/holdout_setup", "shared/receptor", "shared/redock"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/ga_primary", "status": "planned", "script": "05_run_ga.py", "args": [], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/size_percentile", "status": "planned", "script": "05b_size_conditioned_similarity.py", "args": [], "deps": ["corrected/ga_primary"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/summarize_ga", "status": "planned", "script": "05c_summarize_ga.py", "args": [], "deps": ["corrected/size_percentile"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/descriptive", "status": "planned", "script": "05d_ga_descriptive_checks.py", "args": [], "deps": ["corrected/size_percentile"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/holdout_molecule", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "molecule"], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/holdout_scaffold", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold"], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/robust_scaffold_split", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split"], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/robust_scaffold_split_s43", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s43"], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/robust_scaffold_split_s44", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s44"], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/robust_scaffold_split_s45", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s45"], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/robust_scaffold_split_s46", "status": "planned", "script": "05f_positive_control_ga.py", "args": ["--controls", "scaffold_split_s46"], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/robustness_eval", "status": "planned", "script": "05h_scaffold_surrogate_robustness.py", "args": [], "deps": ["corrected/ga_primary", "corrected/robust_scaffold_split", "corrected/robust_scaffold_split_s43", "corrected/robust_scaffold_split_s44", "corrected/robust_scaffold_split_s45", "corrected/robust_scaffold_split_s46"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/holdout_eval", "status": "planned", "script": "05g_positive_control_eval.py", "args": [], "deps": ["corrected/holdout_molecule", "corrected/holdout_scaffold"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/pareto", "status": "planned", "script": "06_pareto.py", "args": [], "deps": ["corrected/size_percentile"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/ad_reliability", "status": "planned", "script": "07_ad_reliability.py", "args": [], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/ad_overlay", "status": "planned", "script": "07b_ad_generated_overlay.py", "args": [], "deps": ["corrected/size_percentile", "corrected/pareto", "corrected/ad_reliability"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/alerts", "status": "planned", "script": "07c_structural_alerts.py", "args": [], "deps": ["corrected/ad_overlay"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/constrained_primary", "status": "planned", "script": "10_run_constrained_ga.py", "args": ["--experiments", "primary"], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/constrained_molecule", "status": "planned", "script": "10_run_constrained_ga.py", "args": ["--experiments", "molecule"], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/constrained_scaffold", "status": "planned", "script": "10_run_constrained_ga.py", "args": ["--experiments", "scaffold"], "deps": ["corrected/link"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/tradeoff", "status": "planned", "script": "10b_analyze_tradeoff.py", "args": [], "deps": ["corrected/ga_primary", "corrected/holdout_molecule", "corrected/holdout_scaffold", "corrected/constrained_primary", "corrected/constrained_molecule", "corrected/constrained_scaffold"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/endpoints", "status": "planned", "script": "13_hypothesis_endpoints.py", "args": [], "deps": ["corrected/size_percentile", "corrected/holdout_molecule", "corrected/holdout_scaffold", "corrected/constrained_primary", "corrected/constrained_molecule", "corrected/constrained_scaffold"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/dock_sets", "status": "planned", "script": "08c_select_docking_sets.py", "args": [], "deps": ["corrected/size_percentile", "corrected/pareto", "corrected/holdout_molecule", "corrected/holdout_scaffold"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/dock", "status": "planned", "script": "08d_dock_sets.py", "args": [], "deps": ["corrected/dock_sets"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/dock_analysis", "status": "planned", "script": "08e_docking_analysis.py", "args": [], "deps": ["corrected/dock", "corrected/posebusters"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/posebusters", "status": "planned", "script": "08f_posebusters.py", "args": [], "deps": ["corrected/dock"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/hinge", "status": "planned", "script": "08g_hinge_contacts.py", "args": [], "deps": ["corrected/dock"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/figures", "status": "planned", "script": "11_make_figures.py", "args": [], "deps": ["corrected/dock_analysis", "corrected/posebusters", "corrected/hinge", "corrected/summarize_ga", "corrected/pareto", "corrected/ad_reliability"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/table1", "status": "planned", "script": "11b_table1.py", "args": [], "deps": ["corrected/dock_analysis", "corrected/posebusters", "corrected/hinge"]}
+{"time_utc": "2026-11-22T21:37:16+00:00", "stage": "corrected/audit", "status": "planned", "script": "12_audit_leakage_and_artifacts.py", "args": [], "deps": ["corrected/dock", "corrected/posebusters", "corrected/hinge"]}
+{"time_utc": "2026-11-22T21:37:22+00:00", "stage": "shared/receptor", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/shared__receptor.log"}
+{"time_utc": "2026-11-22T21:37:22+00:00", "stage": "shared/curate", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/shared__curate.log"}
+{"time_utc": "2026-11-22T21:37:25+00:00", "stage": "shared/receptor", "status": "completed", "seconds": 2.8, "n_outputs": 3}
+{"time_utc": "2026-11-22T21:37:27+00:00", "stage": "shared/redock", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/shared__redock.log"}
+{"time_utc": "2026-11-22T21:37:56+00:00", "stage": "shared/redock", "status": "completed", "seconds": 28.7, "n_outputs": 1}
+{"time_utc": "2026-11-22T21:38:38+00:00", "stage": "shared/curate", "status": "completed", "seconds": 76.1, "n_outputs": 3}
+{"time_utc": "2026-11-22T21:38:42+00:00", "stage": "shared/features_splits", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/shared__features_splits.log"}
+{"time_utc": "2026-11-22T21:38:42+00:00", "stage": "shared/eligible_starts", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/shared__eligible_starts.log"}
+{"time_utc": "2026-11-22T21:38:44+00:00", "stage": "shared/features_splits", "status": "completed", "seconds": 1.9, "n_outputs": 3}
+{"time_utc": "2026-11-22T21:38:47+00:00", "stage": "shared/surrogate_eval", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/shared__surrogate_eval.log"}
+{"time_utc": "2026-11-22T21:38:47+00:00", "stage": "shared/holdout_setup", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/shared__holdout_setup.log"}
+{"time_utc": "2026-11-22T21:39:38+00:00", "stage": "shared/holdout_setup", "status": "completed", "seconds": 51.0, "n_outputs": 3}
+{"time_utc": "2026-11-22T21:41:15+00:00", "stage": "shared/eligible_starts", "status": "completed", "seconds": 152.8, "n_outputs": 1}
+{"time_utc": "2026-11-22T21:45:23+00:00", "stage": "shared/surrogate_eval", "status": "completed", "seconds": 396.2, "n_outputs": 2}
+{"time_utc": "2026-11-22T21:45:23+00:00", "stage": "corrected/link", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__link.log"}
+{"time_utc": "2026-11-22T21:45:23+00:00", "stage": "corrected/link", "status": "completed", "seconds": 0.2, "n_outputs": 19}
+{"time_utc": "2026-11-22T21:45:28+00:00", "stage": "corrected/ga_primary", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__ga_primary.log"}
+{"time_utc": "2026-11-22T21:45:28+00:00", "stage": "corrected/holdout_molecule", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__holdout_molecule.log"}
+{"time_utc": "2026-11-22T21:45:28+00:00", "stage": "corrected/robust_scaffold_split_s44", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__robust_scaffold_split_s44.log"}
+{"time_utc": "2026-11-22T21:45:28+00:00", "stage": "corrected/robust_scaffold_split", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__robust_scaffold_split.log"}
+{"time_utc": "2026-11-22T21:45:28+00:00", "stage": "corrected/robust_scaffold_split_s46", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__robust_scaffold_split_s46.log"}
+{"time_utc": "2026-11-22T21:45:28+00:00", "stage": "corrected/robust_scaffold_split_s45", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__robust_scaffold_split_s45.log"}
+{"time_utc": "2026-11-22T21:45:28+00:00", "stage": "corrected/holdout_scaffold", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__holdout_scaffold.log"}
+{"time_utc": "2026-11-22T21:45:28+00:00", "stage": "corrected/robust_scaffold_split_s43", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__robust_scaffold_split_s43.log"}
+{"time_utc": "2026-11-22T23:58:36+00:00", "stage": "corrected/robust_scaffold_split_s45", "status": "completed", "seconds": 7987.7, "n_outputs": 1}
+{"time_utc": "2026-11-22T23:58:36+00:00", "stage": "corrected/ad_reliability", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__ad_reliability.log"}
+{"time_utc": "2026-11-22T23:58:43+00:00", "stage": "corrected/ad_reliability", "status": "completed", "seconds": 6.8, "n_outputs": 3}
+{"time_utc": "2026-11-22T23:58:47+00:00", "stage": "corrected/constrained_primary", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__constrained_primary.log"}
+{"time_utc": "2026-11-23T00:06:30+00:00", "stage": "corrected/robust_scaffold_split", "status": "completed", "seconds": 8461.8, "n_outputs": 1}
+{"time_utc": "2026-11-23T00:06:32+00:00", "stage": "corrected/constrained_molecule", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__constrained_molecule.log"}
+{"time_utc": "2026-11-23T00:12:49+00:00", "stage": "corrected/holdout_molecule", "status": "completed", "seconds": 8840.2, "n_outputs": 1}
+{"time_utc": "2026-11-23T00:12:53+00:00", "stage": "corrected/constrained_scaffold", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__constrained_scaffold.log"}
+{"time_utc": "2026-11-23T00:37:33+00:00", "stage": "corrected/robust_scaffold_split_s44", "status": "completed", "seconds": 10324.8, "n_outputs": 1}
+{"time_utc": "2026-11-23T00:44:43+00:00", "stage": "corrected/holdout_scaffold", "status": "completed", "seconds": 10754.9, "n_outputs": 1}
+{"time_utc": "2026-11-23T00:44:46+00:00", "stage": "corrected/holdout_eval", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__holdout_eval.log"}
+{"time_utc": "2026-11-23T00:45:43+00:00", "stage": "corrected/robust_scaffold_split_s46", "status": "completed", "seconds": 10814.2, "n_outputs": 1}
+{"time_utc": "2026-11-23T00:47:38+00:00", "stage": "corrected/ga_primary", "status": "completed", "seconds": 10929.7, "n_outputs": 1}
+{"time_utc": "2026-11-23T00:47:42+00:00", "stage": "corrected/size_percentile", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__size_percentile.log"}
+{"time_utc": "2026-11-23T00:47:46+00:00", "stage": "corrected/size_percentile", "status": "completed", "seconds": 3.8, "n_outputs": 2}
+{"time_utc": "2026-11-23T00:47:47+00:00", "stage": "corrected/summarize_ga", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__summarize_ga.log"}
+{"time_utc": "2026-11-23T00:47:47+00:00", "stage": "corrected/descriptive", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__descriptive.log"}
+{"time_utc": "2026-11-23T00:47:47+00:00", "stage": "corrected/pareto", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__pareto.log"}
+{"time_utc": "2026-11-23T00:47:51+00:00", "stage": "corrected/summarize_ga", "status": "completed", "seconds": 4.1, "n_outputs": 4}
+{"time_utc": "2026-11-23T00:48:07+00:00", "stage": "corrected/descriptive", "status": "completed", "seconds": 20.6, "n_outputs": 0}
+{"time_utc": "2026-11-23T00:48:27+00:00", "stage": "corrected/pareto", "status": "completed", "seconds": 40.7, "n_outputs": 3}
+{"time_utc": "2026-11-23T00:48:32+00:00", "stage": "corrected/ad_overlay", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__ad_overlay.log"}
+{"time_utc": "2026-11-23T00:48:32+00:00", "stage": "corrected/dock_sets", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__dock_sets.log"}
+{"time_utc": "2026-11-23T00:48:36+00:00", "stage": "corrected/ad_overlay", "status": "completed", "seconds": 4.0, "n_outputs": 1}
+{"time_utc": "2026-11-23T00:48:37+00:00", "stage": "corrected/alerts", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__alerts.log"}
+{"time_utc": "2026-11-23T00:49:12+00:00", "stage": "corrected/dock_sets", "status": "completed", "seconds": 40.6, "n_outputs": 2}
+{"time_utc": "2026-11-23T00:50:57+00:00", "stage": "corrected/alerts", "status": "completed", "seconds": 139.9, "n_outputs": 3}
+{"time_utc": "2026-11-23T00:54:36+00:00", "stage": "corrected/robust_scaffold_split_s43", "status": "completed", "seconds": 11347.7, "n_outputs": 1}
+{"time_utc": "2026-11-23T00:54:37+00:00", "stage": "corrected/robustness_eval", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__robustness_eval.log"}
+{"time_utc": "2026-11-23T00:54:48+00:00", "stage": "corrected/robustness_eval", "status": "completed", "seconds": 10.7, "n_outputs": 1}
+{"time_utc": "2026-11-23T01:08:43+00:00", "stage": "corrected/holdout_eval", "status": "completed", "seconds": 1436.3, "n_outputs": 2}
+{"time_utc": "2026-11-23T05:54:20+00:00", "stage": "corrected/constrained_molecule", "status": "completed", "seconds": 20867.3, "n_outputs": 1}
+{"time_utc": "2026-11-23T06:07:54+00:00", "stage": "corrected/constrained_scaffold", "status": "completed", "seconds": 21300.7, "n_outputs": 1}
+{"time_utc": "2026-11-23T06:15:45+00:00", "stage": "corrected/constrained_primary", "status": "completed", "seconds": 22618.0, "n_outputs": 1}
+{"time_utc": "2026-11-23T06:15:49+00:00", "stage": "corrected/endpoints", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__endpoints.log"}
+{"time_utc": "2026-11-23T06:15:49+00:00", "stage": "corrected/tradeoff", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__tradeoff.log"}
+{"time_utc": "2026-11-23T06:16:41+00:00", "stage": "corrected/tradeoff", "status": "completed", "seconds": 51.8, "n_outputs": 2}
+{"time_utc": "2026-11-23T06:17:45+00:00", "stage": "corrected/endpoints", "status": "completed", "seconds": 116.0, "n_outputs": 9}
+{"time_utc": "2026-11-23T06:17:49+00:00", "stage": "corrected/dock", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__dock.log"}
+{"time_utc": "2026-11-23T10:54:42+00:00", "stage": "corrected/dock", "status": "completed", "seconds": 16612.4, "n_outputs": 4}
+{"time_utc": "2026-11-23T10:54:46+00:00", "stage": "corrected/posebusters", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__posebusters.log"}
+{"time_utc": "2026-11-23T10:54:46+00:00", "stage": "corrected/hinge", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__hinge.log"}
+{"time_utc": "2026-11-23T10:54:47+00:00", "stage": "corrected/hinge", "status": "completed", "seconds": 0.9, "n_outputs": 2}
+{"time_utc": "2026-11-23T11:22:33+00:00", "stage": "corrected/posebusters", "status": "completed", "seconds": 1667.1, "n_outputs": 4}
+{"time_utc": "2026-11-23T11:22:35+00:00", "stage": "corrected/audit", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__audit.log"}
+{"time_utc": "2026-11-23T11:22:35+00:00", "stage": "corrected/dock_analysis", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__dock_analysis.log"}
+{"time_utc": "2026-11-23T11:22:35+00:00", "stage": "corrected/audit", "status": "completed", "seconds": 0.8, "n_outputs": 5}
+{"time_utc": "2026-11-23T11:22:46+00:00", "stage": "corrected/dock_analysis", "status": "completed", "seconds": 11.4, "n_outputs": 10}
+{"time_utc": "2026-11-23T11:22:50+00:00", "stage": "corrected/figures", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__figures.log"}
+{"time_utc": "2026-11-23T11:22:50+00:00", "stage": "corrected/table1", "status": "running", "log": "campaigns/c2026-11-22/manifests/logs/corrected__table1.log"}
+{"time_utc": "2026-11-23T11:22:51+00:00", "stage": "corrected/figures", "status": "completed", "seconds": 1.6, "n_outputs": 9}
+{"time_utc": "2026-11-23T11:22:58+00:00", "stage": "corrected/table1", "status": "completed", "seconds": 8.6, "n_outputs": 2}

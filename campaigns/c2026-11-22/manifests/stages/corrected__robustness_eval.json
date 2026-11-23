@@ -1,0 +1,67 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/ga_primary": {
+      "campaigns/c2026-11-22/corrected/results/05_ga_populations.csv": {
+        "bytes": 57242418,
+        "sha256": "dc9930b2720ca6ed9234b78f83feb1d27d72439054df151175a051f0817e6c07"
+      }
+    },
+    "corrected/robust_scaffold_split": {
+      "campaigns/c2026-11-22/corrected/results/05f_scaffold_split_populations.csv": {
+        "bytes": 58336113,
+        "sha256": "6d322f4e72a917842cab0b006b1a78748c0e547af5a0bdb16f5cb49f21c8461d"
+      }
+    },
+    "corrected/robust_scaffold_split_s43": {
+      "campaigns/c2026-11-22/corrected/results/05f_scaffold_split_s43_populations.csv": {
+        "bytes": 57558795,
+        "sha256": "b76b062c4e020769e96cbf649978b84578d66cc1f104e79347fd3b30eeb14e91"
+      }
+    },
+    "corrected/robust_scaffold_split_s44": {
+      "campaigns/c2026-11-22/corrected/results/05f_scaffold_split_s44_populations.csv": {
+        "bytes": 57453206,
+        "sha256": "437021d69bfd0074a42a5f253164ad987fcf09a613d91f8e929f0ae29b8b1d10"
+      }
+    },
+    "corrected/robust_scaffold_split_s45": {
+      "campaigns/c2026-11-22/corrected/results/05f_scaffold_split_s45_populations.csv": {
+        "bytes": 58035723,
+        "sha256": "c08dcba9f5b73a54db20e4ff18105e869bbf82196c26f6c8986274632aaa6a00"
+      }
+    },
+    "corrected/robust_scaffold_split_s46": {
+      "campaigns/c2026-11-22/corrected/results/05f_scaffold_split_s46_populations.csv": {
+        "bytes": 57588397,
+        "sha256": "7388826c474ce48692e45f19e2ddc1681708e2e4daa4a91851c63ea3b99359c3"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T00:54:48+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__robustness_eval.log",
+  "log_sha256": "4d88d874656cfc14746817fc6ef88d6fc5450bf89d2df5b62189fe88f05ee2de",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/results/05h_robustness_summary.csv": {
+      "bytes": 19393,
+      "sha256": "d22cb0a6eace007ab9436a118858cb08e508f52619b7cd04ade72eb962cee03e"
+    }
+  },
+  "scope": "corrected",
+  "script": "05h_scaffold_surrogate_robustness.py",
+  "seconds": 10.7,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/robustness_eval"
+}

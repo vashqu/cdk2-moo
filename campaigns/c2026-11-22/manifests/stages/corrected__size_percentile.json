@@ -1,0 +1,41 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/ga_primary": {
+      "campaigns/c2026-11-22/corrected/results/05_ga_populations.csv": {
+        "bytes": 57242418,
+        "sha256": "dc9930b2720ca6ed9234b78f83feb1d27d72439054df151175a051f0817e6c07"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T00:47:45+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__size_percentile.log",
+  "log_sha256": "dfcb67015fb41352302a002a30ef64474bfd5fc27b8401448fabe05a57a4426b",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/results/05_ga_populations_scored.csv": {
+      "bytes": 60182410,
+      "sha256": "5b7eff1b280dd2d8b8fcdc68147be1b01426cf5881e9ccbc5745f46754119468"
+    },
+    "campaigns/c2026-11-22/corrected/results/05_training_loo_similarity.csv": {
+      "bytes": 81367,
+      "sha256": "79345aab0a11be0571095fb39aa09930a5dc0cfe0245ccb6d60bbf55bc1c80a0"
+    }
+  },
+  "scope": "corrected",
+  "script": "05b_size_conditioned_similarity.py",
+  "seconds": 3.8,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/size_percentile"
+}

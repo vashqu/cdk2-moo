@@ -1,0 +1,82 @@
+$ /opt/anaconda3/envs/cdk2/bin/python /Users/vashqu/Desktop/drug_design/cdk2-moo/scripts/05h_scaffold_surrogate_robustness.py
+# CDK2_CAMPAIGN=c2026-11-22 CDK2_SCOPE=corrected
+[campaign c2026-11-22 | scope corrected] results -> /Users/vashqu/Desktop/drug_design/cdk2-moo/campaigns/c2026-11-22/corrected/results
+Generation 50, generated molecules.
+  primary: median [min, max] over all GA seeds.
+  scaffold-trained: median [min, max] over the 5 splits of each split's median.
+
+  median real prediction
+    arm                                primary              scaffold-trained
+    multi_real          7.68 [7.58, 8.12]        7.74 [7.61, 7.86]
+    multi_scrambled     5.90 [5.80, 6.14]        6.27 [6.11, 6.37]
+    activity_only       8.57 [8.38, 8.68]        8.49 [8.39, 8.64]
+    druglike_only       6.14 [5.87, 6.45]        6.26 [6.05, 6.42]
+
+  median raw max Tanimoto
+    arm                                primary              scaffold-trained
+    multi_real          0.36 [0.34, 0.58]        0.37 [0.35, 0.39]
+    multi_scrambled     0.35 [0.29, 0.42]        0.34 [0.33, 0.34]
+    activity_only       0.70 [0.66, 0.82]        0.72 [0.70, 0.78]
+    druglike_only       0.36 [0.34, 0.38]        0.36 [0.35, 0.36]
+
+  median QED
+    arm                                primary              scaffold-trained
+    multi_real          0.91 [0.90, 0.92]        0.91 [0.91, 0.92]
+    multi_scrambled     0.92 [0.91, 0.93]        0.91 [0.91, 0.92]
+    activity_only       0.29 [0.20, 0.35]        0.26 [0.20, 0.29]
+    druglike_only       0.93 [0.92, 0.94]        0.93 [0.93, 0.94]
+
+  median SA
+    arm                                primary              scaffold-trained
+    multi_real          2.00 [1.87, 2.75]        1.98 [1.89, 2.22]
+    multi_scrambled     2.08 [1.88, 2.66]        2.05 [1.91, 2.13]
+    activity_only       3.22 [3.07, 3.96]        3.17 [3.12, 3.81]
+    druglike_only       1.73 [1.69, 1.86]        1.72 [1.70, 1.74]
+
+  median heavy atoms
+    arm                                primary              scaffold-trained
+    multi_real         21.00 [21.00, 22.00]       21.00 [21.00, 21.00]
+    multi_scrambled    22.50 [21.00, 23.00]       22.00 [22.00, 22.50]
+    activity_only      35.50 [34.00, 36.00]       35.00 [35.00, 35.00]
+    druglike_only      22.00 [22.00, 22.00]       22.00 [21.50, 22.00]
+
+  distinct scaffolds per 100
+    arm                                primary              scaffold-trained
+    multi_real         22.50 [15.00, 35.00]       26.50 [24.50, 30.00]
+    multi_scrambled    68.50 [19.00, 86.00]       53.00 [46.50, 66.50]
+    activity_only      26.00 [15.00, 86.00]       31.50 [19.50, 78.50]
+    druglike_only      55.00 [34.00, 87.00]       47.50 [41.50, 65.00]
+
+  share with raw similarity < 0.4
+    arm                                primary              scaffold-trained
+    multi_real          0.71 [0.00, 0.86]        0.64 [0.53, 0.89]
+    multi_scrambled     0.78 [0.42, 0.99]        0.85 [0.75, 0.89]
+    activity_only       0.00 [0.00, 0.00]        0.00 [0.00, 0.00]
+    druglike_only       0.78 [0.68, 0.90]        0.77 [0.76, 0.82]
+
+Do the Stage 5 claims hold?  (paired by GA seed, arm minus druglike_only)
+  claim                                                                           primary  splits holding   verdict
+  multi_real raises real prediction above druglike_only in every GA seed            holds            5/5    STABLE
+  multi_real raw similarity >= druglike_only (median paired difference)             FAILS            3/5   FRAGILE
+  activity_only ends closer to training than druglike_only in every GA seed         holds            5/5    STABLE
+  multi_scrambled beats druglike_only on REAL prediction in at most 2 GA seeds      holds            0/5   FRAGILE
+  multi_real and activity_only keep fewer distinct scaffolds than druglike_only     holds            4/5    STABLE
+  druglike_only drifts at least as far as activity_only (share < 0.4)               holds            5/5    STABLE
+
+The two claims that were marginal with one split, per split:
+               multi_real minus druglike, raw similarity  scaffolds per 100: multi_real / activity_only / druglike
+  primary                                         -0.002                        22 /   26 /   55
+  split 42                                        -0.006                        30 /   32 /   65
+  split 43                                        +0.027                        24 /   23 /   42
+  split 44                                        +0.013                        26 /   20 /   43
+  split 45                                        -0.018                        26 /   78 /   50
+  split 46                                        +0.031                        29 /   32 /   48
+
+  Pooled over all 50 (split, GA seed) pairs, multi_real minus druglike_only raw similarity: median +0.010, IQR [-0.012, +0.030]; positive in 32/50
+  Pooled activity_only minus druglike_only distinct scaffolds per 100: median -14, IQR [-28, +3]; negative (activity_only less diverse) in 37/50
+
+  Verdict: at least one claim is FRAGILE; state it as fragile (see table).
+
+  Context: scaffold-trained surrogates' accuracy on their held-out molecules (Stage 4, seeds 42-46): R2 median 0.49 [0.43, 0.51], Spearman median 0.70
+
+Wrote results/05h_robustness_summary.csv

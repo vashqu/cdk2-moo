@@ -1,0 +1,598 @@
+{
+  "campaign": "c2026-11-22",
+  "complete": true,
+  "created_utc": "2026-11-22T23:58:36+00:00",
+  "inputs": {
+    "curated": {
+      "bytes": 361575,
+      "path": "/Users/vashqu/Desktop/drug_design/cdk2-moo/campaigns/c2026-11-22/corrected/processed/cdk2_ic50_curated.csv",
+      "sha256": "634c8603cbaba2424b99b9d2ddcb0f7f3ed0452c5c92ed6f6377961d922aa6b2"
+    },
+    "eligible_starts": {
+      "bytes": 109426,
+      "path": "/Users/vashqu/Desktop/drug_design/cdk2-moo/campaigns/c2026-11-22/corrected/processed/eligible_starts.csv",
+      "sha256": "2bff7da9700fc77071b70ffc0de33d296a13260b95c4253e80e280159d88ac92"
+    },
+    "fingerprints": {
+      "bytes": 4128896,
+      "path": "/Users/vashqu/Desktop/drug_design/cdk2-moo/campaigns/c2026-11-22/corrected/processed/ecfp4.npy",
+      "sha256": "9918f0f49e95c4699ddac5ca130403e95db76d58034eac4c04d9edebccbb4246"
+    },
+    "holdout_assignments": {
+      "bytes": 275849,
+      "path": "/Users/vashqu/Desktop/drug_design/cdk2-moo/campaigns/c2026-11-22/corrected/results/05e_holdout_sets.csv",
+      "sha256": "ab1181502a9ee0e6de4a92f686c0f0ab16d16d24e50f0d9474844a9e3426a5f2"
+    }
+  },
+  "output": "05f_scaffold_split_s45_populations.csv",
+  "outputs": {
+    "05f_scaffold_split_s45_populations.csv": {
+      "bytes": 58035723,
+      "sha256": "c08dcba9f5b73a54db20e4ff18105e869bbf82196c26f6c8986274632aaa6a00"
+    }
+  },
+  "parameters": {
+    "ACTIVITY_HIGH": 9.0,
+    "ACTIVITY_LOW": 4.0,
+    "AD_LARGE_ERROR": 1.0,
+    "AD_MIN_UNIQUE": 30,
+    "AD_PCT_EDGES": [
+      0.0,
+      10.0,
+      50.0,
+      100.01
+    ],
+    "AD_RAW_EDGES": [
+      0.0,
+      0.4,
+      0.6,
+      0.8,
+      1.01
+    ],
+    "DOCK_BOX_SIZE": 22.0,
+    "DOCK_EXHAUSTIVENESS": 8,
+    "DOCK_N_POSES": 9,
+    "DOCK_PH": 7.4,
+    "DROP_CURATOR_FLAGGED": true,
+    "FP_BITS": 2048,
+    "FP_RADIUS": 2,
+    "GA_ALLOWED_ELEMENTS": [
+      "C",
+      "N",
+      "O",
+      "F",
+      "S",
+      "Cl",
+      "Br"
+    ],
+    "GA_MAJORITY_FRACTION": 0.8,
+    "GA_MAX_HEAVY_ATOMS": 39,
+    "GA_MIN_HEAVY_ATOMS": 20,
+    "GA_MUTATION_PROB": 0.5,
+    "GA_N_CHILDREN": 100,
+    "GA_N_GENERATIONS": 50,
+    "GA_POP_SIZE": 100,
+    "GA_RELAXED_MAX_HEAVY_ATOMS": 50,
+    "GA_RELAXED_MIN_HEAVY_ATOMS": 15,
+    "GA_SEEDS": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "HOLDOUT_MIN_TOP_PER_FAMILY": 5,
+    "HOLDOUT_QUANTILE": 0.9,
+    "KEEP_ASSAY_TYPES": [
+      "B"
+    ],
+    "KEEP_RELATION": "=",
+    "KEEP_TYPES": [
+      "IC50"
+    ],
+    "KEEP_UNITS": "nM",
+    "MUTANT_REGEX": "\\bmutant\\b|\\bCDK2\\s+[A-Z]\\d{1,3}[A-Z]\\b",
+    "PDB_ID": "4KD1",
+    "RANDOM_SEED": 42,
+    "REDISCOVERY_SIM": 0.6,
+    "REDISCOVERY_SIMS": [
+      0.5,
+      0.6,
+      0.7,
+      0.8
+    ],
+    "REDOCK_MAX_RMSD": 2.0,
+    "RF_MAX_FEATURES": 0.33,
+    "RF_N_TREES": 300,
+    "SCRAMBLE_SEED": 20260930,
+    "SIZE_STRATUM_HALFWIDTH": 2,
+    "SIZE_STRATUM_MIN_N": 100,
+    "SPLIT_SEEDS": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "SURROGATE_SEED": 42,
+    "TARGET_CHEMBL_ID": "CHEMBL301",
+    "TEST_FRAC": 0.2,
+    "activity_scaling": "linear over pActivity [ACTIVITY_LOW, ACTIVITY_HIGH], clipped to 0-1, same for every arm",
+    "campaign": "c2026-11-22",
+    "fingerprint": "ECFP4: Morgan radius 2, 2048 bits, binary, chirality NOT included",
+    "scope": "corrected",
+    "standardization": "cleanup, largest fragment, neutralise, canonical tautomer (RDKit TautomerEnumerator defaults: 1000 transforms), organic-element check"
+  },
+  "platform": "macOS-26.7.3-arm64-arm-64bit",
+  "python": "3.11.16",
+  "scope": "corrected",
+  "settings": {
+    "control": "scaffold_split_s45",
+    "generations": 50,
+    "n_training_molecules": 1613,
+    "policy": "corrected",
+    "rejection_counts": {
+      "activity_only/seed42": {
+        "duplicate": 267,
+        "edit_not_applicable": 611,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5267,
+        "radical": 33,
+        "sanitize": 1463,
+        "size": 4102,
+        "tautomer_incomplete": 86
+      },
+      "activity_only/seed43": {
+        "duplicate": 177,
+        "edit_not_applicable": 574,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5177,
+        "radical": 25,
+        "sanitize": 1463,
+        "size": 4768,
+        "tautomer_incomplete": 170
+      },
+      "activity_only/seed44": {
+        "duplicate": 427,
+        "edit_not_applicable": 747,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5427,
+        "radical": 24,
+        "sanitize": 1663,
+        "size": 5150,
+        "tautomer_incomplete": 83
+      },
+      "activity_only/seed45": {
+        "duplicate": 252,
+        "edit_not_applicable": 768,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5252,
+        "radical": 159,
+        "sanitize": 1736,
+        "size": 4738,
+        "tautomer_incomplete": 78
+      },
+      "activity_only/seed46": {
+        "duplicate": 220,
+        "edit_not_applicable": 750,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5220,
+        "radical": 161,
+        "sanitize": 1823,
+        "size": 5333,
+        "tautomer_incomplete": 66
+      },
+      "activity_only/seed47": {
+        "duplicate": 286,
+        "edit_not_applicable": 646,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5286,
+        "radical": 46,
+        "sanitize": 1620,
+        "size": 4682,
+        "tautomer_incomplete": 74
+      },
+      "activity_only/seed48": {
+        "duplicate": 408,
+        "edit_not_applicable": 752,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5408,
+        "radical": 22,
+        "sanitize": 1648,
+        "size": 4159,
+        "tautomer_incomplete": 299
+      },
+      "activity_only/seed49": {
+        "duplicate": 304,
+        "edit_not_applicable": 687,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5304,
+        "radical": 59,
+        "sanitize": 1692,
+        "size": 4886,
+        "tautomer_incomplete": 38
+      },
+      "activity_only/seed50": {
+        "duplicate": 391,
+        "edit_not_applicable": 730,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5391,
+        "radical": 23,
+        "sanitize": 1684,
+        "size": 4231,
+        "tautomer_incomplete": 59
+      },
+      "activity_only/seed51": {
+        "duplicate": 561,
+        "edit_not_applicable": 785,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5561,
+        "radical": 20,
+        "sanitize": 1651,
+        "size": 4492,
+        "tautomer_incomplete": 66
+      },
+      "druglike_only/seed42": {
+        "duplicate": 129,
+        "edit_not_applicable": 334,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5129,
+        "radical": 7,
+        "sanitize": 1392,
+        "size": 3300,
+        "tautomer_incomplete": 18
+      },
+      "druglike_only/seed43": {
+        "duplicate": 205,
+        "edit_not_applicable": 126,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5205,
+        "radical": 2,
+        "sanitize": 1165,
+        "size": 3143,
+        "tautomer_incomplete": 19
+      },
+      "druglike_only/seed44": {
+        "duplicate": 120,
+        "edit_not_applicable": 196,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5120,
+        "radical": 9,
+        "sanitize": 1146,
+        "size": 2943,
+        "tautomer_incomplete": 29
+      },
+      "druglike_only/seed45": {
+        "duplicate": 105,
+        "edit_not_applicable": 156,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5105,
+        "radical": 16,
+        "sanitize": 1066,
+        "size": 3139,
+        "tautomer_incomplete": 52
+      },
+      "druglike_only/seed46": {
+        "duplicate": 95,
+        "edit_not_applicable": 178,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5095,
+        "radical": 7,
+        "sanitize": 1127,
+        "size": 3376,
+        "tautomer_incomplete": 55
+      },
+      "druglike_only/seed47": {
+        "duplicate": 132,
+        "edit_not_applicable": 232,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5132,
+        "radical": 5,
+        "sanitize": 1150,
+        "size": 3340,
+        "tautomer_incomplete": 14
+      },
+      "druglike_only/seed48": {
+        "duplicate": 127,
+        "edit_not_applicable": 309,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5127,
+        "radical": 14,
+        "sanitize": 1239,
+        "size": 3396,
+        "tautomer_incomplete": 26
+      },
+      "druglike_only/seed49": {
+        "duplicate": 122,
+        "edit_not_applicable": 171,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5122,
+        "radical": 18,
+        "sanitize": 1092,
+        "size": 3469,
+        "tautomer_incomplete": 29
+      },
+      "druglike_only/seed50": {
+        "duplicate": 164,
+        "edit_not_applicable": 190,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5164,
+        "radical": 4,
+        "sanitize": 1068,
+        "size": 3145,
+        "tautomer_incomplete": 23
+      },
+      "druglike_only/seed51": {
+        "duplicate": 238,
+        "edit_not_applicable": 91,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5238,
+        "radical": 6,
+        "sanitize": 1053,
+        "size": 2999,
+        "tautomer_incomplete": 46
+      },
+      "multi_real/seed42": {
+        "duplicate": 455,
+        "edit_not_applicable": 503,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5455,
+        "radical": 7,
+        "sanitize": 1350,
+        "size": 3356,
+        "tautomer_incomplete": 25
+      },
+      "multi_real/seed43": {
+        "duplicate": 401,
+        "edit_not_applicable": 485,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5401,
+        "radical": 5,
+        "sanitize": 1430,
+        "size": 3316,
+        "tautomer_incomplete": 56
+      },
+      "multi_real/seed44": {
+        "duplicate": 370,
+        "edit_not_applicable": 498,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5370,
+        "radical": 4,
+        "sanitize": 1356,
+        "size": 3313,
+        "tautomer_incomplete": 26
+      },
+      "multi_real/seed45": {
+        "duplicate": 428,
+        "edit_not_applicable": 605,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5428,
+        "radical": 9,
+        "sanitize": 1442,
+        "size": 3634,
+        "tautomer_incomplete": 27
+      },
+      "multi_real/seed46": {
+        "duplicate": 371,
+        "edit_not_applicable": 492,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5371,
+        "radical": 24,
+        "sanitize": 1471,
+        "size": 3424,
+        "tautomer_incomplete": 100
+      },
+      "multi_real/seed47": {
+        "duplicate": 379,
+        "edit_not_applicable": 637,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5379,
+        "radical": 25,
+        "sanitize": 1521,
+        "size": 3500,
+        "tautomer_incomplete": 16
+      },
+      "multi_real/seed48": {
+        "duplicate": 435,
+        "edit_not_applicable": 564,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5435,
+        "radical": 8,
+        "sanitize": 1399,
+        "size": 3368,
+        "tautomer_incomplete": 35
+      },
+      "multi_real/seed49": {
+        "duplicate": 397,
+        "edit_not_applicable": 476,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5397,
+        "radical": 17,
+        "sanitize": 1396,
+        "size": 3556,
+        "tautomer_incomplete": 33
+      },
+      "multi_real/seed50": {
+        "duplicate": 524,
+        "edit_not_applicable": 540,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5524,
+        "sanitize": 1391,
+        "size": 3176,
+        "tautomer_incomplete": 10
+      },
+      "multi_real/seed51": {
+        "duplicate": 386,
+        "edit_not_applicable": 505,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5386,
+        "radical": 17,
+        "sanitize": 1308,
+        "size": 3362,
+        "tautomer_incomplete": 31
+      },
+      "multi_scrambled/seed42": {
+        "duplicate": 245,
+        "edit_not_applicable": 185,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5245,
+        "radical": 5,
+        "sanitize": 1146,
+        "size": 3153,
+        "tautomer_incomplete": 30
+      },
+      "multi_scrambled/seed43": {
+        "duplicate": 167,
+        "edit_not_applicable": 145,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5167,
+        "radical": 2,
+        "sanitize": 1139,
+        "size": 3476,
+        "tautomer_incomplete": 25
+      },
+      "multi_scrambled/seed44": {
+        "duplicate": 94,
+        "edit_not_applicable": 134,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5094,
+        "radical": 7,
+        "sanitize": 1142,
+        "size": 3070,
+        "tautomer_incomplete": 79
+      },
+      "multi_scrambled/seed45": {
+        "duplicate": 205,
+        "edit_not_applicable": 149,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5205,
+        "radical": 14,
+        "sanitize": 1089,
+        "size": 3273,
+        "tautomer_incomplete": 19
+      },
+      "multi_scrambled/seed46": {
+        "duplicate": 98,
+        "edit_not_applicable": 47,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5098,
+        "radical": 1,
+        "sanitize": 853,
+        "size": 3062,
+        "tautomer_incomplete": 27
+      },
+      "multi_scrambled/seed47": {
+        "duplicate": 302,
+        "edit_not_applicable": 93,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5302,
+        "radical": 14,
+        "sanitize": 1182,
+        "size": 3369,
+        "tautomer_incomplete": 31
+      },
+      "multi_scrambled/seed48": {
+        "duplicate": 124,
+        "edit_not_applicable": 275,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5124,
+        "radical": 12,
+        "sanitize": 1228,
+        "size": 3760,
+        "tautomer_incomplete": 39
+      },
+      "multi_scrambled/seed49": {
+        "duplicate": 167,
+        "edit_not_applicable": 230,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5167,
+        "radical": 4,
+        "sanitize": 1141,
+        "size": 3007,
+        "tautomer_incomplete": 34
+      },
+      "multi_scrambled/seed50": {
+        "duplicate": 113,
+        "edit_not_applicable": 430,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5113,
+        "radical": 1,
+        "sanitize": 1289,
+        "size": 3409,
+        "tautomer_incomplete": 133
+      },
+      "multi_scrambled/seed51": {
+        "duplicate": 82,
+        "edit_not_applicable": 202,
+        "proposals_accepted": 5000,
+        "proposals_attempted": 5082,
+        "radical": 3,
+        "sanitize": 1224,
+        "size": 3380,
+        "tautomer_incomplete": 27
+      }
+    },
+    "scramble_seeds": {
+      "42": 20260930,
+      "43": 20260931,
+      "44": 20260932,
+      "45": 20260933,
+      "46": 20260934,
+      "47": 20260935,
+      "48": 20260936,
+      "49": 20260937,
+      "50": 20260938,
+      "51": 20260939
+    },
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "size_window": [
+      20,
+      39
+    ],
+    "surrogate_seed": 42,
+    "training_subset": "rows with role 'train' in column scaffold_split_s45_control of 05e_holdout_sets.csv"
+  },
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "n_source_files": 86,
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "versions": {
+    "gemmi": "0.7.5",
+    "matplotlib": "3.11.2",
+    "meeko": "0.8.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "posebusters": "0.6.5",
+    "rdkit": "2026.3.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.17.1",
+    "vina": "1.2.7"
+  }
+}

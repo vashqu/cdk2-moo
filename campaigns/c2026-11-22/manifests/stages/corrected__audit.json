@@ -1,0 +1,93 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/dock": {
+      "campaigns/c2026-11-22/corrected/results/08d_export/docking_scores.csv": {
+        "bytes": 382675,
+        "sha256": "76e88831df5ead278563a862d8805921dfc6d7fc351cad0e343e49dc7098da85"
+      },
+      "campaigns/c2026-11-22/corrected/results/08d_export/poses_seed42.sdf": {
+        "bytes": 8589948,
+        "sha256": "e78d877b94d644e59406a6632842b8cef21ec503cd0688a8665c59d701393313"
+      },
+      "campaigns/c2026-11-22/corrected/results/08d_export/poses_seed43.sdf": {
+        "bytes": 402505,
+        "sha256": "fc2a4944b4c206bffb06f92bd59e24404b152bfdf55b8f50d65ab0073f5dd1b8"
+      },
+      "campaigns/c2026-11-22/corrected/results/08d_export/poses_seed44.sdf": {
+        "bytes": 407028,
+        "sha256": "7aa095e749fd5654c5bf673f653a5aa6ad17b8166dfa8f46daa933f4c54f6eef"
+      }
+    },
+    "corrected/hinge": {
+      "campaigns/c2026-11-22/corrected/results/08g_hinge_by_set.csv": {
+        "bytes": 1406,
+        "sha256": "14c200b08fe7ddcb5ee5dd24c2cfc6d288310bf6804f561c88f793d1276b6626"
+      },
+      "campaigns/c2026-11-22/corrected/results/08g_hinge_contacts.csv": {
+        "bytes": 145235,
+        "sha256": "8036c9e5c1a485e51c2eefc43f9344c94981eaab0619bc2cbc7f4ddcd4a11bd7"
+      }
+    },
+    "corrected/posebusters": {
+      "campaigns/c2026-11-22/corrected/results/posebusters_audit/posebusters_audit.png": {
+        "bytes": 78966,
+        "sha256": "d818cb8e991a5f4f8bfd69b07833cee0c41048b0a069e615c2bca0bc8b6dad1d"
+      },
+      "campaigns/c2026-11-22/corrected/results/posebusters_audit/posebusters_by_set.csv": {
+        "bytes": 805,
+        "sha256": "753bcb4733343cc7d6349cac692d67055580bee46d5362e3eb8019654cab8337"
+      },
+      "campaigns/c2026-11-22/corrected/results/posebusters_audit/posebusters_checks.csv": {
+        "bytes": 394298,
+        "sha256": "25a5566702e4a549bd2534a453b5cb887f1a5d967520ffa51e89952625e19a13"
+      },
+      "campaigns/c2026-11-22/corrected/results/posebusters_audit/posebusters_summary.json": {
+        "bytes": 888,
+        "sha256": "952bd305fcecc08c38351a21f73876a0aaaf82566a99646933e9a3d0abd4ccb4"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T11:22:35+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__audit.log",
+  "log_sha256": "f4b08e839be89d0c03f9bce9487e43b20bd85fe7ce845f369fe4dd6ac5097923",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/results/audit/control_overlap.csv": {
+      "bytes": 404,
+      "sha256": "8380ceff27d0a53d08a0401d08401ea448462e7c23991326745f58fd0e87e1ba"
+    },
+    "campaigns/c2026-11-22/corrected/results/audit/leakage_by_seed.csv": {
+      "bytes": 1696,
+      "sha256": "040aa57609cdfa746c25ad4161ebad3865fbc97a4c714e9cf7dfc4c7e29247fe"
+    },
+    "campaigns/c2026-11-22/corrected/results/audit/leakage_summary.csv": {
+      "bytes": 860,
+      "sha256": "71bc486e3ea48b6408671d90ded66d7a32e6f135baba58b6aa7d67a7798c1259"
+    },
+    "campaigns/c2026-11-22/corrected/results/audit/posebusters_coverage.json": {
+      "bytes": 430,
+      "sha256": "4c74d33421316c395ff17d97121432a9e390f26c6e871fbd263b93c83000f735"
+    },
+    "campaigns/c2026-11-22/corrected/results/audit/score_pose_coverage.csv": {
+      "bytes": 374,
+      "sha256": "59bfe6de47d05c71726d3f1bb7db3ac7c8e2eefeae59b902cdc0b5b29db6f1a8"
+    }
+  },
+  "scope": "corrected",
+  "script": "12_audit_leakage_and_artifacts.py",
+  "seconds": 0.8,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/audit"
+}

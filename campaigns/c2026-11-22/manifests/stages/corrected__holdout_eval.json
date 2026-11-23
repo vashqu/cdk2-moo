@@ -1,0 +1,47 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/holdout_molecule": {
+      "campaigns/c2026-11-22/corrected/results/05f_molecule_populations.csv": {
+        "bytes": 58111034,
+        "sha256": "560026886ccdb6969b9a9c9abba47a2c600ad9eb980481630ded74e26b0c540e"
+      }
+    },
+    "corrected/holdout_scaffold": {
+      "campaigns/c2026-11-22/corrected/results/05f_scaffold_populations.csv": {
+        "bytes": 58110877,
+        "sha256": "1de8ee101455d00d6ef3f9d69445e56124350e2821c857c7da9ca5f67426b9c7"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T01:08:43+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__holdout_eval.log",
+  "log_sha256": "90e54d6294c6993babfa6246298333311b6bfcaa3a5911a53594f69491db023b",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/figures/05g_positive_control_v2.png": {
+      "bytes": 204321,
+      "sha256": "b052db2c9911705171c1638d49be543050052ce51b331add99cb691c061eba96"
+    },
+    "campaigns/c2026-11-22/corrected/results/05g_positive_control_summary_v2.csv": {
+      "bytes": 6021,
+      "sha256": "ce708de2169392637b5e110a353b1ac861e7e4f523157d1eadcf1e7fc6890f6b"
+    }
+  },
+  "scope": "corrected",
+  "script": "05g_positive_control_eval.py",
+  "seconds": 1436.3,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/holdout_eval"
+}

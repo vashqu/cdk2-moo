@@ -1,0 +1,103 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/constrained_molecule": {
+      "campaigns/c2026-11-22/corrected/results/10_constrained_molecule_populations.csv": {
+        "bytes": 127136539,
+        "sha256": "63f8f7bbca04cb02ca27c060437d30805d3e76a25d43475a69076a3a51c5d709"
+      }
+    },
+    "corrected/constrained_primary": {
+      "campaigns/c2026-11-22/corrected/results/10_constrained_primary_populations.csv": {
+        "bytes": 125105046,
+        "sha256": "2b581694f9bde8c1524f928e2c322f8b0f27a0a7fb2b0c42a49cba120d2ced76"
+      }
+    },
+    "corrected/constrained_scaffold": {
+      "campaigns/c2026-11-22/corrected/results/10_constrained_scaffold_populations.csv": {
+        "bytes": 125896326,
+        "sha256": "87147f8847469606a17d55b4d32a488b65755447fffbde5c2ef9b51805c18e97"
+      }
+    },
+    "corrected/holdout_molecule": {
+      "campaigns/c2026-11-22/corrected/results/05f_molecule_populations.csv": {
+        "bytes": 58111034,
+        "sha256": "560026886ccdb6969b9a9c9abba47a2c600ad9eb980481630ded74e26b0c540e"
+      }
+    },
+    "corrected/holdout_scaffold": {
+      "campaigns/c2026-11-22/corrected/results/05f_scaffold_populations.csv": {
+        "bytes": 58110877,
+        "sha256": "1de8ee101455d00d6ef3f9d69445e56124350e2821c857c7da9ca5f67426b9c7"
+      }
+    },
+    "corrected/size_percentile": {
+      "campaigns/c2026-11-22/corrected/results/05_ga_populations_scored.csv": {
+        "bytes": 60182410,
+        "sha256": "5b7eff1b280dd2d8b8fcdc68147be1b01426cf5881e9ccbc5745f46754119468"
+      },
+      "campaigns/c2026-11-22/corrected/results/05_training_loo_similarity.csv": {
+        "bytes": 81367,
+        "sha256": "79345aab0a11be0571095fb39aa09930a5dc0cfe0245ccb6d60bbf55bc1c80a0"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T06:17:45+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__endpoints.log",
+  "log_sha256": "1d87ed196acf9c85295ad53271d1ca818b707e20ac3ceccd9c2bc75bc415616d",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/results/13_final_generation.csv": {
+      "bytes": 3922,
+      "sha256": "934f703f02d3dffd2be0314303da2493a5afd4f8acd65a63932377dd9bc7d2fc"
+    },
+    "campaigns/c2026-11-22/corrected/results/13_h1_runs.csv": {
+      "bytes": 2583,
+      "sha256": "0221bf079547fd11e24c5a7423a0398ab5b8957b3d56c4d6a13d5599fe2a05e7"
+    },
+    "campaigns/c2026-11-22/corrected/results/13_h1_summary.csv": {
+      "bytes": 565,
+      "sha256": "7c1a3c37739eda8096a39cb01e55e95061171e363d149f8c2bb4d04daaf5de15"
+    },
+    "campaigns/c2026-11-22/corrected/results/13_h2_runs.csv": {
+      "bytes": 4513,
+      "sha256": "d2ce4996bb8e4e42a4e91b61dd29beb10f31918f13f6141695c8aa24db5e7956"
+    },
+    "campaigns/c2026-11-22/corrected/results/13_h2_summary.csv": {
+      "bytes": 673,
+      "sha256": "b0ea4121e856145984c80d872c941ea143d7aa7c704043b7f38caf832655d4ca"
+    },
+    "campaigns/c2026-11-22/corrected/results/13_h4_runs.csv": {
+      "bytes": 4818,
+      "sha256": "60e45b3c23f54800187b823c34a4a726bd5da65452af2132d40562ee665cbe08"
+    },
+    "campaigns/c2026-11-22/corrected/results/13_h4_summary.csv": {
+      "bytes": 612,
+      "sha256": "9b46ec5ecfa22b90e1634506d323662d557254f46e4dd962d7aa7458e704ea01"
+    },
+    "campaigns/c2026-11-22/corrected/results/13_h5_runs.csv": {
+      "bytes": 30363,
+      "sha256": "453636b24dd17e0836f1aacfa743fd0b0837f568af04e5b944a942132a731a47"
+    },
+    "campaigns/c2026-11-22/corrected/results/13_h5_summary.csv": {
+      "bytes": 4413,
+      "sha256": "04cadeae6d1e0392ad8f6ff486017477668a24f23ce90a27c8d9336f3665d51a"
+    }
+  },
+  "scope": "corrected",
+  "script": "13_hypothesis_endpoints.py",
+  "seconds": 116.0,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/endpoints"
+}

@@ -1,0 +1,36 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/size_percentile": {
+      "campaigns/c2026-11-22/corrected/results/05_ga_populations_scored.csv": {
+        "bytes": 60182410,
+        "sha256": "5b7eff1b280dd2d8b8fcdc68147be1b01426cf5881e9ccbc5745f46754119468"
+      },
+      "campaigns/c2026-11-22/corrected/results/05_training_loo_similarity.csv": {
+        "bytes": 81367,
+        "sha256": "79345aab0a11be0571095fb39aa09930a5dc0cfe0245ccb6d60bbf55bc1c80a0"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T00:48:07+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__descriptive.log",
+  "log_sha256": "73a54c0db1a6adf2fa6abb862ea5a19d421d47a710a0f22708c3f0ff11fcee31",
+  "outputs": {},
+  "scope": "corrected",
+  "script": "05d_ga_descriptive_checks.py",
+  "seconds": 20.6,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/descriptive"
+}

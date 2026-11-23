@@ -1,0 +1,112 @@
+{
+  "args": [
+    "--controls",
+    "molecule"
+  ],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/link": {
+      "campaigns/c2026-11-22/corrected/link_manifest.json": {
+        "bytes": 2949,
+        "sha256": "36b5ad03f1fd5df2b52b8aec0b0378e045f8c440b16c1bc983bdad1e176ea975"
+      },
+      "campaigns/c2026-11-22/corrected/processed/cdk2_ic50_curated.csv": {
+        "bytes": 361575,
+        "sha256": "634c8603cbaba2424b99b9d2ddcb0f7f3ed0452c5c92ed6f6377961d922aa6b2"
+      },
+      "campaigns/c2026-11-22/corrected/processed/cdk2_kikd_external.csv": {
+        "bytes": 100723,
+        "sha256": "2822d32df1de43eac95522121a4b46c52773dba4ede9f67e976f3d06046ea197"
+      },
+      "campaigns/c2026-11-22/corrected/processed/cdk2_splits.csv": {
+        "bytes": 1875057,
+        "sha256": "fb0e99d050d0086c72f507748d986127de7f3afd42361caf5e817259162fea20"
+      },
+      "campaigns/c2026-11-22/corrected/processed/ecfp4.npy": {
+        "bytes": 4128896,
+        "sha256": "9918f0f49e95c4699ddac5ca130403e95db76d58034eac4c04d9edebccbb4246"
+      },
+      "campaigns/c2026-11-22/corrected/processed/eligible_starts.csv": {
+        "bytes": 109426,
+        "sha256": "2bff7da9700fc77071b70ffc0de33d296a13260b95c4253e80e280159d88ac92"
+      },
+      "campaigns/c2026-11-22/corrected/results/02_curation_funnel.json": {
+        "bytes": 904,
+        "sha256": "2c8883535699f9cccab2d69b6c731b66f74e806509910aa616191097e50e0586"
+      },
+      "campaigns/c2026-11-22/corrected/results/03_splits.json": {
+        "bytes": 20866,
+        "sha256": "b88d274722b30b5c7a8d895245c1942a8c2e946df5181098074492cdb3802434"
+      },
+      "campaigns/c2026-11-22/corrected/results/04_surrogate_metrics.csv": {
+        "bytes": 11437,
+        "sha256": "77e304710d1d552a5f0992dd7a40b38d0930890f6959c8a144d9d247d037b625"
+      },
+      "campaigns/c2026-11-22/corrected/results/04_test_predictions.csv": {
+        "bytes": 1161718,
+        "sha256": "47fdc6935938573a448426577398de9dd44395709b437202d4ec9d0921212124"
+      },
+      "campaigns/c2026-11-22/corrected/results/05e_heldout_predictions.csv": {
+        "bytes": 12633,
+        "sha256": "9445177a3c606f065cade5d3ba519721cd229d4c6e4d18fb59bfd58918093b78"
+      },
+      "campaigns/c2026-11-22/corrected/results/05e_holdout_sets.csv": {
+        "bytes": 275849,
+        "sha256": "ab1181502a9ee0e6de4a92f686c0f0ab16d16d24e50f0d9474844a9e3426a5f2"
+      },
+      "campaigns/c2026-11-22/corrected/results/05e_setup_report.json": {
+        "bytes": 1307,
+        "sha256": "cd7573fbc4dd139fb721a0aaa926abfda1e73c5224a15035a42ee33fb2716bcf"
+      },
+      "campaigns/c2026-11-22/corrected/results/08b_redocking.json": {
+        "bytes": 1203,
+        "sha256": "dc1c9f226dfa4721fc2bff750038f532ed08dfe512b7c3540ed4cce53e323732"
+      },
+      "campaigns/c2026-11-22/corrected/structures/4KD1.pdb": {
+        "bytes": 245997,
+        "sha256": "f902a65172345488551d1eb14659d2e24094aa82b5b882d88ddecccdf0811f5c"
+      },
+      "campaigns/c2026-11-22/corrected/structures/4kd1_1QK_crystal.sdf": {
+        "bytes": 3452,
+        "sha256": "154ef0db46fed220680b8e0943dc270d8416353af89adc3754e0f4373a2e8c08"
+      },
+      "campaigns/c2026-11-22/corrected/structures/receptor.pdbqt": {
+        "bytes": 233120,
+        "sha256": "832ba63e0bd9acc346886a20cc2f163fab6f14c31f9bf7e8d0bee8511a3ab29a"
+      },
+      "campaigns/c2026-11-22/corrected/structures/receptor_H.pdb": {
+        "bytes": 392840,
+        "sha256": "49301b3bb6f5f006d085bf806e0474617dcb0f1c4b0927b7ef9b1903b7a2cac8"
+      },
+      "campaigns/c2026-11-22/corrected/structures/receptor_box.txt": {
+        "bytes": 48,
+        "sha256": "e2db9a29e5a80e81fccb611184599117c253a7b91dfd7a81bb847eff9aab89b8"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T00:12:49+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__holdout_molecule.log",
+  "log_sha256": "ee6395e545af52a82abd98b50a2c03431d297d15da6056af201bc8333de037e4",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/results/05f_molecule_populations.csv": {
+      "bytes": 58111034,
+      "sha256": "560026886ccdb6969b9a9c9abba47a2c600ad9eb980481630ded74e26b0c540e"
+    }
+  },
+  "scope": "corrected",
+  "script": "05f_positive_control_ga.py",
+  "seconds": 8840.2,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/holdout_molecule"
+}

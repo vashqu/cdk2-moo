@@ -11,3 +11,6 @@ dist/
 
 # OS
 .DS_Store
+
+# Constrained-GA population tables (about 120 MB each): over GitHub's 100 MB file limit. Kept locally; their SHA-256 is in the stage manifests.
+campaigns/*/*/results/10_constrained_*_populations.csv

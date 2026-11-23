@@ -1,0 +1,53 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/dock_sets": {
+      "campaigns/c2026-11-22/corrected/results/08c_docking_sets.csv": {
+        "bytes": 487900,
+        "sha256": "3c94fc956f5e284c5016f7b37b31f5af5c57e5ff1b65577a278d6c249c0272d7"
+      },
+      "campaigns/c2026-11-22/corrected/results/08c_selection_report.json": {
+        "bytes": 1689,
+        "sha256": "d9a71442f4b33beb53721848224b7d3bd9aa779fd14d14df83072d2bd1400f4c"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T10:54:42+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__dock.log",
+  "log_sha256": "678c4367d5f70ea770965dba31ed6ea660f177043e763bf1c5aff8a5cbaf1455",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/results/08d_export/docking_scores.csv": {
+      "bytes": 382675,
+      "sha256": "76e88831df5ead278563a862d8805921dfc6d7fc351cad0e343e49dc7098da85"
+    },
+    "campaigns/c2026-11-22/corrected/results/08d_export/poses_seed42.sdf": {
+      "bytes": 8589948,
+      "sha256": "e78d877b94d644e59406a6632842b8cef21ec503cd0688a8665c59d701393313"
+    },
+    "campaigns/c2026-11-22/corrected/results/08d_export/poses_seed43.sdf": {
+      "bytes": 402505,
+      "sha256": "fc2a4944b4c206bffb06f92bd59e24404b152bfdf55b8f50d65ab0073f5dd1b8"
+    },
+    "campaigns/c2026-11-22/corrected/results/08d_export/poses_seed44.sdf": {
+      "bytes": 407028,
+      "sha256": "7aa095e749fd5654c5bf673f653a5aa6ad17b8166dfa8f46daa933f4c54f6eef"
+    }
+  },
+  "scope": "corrected",
+  "script": "08d_dock_sets.py",
+  "seconds": 16612.4,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/dock"
+}

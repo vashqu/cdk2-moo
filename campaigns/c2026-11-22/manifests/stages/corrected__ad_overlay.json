@@ -1,0 +1,69 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/ad_reliability": {
+      "campaigns/c2026-11-22/corrected/figures/07_reliability_curves.png": {
+        "bytes": 147374,
+        "sha256": "ce15ed09d0a9c79e0b59283b683d9b6fad4d72b9a2abaac5896cb462aaff6996"
+      },
+      "campaigns/c2026-11-22/corrected/results/07_reliability_bins.csv": {
+        "bytes": 2329,
+        "sha256": "f1c7b061e2dea001635279c250e3d3b29ac4be2a3b540e9605c818955eea79d8"
+      },
+      "campaigns/c2026-11-22/corrected/results/07_stage4_ad.csv": {
+        "bytes": 1359827,
+        "sha256": "121e067414c17415b78202948c6bc1bc17d084cd0499a55327e89ab47b40a3c4"
+      }
+    },
+    "corrected/pareto": {
+      "campaigns/c2026-11-22/corrected/figures/06_pareto_fronts.png": {
+        "bytes": 1085880,
+        "sha256": "3d43c4b03f075057b63632cf812e36b9458919bf966d1b4b07a907170484f597"
+      },
+      "campaigns/c2026-11-22/corrected/figures/06_pareto_structures.png": {
+        "bytes": 87319,
+        "sha256": "58dac59c773e43fa8b7b15871ee7e017f63bb9abc39e7440676845fb924b025b"
+      },
+      "campaigns/c2026-11-22/corrected/results/06_pareto_front.csv": {
+        "bytes": 11038,
+        "sha256": "c1bcebc23a33585ad4cc25fa74b1c07747a6f3c2be0cbe737a9a4b3f33b3f7ef"
+      }
+    },
+    "corrected/size_percentile": {
+      "campaigns/c2026-11-22/corrected/results/05_ga_populations_scored.csv": {
+        "bytes": 60182410,
+        "sha256": "5b7eff1b280dd2d8b8fcdc68147be1b01426cf5881e9ccbc5745f46754119468"
+      },
+      "campaigns/c2026-11-22/corrected/results/05_training_loo_similarity.csv": {
+        "bytes": 81367,
+        "sha256": "79345aab0a11be0571095fb39aa09930a5dc0cfe0245ccb6d60bbf55bc1c80a0"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T00:48:36+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__ad_overlay.log",
+  "log_sha256": "5543dea6ed7b83de488fdb5d446851a96fa2172e97e2728b8ba5a51700cb9718",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/results/07_generated_regions.csv": {
+      "bytes": 3746200,
+      "sha256": "e63273fa9357329fb5a8b32545ed21b42ebdccc04f1afce54d33ea15c9689bee"
+    }
+  },
+  "scope": "corrected",
+  "script": "07b_ad_generated_overlay.py",
+  "seconds": 4.0,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/ad_overlay"
+}

@@ -1,0 +1,71 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/holdout_molecule": {
+      "campaigns/c2026-11-22/corrected/results/05f_molecule_populations.csv": {
+        "bytes": 58111034,
+        "sha256": "560026886ccdb6969b9a9c9abba47a2c600ad9eb980481630ded74e26b0c540e"
+      }
+    },
+    "corrected/holdout_scaffold": {
+      "campaigns/c2026-11-22/corrected/results/05f_scaffold_populations.csv": {
+        "bytes": 58110877,
+        "sha256": "1de8ee101455d00d6ef3f9d69445e56124350e2821c857c7da9ca5f67426b9c7"
+      }
+    },
+    "corrected/pareto": {
+      "campaigns/c2026-11-22/corrected/figures/06_pareto_fronts.png": {
+        "bytes": 1085880,
+        "sha256": "3d43c4b03f075057b63632cf812e36b9458919bf966d1b4b07a907170484f597"
+      },
+      "campaigns/c2026-11-22/corrected/figures/06_pareto_structures.png": {
+        "bytes": 87319,
+        "sha256": "58dac59c773e43fa8b7b15871ee7e017f63bb9abc39e7440676845fb924b025b"
+      },
+      "campaigns/c2026-11-22/corrected/results/06_pareto_front.csv": {
+        "bytes": 11038,
+        "sha256": "c1bcebc23a33585ad4cc25fa74b1c07747a6f3c2be0cbe737a9a4b3f33b3f7ef"
+      }
+    },
+    "corrected/size_percentile": {
+      "campaigns/c2026-11-22/corrected/results/05_ga_populations_scored.csv": {
+        "bytes": 60182410,
+        "sha256": "5b7eff1b280dd2d8b8fcdc68147be1b01426cf5881e9ccbc5745f46754119468"
+      },
+      "campaigns/c2026-11-22/corrected/results/05_training_loo_similarity.csv": {
+        "bytes": 81367,
+        "sha256": "79345aab0a11be0571095fb39aa09930a5dc0cfe0245ccb6d60bbf55bc1c80a0"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T00:49:12+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__dock_sets.log",
+  "log_sha256": "d02487c4621e714e54df52502143cfbf93017b8b2219cc7bff3c8166a4c30a01",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/results/08c_docking_sets.csv": {
+      "bytes": 487900,
+      "sha256": "3c94fc956f5e284c5016f7b37b31f5af5c57e5ff1b65577a278d6c249c0272d7"
+    },
+    "campaigns/c2026-11-22/corrected/results/08c_selection_report.json": {
+      "bytes": 1689,
+      "sha256": "d9a71442f4b33beb53721848224b7d3bd9aa779fd14d14df83072d2bd1400f4c"
+    }
+  },
+  "scope": "corrected",
+  "script": "08c_select_docking_sets.py",
+  "seconds": 40.6,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/dock_sets"
+}

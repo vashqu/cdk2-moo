@@ -1,0 +1,45 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "shared/receptor": {
+      "campaigns/c2026-11-22/shared/structures/receptor.pdbqt": {
+        "bytes": 233120,
+        "sha256": "832ba63e0bd9acc346886a20cc2f163fab6f14c31f9bf7e8d0bee8511a3ab29a"
+      },
+      "campaigns/c2026-11-22/shared/structures/receptor_H.pdb": {
+        "bytes": 392840,
+        "sha256": "49301b3bb6f5f006d085bf806e0474617dcb0f1c4b0927b7ef9b1903b7a2cac8"
+      },
+      "campaigns/c2026-11-22/shared/structures/receptor_box.txt": {
+        "bytes": 48,
+        "sha256": "e2db9a29e5a80e81fccb611184599117c253a7b91dfd7a81bb847eff9aab89b8"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-22T21:37:56+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/shared__redock.log",
+  "log_sha256": "f3552d2ec56c8cef1f80e84715b0ba55551bd8cd7957bb064221fdf2011369a1",
+  "outputs": {
+    "campaigns/c2026-11-22/shared/results/08b_redocking.json": {
+      "bytes": 1203,
+      "sha256": "dc1c9f226dfa4721fc2bff750038f532ed08dfe512b7c3540ed4cce53e323732"
+    }
+  },
+  "scope": "shared",
+  "script": "08b_redock_native_ligand.py",
+  "seconds": 28.7,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "shared/redock"
+}

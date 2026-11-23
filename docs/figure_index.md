@@ -20,3 +20,18 @@ Where an embedded title says "distinct molecules", it means distinct **raw SMILE
 * `10_tradeoff_v2.png` (H5 floor vs predicted activity and proximity): no policy label, y-axis label cut off, error-bar definition not stated in the image, and its proximity axis uses fingerprint geometry shared with the imposed similarity floor; H5 exchange quantities are provisional (`known_issues.md` #1).
 * `05g_positive_control_v2.png` (proximity to held-out actives), `07_generated_on_domain.png`, `05_ga_final_generation.png`, `05_ga_trajectories.png`, `fig3b_pareto_structures.png`, `06_pareto_*` and `08_docking_*` stage copies (byte-identical to the final copies of `fig3`/`fig5`): not inspected in this pass or redundant. Proximity views would need the same caveat as the tradeoff plot.
 * All historical (pre-campaign) figures: archived in `archive/historical_pre_campaign/figures/`; different definitions and counts.
+
+## Campaign c2026-11-22 figures
+
+Copies of the final figures of `campaigns/c2026-11-22/corrected/figures/final/`; each title states campaign, policy scope and n. Corrected policy only; 10 GA seeds; counting is distinct standardized molecules. The caveats of the table above apply to the same quantities.
+
+| File here | Quantity | Limitations |
+|---|---|---|
+| `figures/fig1_surrogate_c2026-11-22.png` | Predicted vs measured pActivity for held-out molecules, three split types with scrambled control | Shared with the first campaign; scaffold and paper splits are not series-independent |
+| `figures/fig2_trajectories_c2026-11-22.png` | Four panels over 50 generations, four arms, mean of per-seed medians, band = ±1 SD over 10 seeds | Predicted activity is the model's own output; generation 0 is training molecules |
+| `figures/fig3_pareto_fronts_c2026-11-22.png` | Generated molecules in predicted pActivity vs QED and SA with the Pareto front | Measured (reference sets) and predicted values share an axis; the title states this |
+| `figures/fig4_similarity_vs_prediction_c2026-11-22.png` | Predicted pActivity vs max Tanimoto for generated molecules; inset: measured-vs-predicted error of real molecules | The inset is real-molecule error, not error on generated molecules |
+| `figures/fig5_docking_{M,S,P}_c2026-11-22.png` | Vina scores per set and vs heavy-atom count | The validity gate failed; M and S are not an assessment of H3; P is in-sample |
+| `figures/fig6_pose_checks_c2026-11-22.png` | PoseBusters pass share and hinge-distance share per set | Plausibility and distance only |
+
+Not copied: `10_tradeoff_v2.png`, `05g_positive_control_v2.png` and the stage-level figures (they remain in the campaign folder). I looked at `fig2`, `fig3` and `fig4` and checked that their titles say what is stated here; `fig1`, `fig5` and `fig6` were not inspected in this pass.

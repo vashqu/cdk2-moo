@@ -1,0 +1,61 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/dock": {
+      "campaigns/c2026-11-22/corrected/results/08d_export/docking_scores.csv": {
+        "bytes": 382675,
+        "sha256": "76e88831df5ead278563a862d8805921dfc6d7fc351cad0e343e49dc7098da85"
+      },
+      "campaigns/c2026-11-22/corrected/results/08d_export/poses_seed42.sdf": {
+        "bytes": 8589948,
+        "sha256": "e78d877b94d644e59406a6632842b8cef21ec503cd0688a8665c59d701393313"
+      },
+      "campaigns/c2026-11-22/corrected/results/08d_export/poses_seed43.sdf": {
+        "bytes": 402505,
+        "sha256": "fc2a4944b4c206bffb06f92bd59e24404b152bfdf55b8f50d65ab0073f5dd1b8"
+      },
+      "campaigns/c2026-11-22/corrected/results/08d_export/poses_seed44.sdf": {
+        "bytes": 407028,
+        "sha256": "7aa095e749fd5654c5bf673f653a5aa6ad17b8166dfa8f46daa933f4c54f6eef"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T11:22:33+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__posebusters.log",
+  "log_sha256": "43cf387999f28754cbdb3bb2dad8bc04e67967e13d2fc0f6bed2f10f3f845a43",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/results/posebusters_audit/posebusters_audit.png": {
+      "bytes": 78966,
+      "sha256": "d818cb8e991a5f4f8bfd69b07833cee0c41048b0a069e615c2bca0bc8b6dad1d"
+    },
+    "campaigns/c2026-11-22/corrected/results/posebusters_audit/posebusters_by_set.csv": {
+      "bytes": 805,
+      "sha256": "753bcb4733343cc7d6349cac692d67055580bee46d5362e3eb8019654cab8337"
+    },
+    "campaigns/c2026-11-22/corrected/results/posebusters_audit/posebusters_checks.csv": {
+      "bytes": 394298,
+      "sha256": "25a5566702e4a549bd2534a453b5cb887f1a5d967520ffa51e89952625e19a13"
+    },
+    "campaigns/c2026-11-22/corrected/results/posebusters_audit/posebusters_summary.json": {
+      "bytes": 888,
+      "sha256": "952bd305fcecc08c38351a21f73876a0aaaf82566a99646933e9a3d0abd4ccb4"
+    }
+  },
+  "scope": "corrected",
+  "script": "08f_posebusters.py",
+  "seconds": 1667.1,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/posebusters"
+}

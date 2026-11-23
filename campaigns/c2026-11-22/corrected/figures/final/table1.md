@@ -1,0 +1,26 @@
+| set | n | n with Vina | pActivity | basis | Vina | QED | SA | MW | cLogP | diversity | % PAINS | % PB pass | max Tanimoto |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| P:training_top_decile | 100 | 99 | 8.40 | measured | -8.31 | 0.53 | 2.78 | 405 | 3.35 | 0.83 | 15 | 99 | 0.78 |
+| M:heldout_actives | 100 | 99 | 8.40 | measured | -8.17 | 0.52 | 2.91 | 410 | 3.44 | 0.83 | 9 | 99 | 0.73 |
+| S:heldout_actives | 93 | 93 | 8.40 | measured | -8.18 | 0.54 | 3.03 | 428 | 3.38 | 0.75 | 9 | 100 | 0.67 |
+| P:random_training | 100 | 100 | 6.59 | measured | -8.23 | 0.52 | 2.86 | 428 | 3.87 | 0.86 | 13 | 99 | 0.78 |
+| M:random_remaining | 100 | 98 | 6.28 | measured | -8.28 | 0.55 | 2.93 | 417 | 3.45 | 0.87 | 7 | 96 | 0.78 |
+| S:random_remaining | 100 | 100 | 6.01 | measured | -8.44 | 0.54 | 2.78 | 418 | 3.63 | 0.87 | 7 | 99 | 0.79 |
+| P:multi_real | 100 | 100 | 7.72 | predicted | -8.01 | 0.91 | 2.07 | 305 | 2.88 | 0.72 | 1 | 99 | 0.37 |
+| P:multi_scrambled | 100 | 100 | 5.92 | predicted | -7.50 | 0.92 | 2.07 | 302 | 2.61 | 0.83 | 7 | 97 | 0.34 |
+| P:activity_only | 100 | 100 | 8.59 | predicted | -8.72 | 0.27 | 3.35 | 491 | 4.63 | 0.64 | 7 | 96 | 0.71 |
+| P:druglike_only | 100 | 100 | 6.22 | predicted | -7.72 | 0.93 | 1.72 | 304 | 3.22 | 0.79 | 26 | 99 | 0.36 |
+| P:pareto_front | 114 | 114 | 7.94 | predicted | -7.98 | 0.90 | 2.26 | 306 | 3.08 | 0.75 | 1 | 100 | 0.43 |
+| P:decoys | 100 | 100 | 6.35 | predicted | -8.23 | 0.61 | 2.88 | 399 | 3.35 | 0.86 | 3 | 99 | 0.48 |
+| M:multi_real | 100 | 100 | 7.23 | predicted | -7.98 | 0.91 | 2.00 | 307 | 2.62 | 0.71 | 1 | 98 | 0.34 |
+| M:multi_scrambled | 100 | 100 | 5.93 | predicted | -7.67 | 0.91 | 1.85 | 298 | 3.03 | 0.81 | 8 | 98 | 0.35 |
+| M:activity_only | 100 | 100 | 7.86 | predicted | -8.16 | 0.32 | 4.24 | 517 | 3.81 | 0.61 | 9 | 92 | 0.70 |
+| M:druglike_only | 100 | 100 | 6.10 | predicted | -7.65 | 0.93 | 1.73 | 302 | 2.99 | 0.78 | 13 | 97 | 0.35 |
+| M:decoys | 100 | 100 | 6.22 | predicted | -8.13 | 0.61 | 2.81 | 400 | 3.35 | 0.86 | 6 | 98 | 0.47 |
+| S:multi_real | 100 | 100 | 7.45 | predicted | -7.92 | 0.91 | 2.39 | 317 | 2.82 | 0.80 | 2 | 100 | 0.43 |
+| S:multi_scrambled | 100 | 100 | 6.24 | predicted | -7.75 | 0.91 | 2.26 | 311 | 3.28 | 0.84 | 22 | 98 | 0.32 |
+| S:activity_only | 100 | 100 | 8.41 | predicted | -8.53 | 0.19 | 3.42 | 502 | 3.74 | 0.73 | 36 | 97 | 0.67 |
+| S:druglike_only | 100 | 100 | 6.19 | predicted | -7.70 | 0.93 | 1.73 | 302 | 3.05 | 0.79 | 12 | 98 | 0.35 |
+| S:decoys | 93 | 92 | 6.42 | predicted | -8.12 | 0.61 | 3.05 | 399 | 3.38 | 0.86 | 4 | 97 | 0.51 |
+
+Table 1. Campaign c2026-11-22, corrected policy scope. Per-set summary of docked molecules (medians; diversity = mean pairwise 1 - ECFP4 Tanimoto). Groups: P = surrogate trained on all 2,016 molecules (its comparator actives were in training); M = molecule-level holdout; S = scaffold-level holdout. pActivity is measured for sets drawn from the curated data and predicted by the group's surrogate otherwise; not comparable. Vina in kcal/mol (more negative = better), median over the n with Vina molecules. % PB pass = passes all 22 PoseBusters checks / n in set. Max Tanimoto is raw ECFP4 (Morgan r=2, 2048-bit) to the group's training molecules, excluding the molecule itself for sets drawn from training. random_training / random_remaining are stand-ins for a random ChEMBL sample, not a ChEMBL sample.

@@ -1,0 +1,53 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/size_percentile": {
+      "campaigns/c2026-11-22/corrected/results/05_ga_populations_scored.csv": {
+        "bytes": 60182410,
+        "sha256": "5b7eff1b280dd2d8b8fcdc68147be1b01426cf5881e9ccbc5745f46754119468"
+      },
+      "campaigns/c2026-11-22/corrected/results/05_training_loo_similarity.csv": {
+        "bytes": 81367,
+        "sha256": "79345aab0a11be0571095fb39aa09930a5dc0cfe0245ccb6d60bbf55bc1c80a0"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T00:47:51+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__summarize_ga.log",
+  "log_sha256": "ff2775f2a731d46ad900546adbcf7e21ea35b8ff77e89f71a0cc1f6a8f945e39",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/figures/05_ga_final_generation.png": {
+      "bytes": 122303,
+      "sha256": "b5f2366d3d183da3d3cf45543287471847a83383143822b528be0aecb6427046"
+    },
+    "campaigns/c2026-11-22/corrected/figures/05_ga_trajectories.png": {
+      "bytes": 480845,
+      "sha256": "4098b6432ee16fff495725878a764203e844192376a5e9db0b384ecdccfd58f2"
+    },
+    "campaigns/c2026-11-22/corrected/results/05_ga_final_summary.csv": {
+      "bytes": 4923,
+      "sha256": "c6cea8c9e9d614da2e5987495daa66e210ea1e57d780bf2ee2f13e1b05070672"
+    },
+    "campaigns/c2026-11-22/corrected/results/05_ga_per_run.csv": {
+      "bytes": 229521,
+      "sha256": "423eb17b974ec63d619fa416973260746eb2324ddcaf6131365ef129db24a3bd"
+    }
+  },
+  "scope": "corrected",
+  "script": "05c_summarize_ga.py",
+  "seconds": 4.1,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/summarize_ga"
+}

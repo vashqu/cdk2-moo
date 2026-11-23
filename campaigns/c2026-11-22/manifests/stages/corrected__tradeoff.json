@@ -1,0 +1,71 @@
+{
+  "args": [],
+  "campaign": "c2026-11-22",
+  "code_sha256": "7d30bf2262dd70c4abd51af6059fdf67cf4e817a910e2c9f0a1ddbd822c0dffe",
+  "complete": true,
+  "consumed_upstream_outputs": {
+    "corrected/constrained_molecule": {
+      "campaigns/c2026-11-22/corrected/results/10_constrained_molecule_populations.csv": {
+        "bytes": 127136539,
+        "sha256": "63f8f7bbca04cb02ca27c060437d30805d3e76a25d43475a69076a3a51c5d709"
+      }
+    },
+    "corrected/constrained_primary": {
+      "campaigns/c2026-11-22/corrected/results/10_constrained_primary_populations.csv": {
+        "bytes": 125105046,
+        "sha256": "2b581694f9bde8c1524f928e2c322f8b0f27a0a7fb2b0c42a49cba120d2ced76"
+      }
+    },
+    "corrected/constrained_scaffold": {
+      "campaigns/c2026-11-22/corrected/results/10_constrained_scaffold_populations.csv": {
+        "bytes": 125896326,
+        "sha256": "87147f8847469606a17d55b4d32a488b65755447fffbde5c2ef9b51805c18e97"
+      }
+    },
+    "corrected/ga_primary": {
+      "campaigns/c2026-11-22/corrected/results/05_ga_populations.csv": {
+        "bytes": 57242418,
+        "sha256": "dc9930b2720ca6ed9234b78f83feb1d27d72439054df151175a051f0817e6c07"
+      }
+    },
+    "corrected/holdout_molecule": {
+      "campaigns/c2026-11-22/corrected/results/05f_molecule_populations.csv": {
+        "bytes": 58111034,
+        "sha256": "560026886ccdb6969b9a9c9abba47a2c600ad9eb980481630ded74e26b0c540e"
+      }
+    },
+    "corrected/holdout_scaffold": {
+      "campaigns/c2026-11-22/corrected/results/05f_scaffold_populations.csv": {
+        "bytes": 58110877,
+        "sha256": "1de8ee101455d00d6ef3f9d69445e56124350e2821c857c7da9ca5f67426b9c7"
+      }
+    }
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-23T06:16:41+00:00",
+  "log": "campaigns/c2026-11-22/manifests/logs/corrected__tradeoff.log",
+  "log_sha256": "c1295828df7de9f425883516f42914ba2e98ee41c12a65e7910e3dc6a3819fd2",
+  "outputs": {
+    "campaigns/c2026-11-22/corrected/figures/10_tradeoff_v2.png": {
+      "bytes": 187022,
+      "sha256": "96a16b476bc7ad7c6237cba26a79638e225ecbc91dbbe570cfb8916886866dfe"
+    },
+    "campaigns/c2026-11-22/corrected/results/10_tradeoff_v2.csv": {
+      "bytes": 29874,
+      "sha256": "03ccd3f6da744311caf675492153485ef2d5ff2bd02a922a03e2325d91af7723"
+    }
+  },
+  "scope": "corrected",
+  "script": "10b_analyze_tradeoff.py",
+  "seconds": 51.8,
+  "source": {
+    "git_head": "a48134a129304c52eb303aa7b2a51274601c10f7",
+    "git_status_lines": [
+      "M README.md",
+      "?? campaigns/c2026-11-22/"
+    ],
+    "source_tree_sha256": "cd046ea9b1c49fa95993714971d0c462ac7ef0a52f887928b902848b6f3b4d89",
+    "working_tree_clean": false
+  },
+  "stage": "corrected/tradeoff"
+}
